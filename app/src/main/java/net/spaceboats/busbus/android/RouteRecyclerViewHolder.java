@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -14,12 +13,12 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
-    private CardView mBackgroundImageView;
+    private CardView mCardView;
 
     public RouteRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
-        mBackgroundImageView = (CardView) itemView.findViewById(R.id.mbg);
+        mCardView = (CardView) itemView.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) itemView.findViewById(R.id.routeName);
     }
 
@@ -36,7 +35,7 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setBackgroundColor(String color){
-        this.mBackgroundImageView.setBackgroundColor(Color.parseColor(color));
+        this.mCardView.setCardBackgroundColor(Color.parseColor(color));
     }
 
     public void setRouteName(String name){
