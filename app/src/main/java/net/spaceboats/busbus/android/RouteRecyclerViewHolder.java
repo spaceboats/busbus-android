@@ -1,6 +1,7 @@
 package net.spaceboats.busbus.android;
 
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,12 +14,12 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
-    private ImageView mBackgroundImageView;
+    private CardView mBackgroundImageView;
 
     public RouteRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
-        mBackgroundImageView = (ImageView) itemView.findViewById(R.id.mbg);
+        mBackgroundImageView = (CardView) itemView.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) itemView.findViewById(R.id.routeName);
     }
 
