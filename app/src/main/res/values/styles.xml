@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:colorControlHighlight">#0f0f0f</item>
         <item name="android:windowContentTransitions">true</item>
@@ -15,6 +15,10 @@
             @android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">
             @android:transition/move</item>
+
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
 
     </style>
 

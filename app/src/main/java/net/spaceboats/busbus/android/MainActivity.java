@@ -4,12 +4,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
-import android.view.Window;
 
 public class MainActivity extends ActionBarActivity {
 
+    private Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private RouteRecyclerAdapter mRouteAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -25,6 +26,9 @@ public class MainActivity extends ActionBarActivity {
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setExitTransition(fade);
         getWindow().setEnterTransition(fade);
+
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
