@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
@@ -54,10 +55,13 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
     public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), RouteActivity.class);
 
+        View parentView = (View) view.getParent().getParent();
+
         //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), mRouteNameTextView, "routeName");
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), Pair.create((View)mRouteNameTextView, "routeName"),
                                                                                      Pair.create((View)mRouteNumberTextView, "routeNumber"),
-                                                                                     Pair.create((View)mCardView, "mgb"));
+                                                                                     Pair.create((View)mCardView, "mgb"),
+                                                                                     Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
 
         intent.putExtra("ROUTENAME", mRouteNameTextView.getText());
         intent.putExtra("ROUTENUMBER", mRouteNumberTextView.getText());

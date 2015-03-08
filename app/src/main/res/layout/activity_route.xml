@@ -1,24 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="net.spaceboats.busbus.android.RouteActivity"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/stuff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:transitionName="mbg"
-    android:orientation="vertical">
+    tools:context="net.spaceboats.busbus.android.RouteActivity">
 
-        <TextView
-            android:transitionName="routeNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/textView" />
-        <TextView
-            android:layout_gravity="center_horizontal"
-            android:transitionName="routeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2" />
+    <include
+        layout="@layout/app_bar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="routeNumber" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="routeName" />
 </LinearLayout>

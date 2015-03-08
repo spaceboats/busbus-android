@@ -21,14 +21,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
         Transition fade = new Fade();
         fade.excludeTarget(android.R.id.statusBarBackground, true);
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setExitTransition(fade);
         getWindow().setEnterTransition(fade);
-
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.view.Menu;
@@ -22,6 +23,9 @@ public class RouteActivity extends ActionBarActivity {
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
 
         Transition fade = new Fade();
         fade.excludeTarget(android.R.id.statusBarBackground, true);
