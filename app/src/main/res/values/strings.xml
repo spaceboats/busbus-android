@@ -10,5 +10,7 @@
     <string name="favorites">Favorites</string>
     <string name="title_activity_route">Route</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
