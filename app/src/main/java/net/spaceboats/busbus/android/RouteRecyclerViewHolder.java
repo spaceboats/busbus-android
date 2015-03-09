@@ -63,7 +63,8 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
     public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), RouteActivity.class);
 
-        View parentView = (View) view.getParent().getParent();
+        // TODO: Should have the activity launch a new fragment instead of this launching a new activity.
+        View parentView = view.getRootView();
 
         //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), mRouteNameTextView, "routeName");
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), Pair.create((View)mRouteNameTextView, "routeName"),
