@@ -63,7 +63,7 @@ public class RecyclerViewFragment extends Fragment {
                 Animator anim =
                         ViewAnimationUtils.createCircularReveal(v, cx, cy, 0, finalRadius);
 
-                anim.setDuration(1750);
+                anim.setDuration(1300);
 
 // make the view visible and start the animation
                 v.setVisibility(View.VISIBLE);
