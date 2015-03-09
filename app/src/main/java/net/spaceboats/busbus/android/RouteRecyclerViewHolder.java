@@ -5,11 +5,17 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.PorterDuff;
+import android.graphics.RadialGradient;
+import android.graphics.drawable.ShapeDrawable;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -19,13 +25,15 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
-    private CardView mCardView;
-    String color = "000000";
+    //private CardView mCardView;
+    private ImageView mColorImageView;
+    String color = "#000000";
 
     public RouteRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
-        mCardView = (CardView) itemView.findViewById(R.id.mbg);
+        //mCardView = (CardView) itemView.findViewById(R.id.mbg);
+        mColorImageView = (ImageView) itemView.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) itemView.findViewById(R.id.routeName);
 
         itemView.setOnClickListener(this);
@@ -44,7 +52,7 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
     }
 
     public void setBackgroundColor(String color){
-        this.mCardView.setCardBackgroundColor(Color.parseColor(color));
+        this.mColorImageView.getDrawable().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
         this.color = color;
     }
 
@@ -60,7 +68,7 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
         //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), mRouteNameTextView, "routeName");
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), Pair.create((View)mRouteNameTextView, "routeName"),
                                                                                      Pair.create((View)mRouteNumberTextView, "routeNumber"),
-                                                                                     Pair.create((View)mCardView, "mgb"),
+                                                                                     //Pair.create((View)mCardView, "mgb"),
                                                                                      Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
 
         intent.putExtra("ROUTENAME", mRouteNameTextView.getText());

@@ -4,13 +4,13 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeight"
-    android:layout_margin="5dp"
+    android:layout_margin="1dp"
     card_view:cardCornerRadius="5dp"
-    android:id="@+id/mbg"
     android:transitionName="mbg"
     card_view:cardElevation="5dp"
     android:clickable="true"
-    android:foreground="@drawable/ripple">
+    android:foreground="@drawable/ripple"
+    card_view:cardBackgroundColor="@color/background_material_dark">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -23,12 +23,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/mbg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/gradient" />
         <TextView
             android:id="@+id/routeNumber"
             android:transitionName="routeNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/abc_text_size_large_material"/>
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:layout_marginLeft="2dp" />
+            </LinearLayout>
 
         <TextView
             android:id="@+id/routeName"
