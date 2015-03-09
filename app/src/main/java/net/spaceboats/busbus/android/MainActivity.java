@@ -1,12 +1,15 @@
 package net.spaceboats.busbus.android;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.Transition;
+import android.view.Gravity;
 
 public class MainActivity extends ActionBarActivity {
 

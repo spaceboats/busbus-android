@@ -61,6 +61,20 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
     }
 
     public void onClick(View view) {
+
+/*
+        RecyclerView pView = (RecyclerView) view.getParent();
+        RouteRecyclerAdapter st = (RouteRecyclerAdapter) pView.getAdapter();
+        int pos = pView.getChildPosition(view);
+        while(pos != 0) {
+            st.removeRoute(0);
+            pos--;
+        }
+        while(st.getItemCount() != 1) {
+            st.removeRoute(1);
+        }
+        */
+
         Intent intent = new Intent(view.getContext(), RouteActivity.class);
 
         View parentView = (View) view.getParent().getParent();
@@ -70,6 +84,7 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
                                                                                      Pair.create((View)mRouteNumberTextView, "routeNumber"),
                                                                                      //Pair.create((View)mCardView, "mgb"),
                                                                                      Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
+                                                                                     //Pair.create((View)view.getParent(), "rcView"));
 
         intent.putExtra("ROUTENAME", mRouteNameTextView.getText());
         intent.putExtra("ROUTENUMBER", mRouteNumberTextView.getText());
