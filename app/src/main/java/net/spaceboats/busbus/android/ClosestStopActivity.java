@@ -16,7 +16,7 @@ public class ClosestStopActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
-    private final String LOG_TAG = ClosestStopActivity.this.getClass().getSimpleName();
+    private RecyclerViewFragment recyclerViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,6 @@ public class ClosestStopActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-        //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        String url = "http://ec2-52-11-35-37.us-west-2.compute.amazonaws.com/routes";
-        TransitDataIntentService.startActionGetRoutes(this, url);
-
-        dataBroadcastReceiver = new DataBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(dataBroadcastReceiver, intentFilter);
-
         Transition fade = new Fade();
         fade.excludeTarget(android.R.id.statusBarBackground, true);
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
@@ -44,12 +35,21 @@ public class ClosestStopActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            RecyclerViewFragment fragment =
+            recyclerViewFragment =
                     RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
                                                      getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
-            transaction.replace(R.id.fragment_placeholder, fragment);
+            transaction.replace(R.id.fragment_placeholder, recyclerViewFragment);
             transaction.commit();
         }
+
+        //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
+        String url = "http://ec2-52-11-35-37.us-west-2.compute.amazonaws.com/stops";
+        TransitDataIntentService.startActionGetRoutes(this, url);
+
+        dataBroadcastReceiver = new DataBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(dataBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -61,8 +61,11 @@ public class ClosestStopActivity extends ActionBarActivity {
     public class DataBroadcastReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
-            if(result != null)
+            if(result != null) {
+                RouteRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
+                GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
+            }
             else
                 Log.v("DataBroadcastReceiver", "Received null message");
         }
