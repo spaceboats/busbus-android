@@ -9,6 +9,8 @@ public class Route {
     private String name;
 
     public Route(String number, String name, String color){
+        if(color.charAt(0) != '#')
+            color = '#' + color;
         this.number = number;
         this.color = color;
         this.name = name;

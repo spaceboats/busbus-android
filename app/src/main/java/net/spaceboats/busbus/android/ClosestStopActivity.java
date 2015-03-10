@@ -28,7 +28,7 @@ public class ClosestStopActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        String url = "http://ec2-52-11-35-37.us-west-2.compute.amazonaws.com/stops";
+        String url = "http://ec2-52-11-35-37.us-west-2.compute.amazonaws.com/routes";
         TransitDataIntentService.startActionGetRoutes(this, url);
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
