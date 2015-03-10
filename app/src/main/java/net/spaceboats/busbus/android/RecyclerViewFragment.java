@@ -28,7 +28,7 @@ public class RecyclerViewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RecyclerViewFragment newinstance(int cx, int cy){
+    public static RecyclerViewFragment newinstance(int cx, int cy) {
         RecyclerViewFragment myFragment = new RecyclerViewFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_X_CLICKED_POSITION, cx);
@@ -59,7 +59,6 @@ public class RecyclerViewFragment extends Fragment {
         mRouteAdapter = new RouteRecyclerAdapter();
         mRecyclerView.setAdapter(mRouteAdapter);
 
-        GarbageRouteData.setDefaultRouteData(mRouteAdapter);
 
         rootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -70,9 +69,9 @@ public class RecyclerViewFragment extends Fragment {
 
                 Animator anim =
                         ViewAnimationUtils.createCircularReveal(v,
-                                                                getArguments().getInt(KEY_X_CLICKED_POSITION, 0),
-                                                                getArguments().getInt(KEY_Y_CLICKED_POSITION, 0),
-                                                                0, finalRadius);
+                                getArguments().getInt(KEY_X_CLICKED_POSITION, 0),
+                                getArguments().getInt(KEY_Y_CLICKED_POSITION, 0),
+                                0, finalRadius);
 
                 anim.setDuration(1300);
 
@@ -84,5 +83,7 @@ public class RecyclerViewFragment extends Fragment {
         return rootView;
     }
 
-
+    public RouteRecyclerAdapter getRouteAdapter() {
+        return mRouteAdapter;
+    }
 }
