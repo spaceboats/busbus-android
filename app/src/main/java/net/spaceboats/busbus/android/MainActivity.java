@@ -3,15 +3,19 @@ package net.spaceboats.busbus.android;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
+    private int clicked_x_coord = 0;
+    private int clicked_y_coord = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        final CardView cardView = (CardView) findViewById(R.id.closestStops);
+
+        cardView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    clicked_x_coord = (int) event.getX();
+                    clicked_y_coord = (int) event.getY();
+                }
+
+                // return false so click events are not blocked
+                return false;
+            }
+        });
     }
 
 
@@ -51,6 +70,9 @@ public class MainActivity extends ActionBarActivity {
 
     public void launchClosestStop(View view) {
         Intent intent = new Intent(this, ClosestStopActivity.class);
+
+        intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
+        intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
         startActivity(intent);
     }
 }

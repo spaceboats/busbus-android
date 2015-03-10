@@ -43,11 +43,12 @@ public class ClosestStopActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            RecyclerViewFragment fragment = new RecyclerViewFragment();
+            RecyclerViewFragment fragment =
+                    RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
+                                                     getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
             transaction.replace(R.id.fragment_placeholder, fragment);
             transaction.commit();
         }
-
     }
 
     @Override

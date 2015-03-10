@@ -10,7 +10,7 @@
     card_view:cardElevation="5dp"
     android:clickable="true"
     android:foreground="@drawable/ripple"
-    card_view:cardBackgroundColor="#424242">
+    card_view:cardBackgroundColor="#424242" >
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"

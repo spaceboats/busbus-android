@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 
 public class RecyclerViewFragment extends Fragment {
 
+    public final static String KEY_X_CLICKED_POSITION = "X_CLICKED_POSITION";
+    public final static String KEY_Y_CLICKED_POSITION = "Y_CLICKED_POSITION";
+
     private RecyclerView mRecyclerView;
     private RouteRecyclerAdapter mRouteAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -25,12 +28,22 @@ public class RecyclerViewFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static RecyclerViewFragment newinstance(int cx, int cy){
+        RecyclerViewFragment myFragment = new RecyclerViewFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_X_CLICKED_POSITION, cx);
+        bundle.putInt(KEY_Y_CLICKED_POSITION, cy);
+        myFragment.setArguments(bundle);
+
+        return myFragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
@@ -52,20 +65,17 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 v.removeOnLayoutChangeListener(this);
-                // get the center for the clipping circle
-                int cx = (v.getLeft() + v.getRight()) / 2;
-                int cy = (v.getTop() + v.getBottom()) / 2;
 
-// get the final radius for the clipping circle
                 int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
-// create the animator for this view (the start radius is zero)
                 Animator anim =
-                        ViewAnimationUtils.createCircularReveal(v, cx, cy, 0, finalRadius);
+                        ViewAnimationUtils.createCircularReveal(v,
+                                                                getArguments().getInt(KEY_X_CLICKED_POSITION, 0),
+                                                                getArguments().getInt(KEY_Y_CLICKED_POSITION, 0),
+                                                                0, finalRadius);
 
                 anim.setDuration(1300);
 
-// make the view visible and start the animation
                 v.setVisibility(View.VISIBLE);
                 anim.start();
             }
