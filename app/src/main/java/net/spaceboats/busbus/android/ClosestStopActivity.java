@@ -60,7 +60,10 @@ public class ClosestStopActivity extends ActionBarActivity {
     public class DataBroadcastReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
-            Log.v("DataBroadcastReceiver", result);
+            if(result != null)
+                Log.v("DataBroadcastReceiver", result);
+            else
+                Log.v("DataBroadcastReceiver", "Received null message");
         }
     }
 }
