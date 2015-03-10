@@ -1,10 +1,15 @@
 package net.spaceboats.busbus.android;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,8 +26,15 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        Transition fade = new Fade();
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setExitTransition(fade);
+        getWindow().setEnterTransition(fade);
 
         final CardView cardView = (CardView) findViewById(R.id.closestStops);
 
@@ -65,14 +77,24 @@ public class MainActivity extends ActionBarActivity {
 
     public void launchFavorites(View view) {
         Intent intent = new Intent(this, FavoritesActivity.class);
-        startActivity(intent);
+        View parentView = view.getRootView();
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
+
+        intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
+        intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
+        startActivity(intent, options.toBundle());
     }
 
     public void launchClosestStop(View view) {
         Intent intent = new Intent(this, ClosestStopActivity.class);
 
+        View parentView = view.getRootView();
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
+
         intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
         intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
-        startActivity(intent);
+        startActivity(intent, options.toBundle());
     }
 }
