@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONException;
 
 public class ClosestStopActivity extends ActionBarActivity {
 
@@ -43,7 +46,7 @@ public class ClosestStopActivity extends ActionBarActivity {
         }
 
         //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        String url = "http://ec2-52-11-35-37.us-west-2.compute.amazonaws.com/stops";
+        String url = "http://ec2-54-68-11-133.us-west-2.compute.amazonaws.com/routes";
         TransitDataIntentService.startActionGetRoutes(this, url);
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
@@ -63,8 +66,15 @@ public class ClosestStopActivity extends ActionBarActivity {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
             if(result != null) {
                 RouteRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
-                GarbageRouteData.setDefaultRouteData(mRouteAdapter);
+                //GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
+                try {
+                    TheJSONParser.addRoutes(mRouteAdapter, result);
+                } catch (JSONException je) {
+                    Log.v("JSON Error", "Could not parse JSON");
+                    Toast.makeText(getApplicationContext(), "Could not get route data",
+                            Toast.LENGTH_LONG).show();
+                }
             }
             else
                 Log.v("DataBroadcastReceiver", "Received null message");
