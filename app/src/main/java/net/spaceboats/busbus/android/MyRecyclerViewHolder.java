@@ -101,7 +101,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
         if(Route.class.isInstance(entity)) {
             Route route = (Route) entity;
 
-            setRouteNumber(route.getNumber());
+            setRouteNumber("Route " + route.getNumber());
             setBackgroundColor(route.getColor());
             setRouteName(route.getName());
 
@@ -135,9 +135,10 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     public void onClick(View view) {
         if(Route.class.isInstance(mEntity)) {
             URLBuilder urlBuilder = new URLBuilder(view.getContext(), URLBuilder.ARRIVALS);
-            urlBuilder.addQueryParam("start_time", "1426075200");
-            urlBuilder.addQueryParam("end_time", "1426075500");
-            urlBuilder.addQueryParam("route.short_name", ((Route) mEntity).getNumber());
+            //urlBuilder.addQueryParam("start_time", "1426075200");
+            //urlBuilder.addQueryParam("end_time", "1426075500");
+            Route route = (Route) mEntity;
+            urlBuilder.addQueryParam("route.id", "RT_" + ((Route) mEntity).getNumber());
             urlBuilder.addQueryParam("_expand", "routes,stops");
             ((ClosestStopActivity) view.getContext()).switchFragment(urlBuilder.getURL(), Arrival.class);
         }

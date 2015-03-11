@@ -45,7 +45,7 @@ public class TheJSONParser {
         if (routeObj.isNull(ROUTE_JSON_SHORT_NAME) || routeObj.isNull(ROUTE_JSON_NAME))
             return null;
         String routeName = routeObj.getString(ROUTE_JSON_NAME);
-        String routeNumber = "Route " + routeObj.getString(ROUTE_JSON_SHORT_NAME);
+        String routeNumber = routeObj.getString(ROUTE_JSON_SHORT_NAME);
         String routeColor = "#424242";
         if (!routeObj.isNull(ROUTE_JSON_COLOR))
             routeColor = "#" + routeObj.getString(ROUTE_JSON_COLOR);

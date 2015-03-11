@@ -63,6 +63,7 @@ public class ClosestStopActivity extends ActionBarActivity {
     }
 
     public void switchFragment(String url, Class myClass) {
+        Log.v("stuff", url);
         mMyClass = myClass;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         recyclerViewFragment =
