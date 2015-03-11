@@ -10,6 +10,7 @@ import org.json.JSONObject;
 public class TheJSONParser {
 
     public static final String ROUTES_JSON_ID = "routes";
+    public static final String ROUTE_JSON_ID = "route";
     public static final String ROUTE_DESCRIPTION_JSON_ID = "description";
     public static final String ROUTE_JSON_SHORT_NAME = "short_name";
     public static final String ROUTE_JSON_NAME = "name";
@@ -90,7 +91,7 @@ public class TheJSONParser {
         throws JSONException {
 
         JSONObject stopObj = arrivalObj.getJSONObject(STOP_JSON_ID);
-        JSONObject routeObj = arrivalObj.getJSONObject(ROUTES_JSON_ID);
+        JSONObject routeObj = arrivalObj.getJSONObject(ROUTE_JSON_ID);
         Route route = getRoute(routeObj);
         if(route == null)
             return null;

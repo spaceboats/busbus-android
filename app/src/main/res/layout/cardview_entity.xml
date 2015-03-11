@@ -19,6 +19,7 @@
         android:padding="8dp">
 
         <LinearLayout
+            android:id="@+id/cardviewLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -29,7 +30,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:textSize="@dimen/abc_text_size_large_material"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/nextArrivalTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:visibility="gone" />
 
             <LinearLayout

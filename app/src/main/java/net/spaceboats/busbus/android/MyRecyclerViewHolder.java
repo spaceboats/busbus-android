@@ -9,9 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.Date;
 
 /**
  * Created by zralston on 2/18/15.
@@ -21,17 +22,19 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
     private TextView mStopNameTextView;
-    //private CardView mCardView;
+    private TextView mNextArrivalTime;
     private ImageView mRouteColorImageView;
+    private LinearLayout mCardviewLinearLayout;
     String routeColor = "#000000";
 
     public MyRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
-        //mCardView = (CardView) itemView.findViewById(R.id.mbg);
         mRouteColorImageView = (ImageView) itemView.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) itemView.findViewById(R.id.routeName);
         mStopNameTextView = (TextView) itemView.findViewById(R.id.stopName);
+        mNextArrivalTime = (TextView) itemView.findViewById(R.id.nextArrivalTime);
+        mCardviewLinearLayout = (LinearLayout) itemView.findViewById(R.id.cardviewLinearLayout);
 
         itemView.setOnClickListener(this);
     }
@@ -57,16 +60,38 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
         this.mRouteNameTextView.setText(name);
     }
 
-    public void setStopName(String name) { this.mStopNameTextView.setText(name); }
+    public void setStopName(String name) {
+        this.mStopNameTextView.setText(name);
+    }
+
+    public void setNextArrivalTime(String time) {
+        this.mNextArrivalTime.setText(time);
+    }
+
 
     private void toggleStopItems(int visibility) {
+        //setOrientation(LinearLayout.HORIZONTAL);
+
         mStopNameTextView.setVisibility(visibility);
     }
 
     private void toggleRouteItems(int visibility) {
+        //setOrientation(LinearLayout.VERTICAL);
+
         mRouteColorImageView.setVisibility(visibility);
         mRouteNameTextView.setVisibility(visibility);
         mRouteNumberTextView.setVisibility(visibility);
+    }
+
+    private void toggleArrival(int visibility) {
+        //setOrientation(LinearLayout.HORIZONTAL);
+
+        mNextArrivalTime.setVisibility(visibility);
+        mStopNameTextView.setVisibility(visibility);
+    }
+
+    private void setOrientation(int orientation) {
+        mCardviewLinearLayout.setOrientation(orientation);
     }
 
     public void setData(Entity entity) {
@@ -77,6 +102,8 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
             setBackgroundColor(route.getColor());
             setRouteName(route.getName());
 
+            // Always call the ones with View.Gone first
+            toggleArrival(View.GONE);
             toggleStopItems(View.GONE);
             toggleRouteItems(View.VISIBLE);
         }
@@ -84,8 +111,21 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
             Stop stop = (Stop) entity;
             setStopName(stop.getStopName());
 
+            // Always call the ones with View.Gone first
             toggleRouteItems(View.GONE);
+            toggleArrival(View.GONE);
             toggleStopItems(View.VISIBLE);
+        }
+        else if(Arrival.class.isInstance(entity)) {
+            Arrival arrival = (Arrival) entity;
+            setStopName(arrival.getStop().getStopName());
+            Date date = new Date();
+            setNextArrivalTime(arrival.getStringOfTimeDifferenceInMinutes(date.getTime()/1000) + " mins");
+
+            // Always call the ones with View.Gone first
+            toggleRouteItems(View.GONE);
+            toggleStopItems(View.GONE);
+            toggleArrival(View.VISIBLE);
         }
     }
 
