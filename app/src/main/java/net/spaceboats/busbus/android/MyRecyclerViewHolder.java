@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     private TextView mNextArrivalTime;
     private ImageView mRouteColorImageView;
     private LinearLayout mCardviewLinearLayout;
+    Entity mEntity;
     String routeColor = "#000000";
 
     public MyRecyclerViewHolder(View itemView) {
@@ -95,6 +97,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     public void setData(Entity entity) {
+        mEntity = entity;
         if(Route.class.isInstance(entity)) {
             Route route = (Route) entity;
 
@@ -130,21 +133,41 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), RouteActivity.class);
+        if(Route.class.isInstance(mEntity)) {
+            URLBuilder urlBuilder = new URLBuilder(view.getContext(), URLBuilder.ARRIVALS);
+            urlBuilder.addQueryParam("start_time", "1426075200");
+            urlBuilder.addQueryParam("end_time", "1426075500");
+            urlBuilder.addQueryParam("route.short_name", ((Route) mEntity).getNumber());
+            urlBuilder.addQueryParam("_expand", "routes,stops");
+            ((ClosestStopActivity) view.getContext()).switchFragment(urlBuilder.getURL(), Arrival.class);
+        }
+        else if(Arrival.class.isInstance(mEntity)) {
+            /*
+            URLBuilder urlBuilder = new URLBuilder(view.getContext(), URLBuilder.ARRIVALS);
+            urlBuilder.addQueryParam("start_time", "1426075200");
+            urlBuilder.addQueryParam("route.short_name", ((Arrival) mEntity).getRoute().getNumber());
+            urlBuilder.addQueryParam("_expand", "routes,stops");
+            ((ClosestStopActivity) view.getContext()).switchFragment(urlBuilder.getURL(), Arrival.class);
+            */
+        }
+
+        /*
+        Intent intent = new Intent(view.getContext(), ClosestStopActivity.class);
 
         // TODO: Should have the activity launch a new fragment instead of this launching a new activity.
         View parentView = view.getRootView();
 
         //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), mRouteNameTextView, "routeName");
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(), Pair.create((View)mRouteNameTextView, "routeName"),
-                                                                                     Pair.create((View)mRouteNumberTextView, "routeNumber"),
-                                                                                     //Pair.create((View)mCardView, "mgb"),
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)view.getContext(),
                                                                                      Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
 
+        /*
         intent.putExtra("ROUTENAME", mRouteNameTextView.getText());
         intent.putExtra("ROUTENUMBER", mRouteNumberTextView.getText());
         intent.putExtra("ROUTECOLOR", routeColor);
 
+
         view.getContext().startActivity(intent, options.toBundle());
+        */
     }
 }

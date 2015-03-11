@@ -17,7 +17,9 @@ import java.net.URL;
  */
 public class TransitDataIntentService extends IntentService {
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    private static final String ACTION_GET_ROUTES = "net.spaceboats.busbus.android.action.GET_STOPS";
+    public static final String ACTION_GET_ROUTES = "net.spaceboats.busbus.android.action.GET_ROUTES";
+    public static final String ACTION_GET_ARRIVALS = "net.spaceboats.busbus.android.action.GET_ARRIVALS";
+    public static final String ACTION_GET_STOPS = "net.spaceboats.busbus.android.action.GET_STOPS";
     public static final String ACTION_TransitDataIntentService = "net.spaceboats.busbus.androidintentservice.RESPONSE";
     private static final String EXTRA_URL = "net.spaceboats.busbus.android.extra.URL";
     public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
@@ -25,9 +27,9 @@ public class TransitDataIntentService extends IntentService {
     /**
      * Creates a Service to send Http request and broadcast response
      */
-    public static void startActionGetRoutes(Context context, String param1) {
+    public static void startActionGetRoutes(Context context, String param1, String action) {
         Intent intent = new Intent(context, TransitDataIntentService.class);
-        intent.setAction(ACTION_GET_ROUTES);
+        intent.setAction(action);
         intent.putExtra(EXTRA_URL, param1);
         context.startService(intent);
     }
@@ -44,6 +46,10 @@ public class TransitDataIntentService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_ROUTES.equals(action)) {
+                final String param1 = intent.getStringExtra(EXTRA_URL);
+                handleActionGetRoutes(param1);
+            }
+            else if (ACTION_GET_ARRIVALS.equals(action)) {
                 final String param1 = intent.getStringExtra(EXTRA_URL);
                 handleActionGetRoutes(param1);
             }

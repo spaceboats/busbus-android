@@ -25,6 +25,7 @@ public class ClosestStopActivity extends ActionBarActivity {
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
     private RecyclerViewFragment recyclerViewFragment;
+    private Class mMyClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +51,32 @@ public class ClosestStopActivity extends ActionBarActivity {
             transaction.commit();
         }
 
-        URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.STOPS);
-        TransitDataIntentService.startActionGetRoutes(this, urlBuilder.getURL());
+        mMyClass = Route.class;
+        URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ROUTES);
+        Log.v("TestURL", urlBuilder.getURL());
+        TransitDataIntentService.startActionGetRoutes(this, urlBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
+    }
+
+    public void switchFragment(String url, Class myClass) {
+        mMyClass = myClass;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        recyclerViewFragment =
+                RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
+                        getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
+        transaction.replace(R.id.fragment_placeholder, recyclerViewFragment);
+        transaction.commit();
+
+        if(myClass == Arrival.class)
+            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
+        else if(myClass == Stop.class)
+            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_STOPS);
+        else if(myClass == Route.class)
+            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
     }
 
     @Override
@@ -68,12 +88,17 @@ public class ClosestStopActivity extends ActionBarActivity {
     public class DataBroadcastReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
-            if(result != null) {
+            if(result != null && recyclerViewFragment != null) {
                 MyRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
                 //GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
                 try {
-                    TheJSONParser.addStops(mRouteAdapter, result);
+                    if(mMyClass == Arrival.class)
+                        TheJSONParser.addArrivals(mRouteAdapter, result);
+                    else if(mMyClass == Stop.class)
+                        TheJSONParser.addStops(mRouteAdapter, result);
+                    else if(mMyClass == Route.class)
+                        TheJSONParser.addRoutes(mRouteAdapter, result);
                 } catch (JSONException je) {
                     Log.v("JSON Error", "Could not parse JSON");
                     Toast.makeText(getApplicationContext(), "Could not get route data",
