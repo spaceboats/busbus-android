@@ -50,29 +50,8 @@ public class ClosestStopActivity extends ActionBarActivity {
             transaction.commit();
         }
 
-        //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        final String SCHEME = "http";
-        final String AUTHORITY = "ec2-54-68-11-133.us-west-2.compute.amazonaws.com";
-        final String ROUTES = "routes";
-        final String STOPS = "stops";
-        final String ARRIVALS = "arrivals";
-
-        try {
-            Uri.Builder builder = new Uri.Builder();
-            Uri builtUri = builder.scheme(SCHEME)
-                    .authority(AUTHORITY)
-                    .appendPath(STOPS).build();
-
-            Log.v("URL", builtUri.toString());
-
-            URL url = new URL(builtUri.toString());
-
-            TransitDataIntentService.startActionGetRoutes(this, url.toString());
-        } catch (MalformedURLException ue) {
-            Log.v("URL Error", "Could not generate URL");
-            Toast.makeText(getApplicationContext(), "Couldn't retrieve data",
-                    Toast.LENGTH_LONG).show();
-        }
+        URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.STOPS);
+        TransitDataIntentService.startActionGetRoutes(this, urlBuilder.getURL());
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
