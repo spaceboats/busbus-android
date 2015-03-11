@@ -3,7 +3,7 @@ package net.spaceboats.busbus.android;
 /**
  * Created by zralston on 2/18/15.
  */
-public class Route {
+public class Route extends Entity {
     private String number;
     private String color;
     private String name;

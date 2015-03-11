@@ -65,7 +65,7 @@ public class ClosestStopActivity extends ActionBarActivity {
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
             if(result != null) {
-                RouteRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
+                MyRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
                 //GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
                 try {

@@ -18,7 +18,7 @@ public class RecyclerViewFragment extends Fragment {
     public final static String KEY_Y_CLICKED_POSITION = "Y_CLICKED_POSITION";
 
     private RecyclerView mRecyclerView;
-    private RouteRecyclerAdapter mRouteAdapter;
+    private MyRecyclerAdapter mRouteAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private View rootView;
@@ -56,7 +56,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // Route adapter that will handle adding and removing items.
-        mRouteAdapter = new RouteRecyclerAdapter();
+        mRouteAdapter = new MyRecyclerAdapter();
         mRecyclerView.setAdapter(mRouteAdapter);
 
 
@@ -83,7 +83,7 @@ public class RecyclerViewFragment extends Fragment {
         return rootView;
     }
 
-    public RouteRecyclerAdapter getRouteAdapter() {
+    public MyRecyclerAdapter getRouteAdapter() {
         return mRouteAdapter;
     }
 }

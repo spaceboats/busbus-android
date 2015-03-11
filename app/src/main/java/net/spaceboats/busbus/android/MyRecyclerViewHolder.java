@@ -21,7 +21,7 @@ import android.widget.TextView;
 /**
  * Created by zralston on 2/18/15.
  */
-public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
@@ -29,7 +29,7 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
     private ImageView mColorImageView;
     String color = "#000000";
 
-    public RouteRecyclerViewHolder(View itemView) {
+    public MyRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
         //mCardView = (CardView) itemView.findViewById(R.id.mbg);
@@ -58,6 +58,19 @@ public class RouteRecyclerViewHolder extends RecyclerView.ViewHolder implements 
 
     public void setRouteName(String name){
         this.mRouteNameTextView.setText(name);
+    }
+
+    public void setData(Entity entity) {
+        if(Route.class.isInstance(entity)) {
+            Route route = (Route) entity;
+
+            setRouteNumber(route.getNumber());
+            setBackgroundColor(route.getColor());
+            setRouteName(route.getName());
+        }
+        else if(Stop.class.isInstance(entity)) {
+            //TODO: FIX THIS
+        }
     }
 
     public void onClick(View view) {

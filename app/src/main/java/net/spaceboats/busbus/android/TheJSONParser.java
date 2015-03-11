@@ -17,7 +17,7 @@ public class TheJSONParser {
     public static final String ROUTE_JSON_NUMBER = "id";
     public static final String ROUTE_JSON_COLOR = "color";
 
-    public static void addRoutes(RouteRecyclerAdapter adapter, String data)
+    public static void addRoutes(MyRecyclerAdapter adapter, String data)
         throws JSONException {
 
         JSONObject dataObj = new JSONObject(data);
@@ -32,11 +32,11 @@ public class TheJSONParser {
             String routeColor = "#424242";
             if(!route.isNull(ROUTE_JSON_COLOR))
                 routeColor = "#" + route.getString(ROUTE_JSON_COLOR);
-            adapter.addRoute(i, new Route(routeNumber, routeName, routeColor));
+            adapter.addItem(i, new Route(routeNumber, routeName, routeColor));
         }
     }
 
-    public void addStops(RouteRecyclerAdapter adapter, String data)
+    public void addStops(MyRecyclerAdapter adapter, String data)
         throws JSONException {
 
         JSONObject dataObj = new JSONObject(data);
