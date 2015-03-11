@@ -46,7 +46,7 @@ public class ClosestStopActivity extends ActionBarActivity {
         }
 
         //String url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        String url = "http://ec2-54-68-11-133.us-west-2.compute.amazonaws.com/routes";
+        String url = "http://ec2-54-68-11-133.us-west-2.compute.amazonaws.com/stops";
         TransitDataIntentService.startActionGetRoutes(this, url);
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
@@ -69,7 +69,7 @@ public class ClosestStopActivity extends ActionBarActivity {
                 //GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
                 try {
-                    TheJSONParser.addRoutes(mRouteAdapter, result);
+                    TheJSONParser.addStops(mRouteAdapter, result);
                 } catch (JSONException je) {
                     Log.v("JSON Error", "Could not parse JSON");
                     Toast.makeText(getApplicationContext(), "Could not get route data",
