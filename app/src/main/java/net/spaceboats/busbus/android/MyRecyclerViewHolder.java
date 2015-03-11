@@ -2,19 +2,12 @@ package net.spaceboats.busbus.android;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.PorterDuff;
-import android.graphics.RadialGradient;
-import android.graphics.drawable.ShapeDrawable;
-import android.media.Image;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,14 +19,14 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
     //private CardView mCardView;
-    private ImageView mColorImageView;
-    String color = "#000000";
+    private ImageView mRouteColorImageView;
+    String routeColor = "#000000";
 
     public MyRecyclerViewHolder(View itemView) {
         super(itemView);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
         //mCardView = (CardView) itemView.findViewById(R.id.mbg);
-        mColorImageView = (ImageView) itemView.findViewById(R.id.mbg);
+        mRouteColorImageView = (ImageView) itemView.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) itemView.findViewById(R.id.routeName);
 
         itemView.setOnClickListener(this);
@@ -52,8 +45,8 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     public void setBackgroundColor(String color){
-        this.mColorImageView.getDrawable().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
-        this.color = color;
+        this.mRouteColorImageView.getDrawable().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
+        this.routeColor = color;
     }
 
     public void setRouteName(String name){
@@ -87,7 +80,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
 
         intent.putExtra("ROUTENAME", mRouteNameTextView.getText());
         intent.putExtra("ROUTENUMBER", mRouteNumberTextView.getText());
-        intent.putExtra("ROUTECOLOR", color);
+        intent.putExtra("ROUTECOLOR", routeColor);
 
         view.getContext().startActivity(intent, options.toBundle());
     }
