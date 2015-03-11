@@ -25,8 +25,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerViewHolder
     }
 
     public void addItem(int position, Entity entity){
-        entities.add(position, entity);
-        notifyItemInserted(position);
+        if(entity != null) {
+            entities.add(position, entity);
+            notifyItemInserted(position);
+        }
     }
 
     public void removeItem(int position){
