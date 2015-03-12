@@ -11,7 +11,6 @@ import android.widget.TextView;
  */
 public class RouteViewHolder extends BaseViewHolder {
 
-    private View rootView;
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
     private ImageView mRouteColorImageView;
@@ -23,7 +22,6 @@ public class RouteViewHolder extends BaseViewHolder {
         mRouteNumberTextView = (TextView) view.findViewById(R.id.routeNumber);
         mRouteColorImageView = (ImageView) view.findViewById(R.id.mbg);
         mRouteNameTextView = (TextView) view.findViewById(R.id.routeName);
-        rootView = view;
     }
 
     public void setData(Entity entity) {
@@ -36,10 +34,6 @@ public class RouteViewHolder extends BaseViewHolder {
 
     public Route getRoute() {
         return mRoute;
-    }
-
-    public View getRootView() {
-        return rootView;
     }
 
     private void setRouteNumber(String number) {
