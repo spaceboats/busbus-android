@@ -7,6 +7,7 @@
     <string name="button_send">Send</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="closest_stop">Closest Stop</string>
+    <string name="all_routes">Routes</string>
     <string name="favorites">Favorites</string>
     <string name="title_activity_route">Route</string>
     <string name="title_activity_main">MainActivity</string>
