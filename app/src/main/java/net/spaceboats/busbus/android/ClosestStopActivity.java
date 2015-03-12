@@ -19,8 +19,9 @@ import org.json.JSONException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.Date;
 
-public class ClosestStopActivity extends ActionBarActivity {
+public class ClosestStopActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
 
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
@@ -108,6 +109,19 @@ public class ClosestStopActivity extends ActionBarActivity {
             }
             else
                 Log.v("DataBroadcastReceiver", "Received null message");
+        }
+    }
+
+    @Override
+    public void itemClicked(Entity entity) {
+        if(Route.class.isInstance(entity)) {
+            URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ARRIVALS);
+            //urlBuilder.addQueryParam("start_time", "1426075200");
+            Date date = new Date();
+            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 1800));
+            urlBuilder.addQueryParam("route.id", "RT_" + ((Route) entity).getNumber());
+            urlBuilder.addQueryParam("_expand", "routes,stops");
+            switchFragment(urlBuilder.getURL(), Arrival.class);
         }
     }
 }

@@ -2,6 +2,7 @@ package net.spaceboats.busbus.android;
 
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+
+import java.util.Date;
 
 
 public class RecyclerViewFragment extends Fragment {
@@ -20,8 +23,13 @@ public class RecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private PassBackData mPassBackData;
 
     private View rootView;
+
+    public interface PassBackData {
+        public void itemClicked(Entity entity);
+    }
 
 
     public RecyclerViewFragment() {
@@ -36,6 +44,14 @@ public class RecyclerViewFragment extends Fragment {
         myFragment.setArguments(bundle);
 
         return myFragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // makes sure that the activity implements this interface
+        mPassBackData = (PassBackData) activity;
     }
 
 
@@ -56,7 +72,11 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // Route adapter that will handle adding and removing items.
-        mAdapter = new MyRecyclerAdapter();
+        mAdapter = new MyRecyclerAdapter(new MyRecyclerAdapter.MyClickListener() {
+            public void entityClicked(Entity entity) {
+                mPassBackData.itemClicked(entity);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
 
 
