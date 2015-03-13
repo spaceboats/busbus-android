@@ -4,6 +4,8 @@ package net.spaceboats.busbus.android;
  * Created by zralston on 3/10/15.
  */
 public class Arrival extends Entity {
+    private static final int HOUR_IN_SECONDS = 3600;
+    private static final int MINUTE_IN_SECONDS = 60;
     private Stop mStop;
     private Route mRoute;
     private String mHeadsign;
@@ -32,15 +34,27 @@ public class Arrival extends Entity {
         return mTimeSeconds;
     }
 
-    public String getStringOfTimeDifferenceInMinutes (long beforeTimeInSeconds) {
-        long difference = mTimeSeconds - beforeTimeInSeconds;
-        return Long.toString(difference/60);
+    public String getStringOfTimeDiff(long beforeTimeInSeconds) {
+        long difference = (mTimeSeconds - beforeTimeInSeconds);
+        String units = "";
+        if(difference/HOUR_IN_SECONDS >= 1) {
+            difference = difference/HOUR_IN_SECONDS;
+            units = " hour";
+        }
+        else if(difference/MINUTE_IN_SECONDS >= 1) {
+            difference = difference/MINUTE_IN_SECONDS;
+            units = " mins";
+        }
+        else
+            units = " secs";
+
+        return Long.toString(difference) + units;
     }
 
     @Override
     public int compareTo(Entity entity) {
         if(!Arrival.class.isInstance(entity))
             return super.compareTo(entity);
-        return (int) this.getTimeInSeconds() -  (int) ((Arrival) (entity)).getTimeInSeconds();
+        return (int) (this.getTimeInSeconds() -  ((Arrival) (entity)).getTimeInSeconds());
     }
 }

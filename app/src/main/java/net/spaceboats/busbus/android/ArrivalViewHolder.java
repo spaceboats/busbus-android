@@ -24,7 +24,8 @@ public class ArrivalViewHolder extends BaseViewHolder {
         mArrival = (Arrival) entity;
         setStopName(mArrival.getStop().getStopName());
         Date date = new Date();
-        setNextArrivalTime(mArrival.getStringOfTimeDifferenceInMinutes(date.getTime()/1000) + " mins");
+        //setNextArrivalTime(mArrival.getStringOfTimeDifferenceInMinutes(date.getTime()/1000) + " mins");
+        setNextArrivalTime(mArrival.getStringOfTimeDiff(date.getTime()/1000));
     }
 
     public void setStopName(String name) {
