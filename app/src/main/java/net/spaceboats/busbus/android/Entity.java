@@ -6,6 +6,6 @@ package net.spaceboats.busbus.android;
 public abstract class Entity implements Comparable<Entity>{
 
     public int compareTo(Entity entity) {
-        return -1;
+        return 0;
     }
 }

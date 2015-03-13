@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -105,6 +105,11 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     public void updateData(List<Entity> entities) {
+        sortEntities(entities);
         mAdapter.updateItems(entities);
+    }
+
+    public void sortEntities(List<Entity> entities) {
+        Collections.sort(entities);
     }
 }
