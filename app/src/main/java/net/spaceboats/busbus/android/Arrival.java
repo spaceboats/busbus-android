@@ -36,4 +36,11 @@ public class Arrival extends Entity {
         long difference = mTimeSeconds - beforeTimeInSeconds;
         return Long.toString(difference/60);
     }
+
+    @Override
+    public int compareTo(Entity entity) {
+        if(!Arrival.class.isInstance(entity))
+            return super.compareTo(entity);
+        return (int) this.getTimeInSeconds() -  (int) ((Arrival) (entity)).getTimeInSeconds();
+    }
 }

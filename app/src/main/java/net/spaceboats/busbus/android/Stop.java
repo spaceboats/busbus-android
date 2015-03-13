@@ -32,5 +32,4 @@ public class Stop extends Entity {
     public String getDescription() {
         return mDescription;
     }
-
 }

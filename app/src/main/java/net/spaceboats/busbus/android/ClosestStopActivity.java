@@ -19,7 +19,11 @@ import org.json.JSONException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class ClosestStopActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
 
@@ -91,16 +95,14 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
             if(result != null && recyclerViewFragment != null) {
-                MyRecyclerAdapter mRouteAdapter = recyclerViewFragment.getRouteAdapter();
-                //GarbageRouteData.setDefaultRouteData(mRouteAdapter);
                 Log.v("DataBroadcastReceiver", result);
                 try {
                     if(mMyClass == Arrival.class)
-                        TheJSONParser.addArrivals(mRouteAdapter, result);
+                        recyclerViewFragment.updateData(TheJSONParser.getArrivalList(result));
                     else if(mMyClass == Stop.class)
-                        TheJSONParser.addStops(mRouteAdapter, result);
+                        recyclerViewFragment.updateData(TheJSONParser.getStopList(result));
                     else if(mMyClass == Route.class)
-                        TheJSONParser.addRoutes(mRouteAdapter, result);
+                        recyclerViewFragment.updateData(TheJSONParser.getRouteList(result));
                 } catch (JSONException je) {
                     Log.v("JSON Error", "Could not parse JSON");
                     Toast.makeText(getApplicationContext(), "Could not get route data",
