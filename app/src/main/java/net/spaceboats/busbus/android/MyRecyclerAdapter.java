@@ -94,7 +94,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         final View routeView = inflater.inflate(R.layout.route, viewGroup, false);
         final RouteViewHolder viewHolder = new RouteViewHolder(routeView);
-        viewHolder.getRootView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickListener.entityClicked(viewHolder.getRoute());
@@ -107,7 +107,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         final View routeView = inflater.inflate(R.layout.stop, viewGroup, false);
         final StopViewHolder viewHolder = new StopViewHolder(routeView);
-        viewHolder.getRootView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickListener.entityClicked(viewHolder.getStop());
@@ -120,7 +120,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         final View routeView = inflater.inflate(R.layout.arrival, viewGroup, false);
         final ArrivalViewHolder viewHolder = new ArrivalViewHolder(routeView);
-        viewHolder.getRootView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickListener.entityClicked(viewHolder.getArrival());
