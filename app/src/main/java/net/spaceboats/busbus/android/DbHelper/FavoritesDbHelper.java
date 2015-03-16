@@ -1,10 +1,8 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.DbHelper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by zralston on 3/15/15.
@@ -65,8 +63,6 @@ public class FavoritesDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ARRIVAL);
         db.execSQL(SQL_DELETE_STOP);
         db.execSQL(SQL_DELETE_ROUTE);

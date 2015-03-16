@@ -1,4 +1,4 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.DbHelper;
 
 import android.provider.BaseColumns;
 

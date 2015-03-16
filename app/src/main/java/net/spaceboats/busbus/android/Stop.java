@@ -9,8 +9,10 @@ public class Stop extends Entity {
     private double mLongitude;
     private String mName;
     private String mDescription;
+    private String mId;
 
     public Stop(String name, double latitude, double longitude, String description) {
+        this.mId = "1";
         this.mName = name;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
@@ -31,5 +33,9 @@ public class Stop extends Entity {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public String getId() {
+        return mId;
     }
 }
