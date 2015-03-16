@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.spaceboats.busbus.android.Stop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,12 @@ public class StopDbOperator {
 
     public StopDbOperator(Context context) {
         mContext = context;
+    }
+
+    public void insert(Stop stop) {
+        List<Stop> stops = new ArrayList<>();
+        stops.add(stop);
+        insert(stop);
     }
 
     public void insert(List<Stop> stops) {

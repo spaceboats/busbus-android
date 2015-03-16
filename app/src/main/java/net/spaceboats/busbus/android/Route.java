@@ -7,6 +7,7 @@ public class Route extends Entity {
     private String number;
     private String color;
     private String name;
+    private String mId;
 
     public Route(String number, String name, String color){
         if(color.charAt(0) != '#')
@@ -14,6 +15,7 @@ public class Route extends Entity {
         this.number = number;
         this.color = color;
         this.name = name;
+        this.mId = "1";
     }
 
     public String getNumber(){
@@ -38,5 +40,9 @@ public class Route extends Entity {
 
     public void setColor(String color){
         this.color = color;
+    }
+
+    public String getId() {
+        return mId;
     }
 }
