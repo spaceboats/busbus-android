@@ -108,9 +108,11 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
     @Override
     public void itemClicked(Entity entity) {
         if(Route.class.isInstance(entity)) {
+            setTitle("Route " + ((Route)entity).getNumber());
             URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ARRIVALS);
             //urlBuilder.addQueryParam("start_time", "1426075200");
             Date date = new Date();
+            urlBuilder.addQueryParam("start_time", Long.toString(date.getTime()/1000));
             urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 1800));
             urlBuilder.addQueryParam("route.id", "RT_" + ((Route) entity).getNumber());
             urlBuilder.addQueryParam("_expand", "routes,stops");
