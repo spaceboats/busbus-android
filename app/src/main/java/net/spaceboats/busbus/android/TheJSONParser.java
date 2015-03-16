@@ -20,6 +20,7 @@ public class TheJSONParser {
     public static final String ROUTE_JSON_NUMBER = "id";
     public static final String ROUTE_JSON_COLOR = "color";
 
+    public static final String STOP_JSON_MYID = "id";
     public static final String STOPS_JSON_ID = "stops";
     public static final String STOP_JSON_ID = "stop";
     public static final String STOP_JSON_NAME = "name";
@@ -54,7 +55,8 @@ public class TheJSONParser {
         String routeColor = "#424242";
         if (!routeObj.isNull(ROUTE_JSON_COLOR))
             routeColor = "#" + routeObj.getString(ROUTE_JSON_COLOR);
-        return new Route(routeNumber, routeName, routeColor);
+        String routeId = routeObj.getString(ROUTE_JSON_NUMBER);
+        return new Route(routeNumber, routeName, routeColor, routeId);
     }
 
     public static List<Entity> getStopList(String data)
@@ -81,7 +83,8 @@ public class TheJSONParser {
             stopDescription = stopObj.getString(STOP_JSON_DESCRIPTION);
         double latitude = stopObj.getDouble(STOP_JSON_LATITUDE);
         double longitude = stopObj.getDouble(STOP_JSON_LONGITUDE);
-        return new Stop(stopName, latitude, longitude, stopDescription);
+        String stopId = stopObj.getString(STOP_JSON_MYID);
+        return new Stop(stopName, latitude, longitude, stopDescription, stopId);
     }
 
     public static List<Entity> getArrivalList(String data)

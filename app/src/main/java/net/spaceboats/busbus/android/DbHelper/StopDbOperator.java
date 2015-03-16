@@ -31,24 +31,34 @@ public class StopDbOperator {
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
         db.beginTransaction();
         try {
-            for (int i = 0; i < stops.size(); i++) {
-                Stop stop = stops.get(i);
-
-                ContentValues values = new ContentValues();
-                values.put(FavoritesContract.Stop.COLUMN_ID, stop.getId());
-                values.put(FavoritesContract.Stop.COLUMN_NAME, stop.getStopName());
-                values.put(FavoritesContract.Stop.COLUMN_LATITUDE, stop.getLatitude());
-                values.put(FavoritesContract.Stop.COLUMN_LONGITUDE, stop.getLongitude());
-                values.put(FavoritesContract.Stop.COLUMN_DESCRIPTION, stop.getDescription());
-
-                db.insert(FavoritesContract.Stop.TABLE_NAME, null, values);
-            }
+            insert(stops, db);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         finally {
             db.endTransaction();
+        }
+    }
+
+    public void insert(Stop stop, SQLiteDatabase db) {
+        List<Stop> stops = new ArrayList<>();
+        stops.add(stop);
+        insert(stops, db);
+    }
+
+    public void insert(List<Stop> stops, SQLiteDatabase db) {
+        for (int i = 0; i < stops.size(); i++) {
+            Stop stop = stops.get(i);
+
+            ContentValues values = new ContentValues();
+            values.put(FavoritesContract.Stop.COLUMN_ID, stop.getId());
+            values.put(FavoritesContract.Stop.COLUMN_NAME, stop.getStopName());
+            values.put(FavoritesContract.Stop.COLUMN_LATITUDE, stop.getLatitude());
+            values.put(FavoritesContract.Stop.COLUMN_LONGITUDE, stop.getLongitude());
+            values.put(FavoritesContract.Stop.COLUMN_DESCRIPTION, stop.getDescription());
+
+            db.insert(FavoritesContract.Stop.TABLE_NAME, null, values);
         }
     }
 }

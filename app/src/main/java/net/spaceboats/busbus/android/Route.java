@@ -9,13 +9,13 @@ public class Route extends Entity {
     private String name;
     private String mId;
 
-    public Route(String number, String name, String color){
+    public Route(String number, String name, String color, String routeId){
         if(color.charAt(0) != '#')
             color = '#' + color;
         this.number = number;
         this.color = color;
         this.name = name;
-        this.mId = "1";
+        this.mId = routeId;
     }
 
     public String getNumber(){

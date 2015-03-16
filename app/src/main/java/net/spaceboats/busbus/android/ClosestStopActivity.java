@@ -13,8 +13,12 @@ import android.transition.Transition;
 import android.util.Log;
 import android.widget.Toast;
 
+import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
+import net.spaceboats.busbus.android.DbHelper.RouteDbOperator;
+
 import org.json.JSONException;
 import java.util.Date;
+import java.util.List;
 
 public class ClosestStopActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
 
@@ -88,8 +92,12 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
             if(result != null && recyclerViewFragment != null) {
                 Log.v("DataBroadcastReceiver", result);
                 try {
-                    if(mMyClass == Arrival.class)
-                        recyclerViewFragment.updateData(TheJSONParser.getArrivalList(result));
+                    if(mMyClass == Arrival.class) {
+                        List<Entity> arrivalList = TheJSONParser.getArrivalList(result);
+                        ArrivalDbOperator arrivalDbOperator = new ArrivalDbOperator(getApplicationContext());
+                        arrivalDbOperator.insert(arrivalList);
+                        recyclerViewFragment.updateData(arrivalList);
+                    }
                     else if(mMyClass == Stop.class)
                         recyclerViewFragment.updateData(TheJSONParser.getStopList(result));
                     else if(mMyClass == Route.class)
@@ -113,7 +121,7 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
             //urlBuilder.addQueryParam("start_time", "1426075200");
             Date date = new Date();
             urlBuilder.addQueryParam("start_time", Long.toString(date.getTime()/1000));
-            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 1800));
+            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 900));
             urlBuilder.addQueryParam("route.id", "RT_" + ((Route) entity).getNumber());
             urlBuilder.addQueryParam("_expand", "routes,stops");
             switchFragment(urlBuilder.getURL(), Arrival.class);

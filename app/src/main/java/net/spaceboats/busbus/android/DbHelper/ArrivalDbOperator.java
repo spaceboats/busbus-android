@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import net.spaceboats.busbus.android.Arrival;
+import net.spaceboats.busbus.android.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +20,25 @@ public class ArrivalDbOperator {
         mContext = context;
     }
 
-    public void insert(Arrival arrival) {
-        List<Arrival> arrivals = new ArrayList<>();
-        arrivals.add(arrival);
-        insert(arrivals);
+    public void insert(Entity entity) {
+        List<Entity> entities = new ArrayList<>();
+        entities.add(entity);
+        insert(entities);
     }
 
-    public void insert(List<Arrival> arrivals) {
+    public void insert(List<Entity> arrivals) {
         FavoritesDbHelper sqlHelper = new FavoritesDbHelper(mContext);
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             for (int i = 0; i < arrivals.size(); i++) {
-                Arrival arrival = arrivals.get(i);
+                Arrival arrival = (Arrival)arrivals.get(i);
 
                 // TODO: See if this actually works, since both of these call getWritableDatabase as well.
                 RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
                 StopDbOperator stopDbOperator = new StopDbOperator(mContext);
-                routeDbOperator.insert(arrival.getRoute());
-                stopDbOperator.insert(arrival.getStop());
+                routeDbOperator.insert(arrival.getRoute(), db);
+                stopDbOperator.insert(arrival.getStop(), db);
 
                 ContentValues values = new ContentValues();
                 values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRoute().getId());
@@ -45,6 +46,7 @@ public class ArrivalDbOperator {
 
                 db.insert(FavoritesContract.Arrival.TABLE_NAME, null, values);
             }
+            db.setTransactionSuccessful();
         }
         catch (Exception e) {
             e.printStackTrace();

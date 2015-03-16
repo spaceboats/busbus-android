@@ -3,6 +3,7 @@ package net.spaceboats.busbus.android.DbHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by zralston on 3/15/15.
@@ -41,10 +42,10 @@ public class FavoritesDbHelper extends SQLiteOpenHelper{
             + FavoritesContract.Arrival.COLUMN_STOP_ID + TYPE_TEXT + SEP_COMMA
             + "FOREIGN KEY(" + FavoritesContract.Arrival.COLUMN_ROUTE_ID
                     + ") REFERENCES " + FavoritesContract.Route.TABLE_NAME + "("
-                    + FavoritesContract.Route.COLUMN_ID + ")"
+                    + FavoritesContract.Route.COLUMN_ID + ")" + SEP_COMMA
             + "FOREIGN KEY(" + FavoritesContract.Arrival.COLUMN_STOP_ID
                     + ") REFERENCES " + FavoritesContract.Stop.TABLE_NAME + "("
-                    + FavoritesContract.Stop.COLUMN_ID + ")";
+                    + FavoritesContract.Stop.COLUMN_ID + ")" + " )";
 
     private static final String SQL_DELETE_ARRIVAL =
             " DROP TABLE IF EXISTS " + FavoritesContract.Arrival.TABLE_NAME;

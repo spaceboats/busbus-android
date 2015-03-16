@@ -11,8 +11,8 @@ public class Stop extends Entity {
     private String mDescription;
     private String mId;
 
-    public Stop(String name, double latitude, double longitude, String description) {
-        this.mId = "1";
+    public Stop(String name, double latitude, double longitude, String description, String stopId) {
+        this.mId = stopId;
         this.mName = name;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
