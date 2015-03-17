@@ -9,7 +9,12 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
+import net.spaceboats.busbus.android.DbHelper.FavoritesContract;
 import net.spaceboats.busbus.android.DbHelper.RouteDbOperator;
+import net.spaceboats.busbus.android.DbHelper.StopDbOperator;
+
+import java.util.List;
 
 
 public class FavoritesActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
@@ -45,7 +50,12 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
     public void onResume() {
         super.onResume();
         RouteDbOperator routeDbOperator = new RouteDbOperator(getApplicationContext());
-        recyclerViewFragment.updateData(routeDbOperator.query());
+        StopDbOperator stopDbOperator = new StopDbOperator(getApplicationContext());
+        ArrivalDbOperator arrivalDbOperator = new ArrivalDbOperator(getApplicationContext());
+        List<Entity> entityList = routeDbOperator.query();
+        //entityList.addAll(stopDbOperator.query());
+        //entityList.addAll(arrivalDbOperator.query());
+        recyclerViewFragment.updateData(entityList);
     }
 
 

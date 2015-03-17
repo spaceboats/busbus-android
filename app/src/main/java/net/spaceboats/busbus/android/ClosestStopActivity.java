@@ -14,7 +14,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
-import net.spaceboats.busbus.android.DbHelper.RouteDbOperator;
 
 import org.json.JSONException;
 import java.util.Date;
@@ -29,6 +28,8 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //FavoritesDbHelper sqlHelper = new FavoritesDbHelper(getApplicationContext());
+        //sqlHelper.deleteAll();
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closest_stop);
