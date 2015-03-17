@@ -14,6 +14,8 @@ import java.util.List;
  * Created by zralston on 3/16/15.
  */
 public abstract class BaseDbOperator {
+    // TODO: See if I can change this to use generics instead.
+    // i.e "BaseDbOperator<T extends Entity>"
 
     Context mContext;
 
@@ -57,8 +59,14 @@ public abstract class BaseDbOperator {
 
     public void insert(List<Entity> entities, SQLiteDatabase db) {
         for (int i = 0; i < entities.size(); i++) {
+            insertSubEntities(entities.get(i), db);
             db.insert(getTableName(), null, getContentValues(entities.get(i)));
         }
+    }
+
+    public void insertSubEntities(Entity entity, SQLiteDatabase db) {
+        // Should be implemented if the entity has other entities that need to be stored.
+        // i.e. Arrival has both a stop and a route.
     }
 
     public List<Entity> query(SQLiteDatabase db) {

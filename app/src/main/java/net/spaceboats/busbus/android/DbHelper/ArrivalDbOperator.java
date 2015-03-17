@@ -62,34 +62,16 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    public void insert(List<Entity> arrivals) {
-        FavoritesDbHelper sqlHelper = new FavoritesDbHelper(mContext);
-        SQLiteDatabase db = sqlHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            for (int i = 0; i < arrivals.size(); i++) {
-                Arrival arrival = (Arrival)arrivals.get(i);
+    public void insertSubEntities(Entity entity, SQLiteDatabase db) {
+        if(!Arrival.class.isInstance(entity))
+            throw new IllegalArgumentException("Entity is not of type Arrival");
 
-                // TODO: Fix the fact that this trys to insert something that is already in the database
-                RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
-                StopDbOperator stopDbOperator = new StopDbOperator(mContext);
-                routeDbOperator.insert(arrival.getRoute(), db);
-                stopDbOperator.insert(arrival.getStop(), db);
+        Arrival arrival = (Arrival) entity;
 
-                ContentValues values = new ContentValues();
-                values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRoute().getId());
-                values.put(FavoritesContract.Arrival.COLUMN_STOP_ID, arrival.getStop().getId());
-
-                db.insert(FavoritesContract.Arrival.TABLE_NAME, null, values);
-            }
-            db.setTransactionSuccessful();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            db.endTransaction();
-        }
+        // TODO: Fix the fact that this trys to insert something that is already in the database
+        RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
+        StopDbOperator stopDbOperator = new StopDbOperator(mContext);
+        routeDbOperator.insert(arrival.getRoute(), db);
+        stopDbOperator.insert(arrival.getStop(), db);
     }
-
 }
