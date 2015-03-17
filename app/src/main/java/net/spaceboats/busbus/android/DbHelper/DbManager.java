@@ -15,7 +15,7 @@ public class DbManager {
     private static FavoritesDbHelper mDbHelper;
 
     public static void initDb(Context context) {
-        if(mDbHelper != null) {
+        if(isInitialized()) {
             Log.v("DbManager", "DbManager was already initialized");
             return;
         }
@@ -24,8 +24,14 @@ public class DbManager {
         mDatabase = null;
     }
 
+    public static boolean isInitialized() {
+        if(mDbHelper == null)
+            return false;
+        return true;
+    }
+
     public static SQLiteDatabase getDatabase() {
-        if(mDbHelper == null) {
+        if(!isInitialized()) {
             throw new IllegalStateException("Make sure to call initDB first");
         }
 
