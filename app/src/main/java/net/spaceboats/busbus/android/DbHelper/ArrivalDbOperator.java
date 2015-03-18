@@ -41,14 +41,14 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor, SQLiteDatabase db) {
+    protected Entity getNewEntity(Cursor cursor) {
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
 
         String id = cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID));
 
-        Route route = (Route) routeDbOperator.queryWithId(db, cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
-        Stop stop = (Stop) stopDbOperator.queryWithId(db, cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
+        Route route = (Route) routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
+        Stop stop = (Stop) stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
 
         return new Arrival(-1, null, stop, route);
     }
@@ -62,7 +62,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    public void insertSubEntities(Entity entity, SQLiteDatabase db) {
+    public void insertSubEntities(Entity entity) {
         if(!Arrival.class.isInstance(entity))
             throw new IllegalArgumentException("Entity is not of type Arrival");
 
@@ -71,7 +71,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
         // TODO: Fix the fact that this trys to insert something that is already in the database
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
-        routeDbOperator.insert(arrival.getRoute(), db);
-        stopDbOperator.insert(arrival.getStop(), db);
+        routeDbOperator.insert(arrival.getRoute());
+        stopDbOperator.insert(arrival.getStop());
     }
 }

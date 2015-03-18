@@ -96,7 +96,7 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
                     if(mMyClass == Arrival.class) {
                         List<Entity> arrivalList = TheJSONParser.getArrivalList(result);
                         ArrivalDbOperator arrivalDbOperator = new ArrivalDbOperator(getApplicationContext());
-                        arrivalDbOperator.insert(arrivalList);
+                        arrivalDbOperator.insertAsTransaction(arrivalList);
                         recyclerViewFragment.updateData(arrivalList);
                     }
                     else if(mMyClass == Stop.class)

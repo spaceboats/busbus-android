@@ -39,7 +39,7 @@ public class RouteDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor, SQLiteDatabase db) {
+    protected Entity getNewEntity(Cursor cursor) {
         Route route = new Route(cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_SHORT_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_COLOR)),
@@ -58,13 +58,20 @@ public class RouteDbOperator extends BaseDbOperator {
         return columns;
     }
 
-    public Entity queryWithId(SQLiteDatabase db, String id) {
+    public Entity queryWithId(String id) {
+        SQLiteDatabase db = DbManager.getDatabase();
         String selection = FavoritesContract.Route.COLUMN_ID + "= ?";
         String[] args = {id};
-        Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
-        cursor.moveToFirst();
-        Entity route = getNewEntity(cursor, db);
-        cursor.close();
+        Entity route;
+        try {
+            Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
+            cursor.moveToFirst();
+            route = getNewEntity(cursor);
+            cursor.close();
+        }
+        finally {
+            DbManager.closeDatabase();
+        }
 
         return route;
     }

@@ -21,6 +21,9 @@ public abstract class BaseDbOperator {
 
     public BaseDbOperator(Context context) {
         mContext = context;
+        if(!DbManager.isInitialized()) {
+            DbManager.initDb(context.getApplicationContext());
+        }
     }
 
     public void insert(Entity entity) {
@@ -29,24 +32,17 @@ public abstract class BaseDbOperator {
         insert(entities);
     }
 
-    public void insert(Entity entity, SQLiteDatabase db) {
+    public void insertAsTransaction(Entity entity) {
         List<Entity> entities = new ArrayList<>();
         entities.add(entity);
-        insert(entities, db);
+        insertAsTransaction(entities);
     }
 
-    public List<Entity> query() {
-        FavoritesDbHelper sqlHelper = new FavoritesDbHelper(mContext);
-        SQLiteDatabase db = sqlHelper.getReadableDatabase();
-        return query(db);
-    }
-
-    public void insert(List<Entity> entities) {
-        FavoritesDbHelper sqlHelper = new FavoritesDbHelper(mContext);
-        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+    public void insertAsTransaction(List<Entity> entities) {
+        SQLiteDatabase db = DbManager.getDatabase();
         db.beginTransaction();
         try {
-            insert(entities, db);
+            insert(entities);
             db.setTransactionSuccessful();
         }
         catch (Exception e) {
@@ -54,29 +50,42 @@ public abstract class BaseDbOperator {
         }
         finally {
             db.endTransaction();
+            DbManager.closeDatabase();
         }
     }
 
-    public void insert(List<Entity> entities, SQLiteDatabase db) {
-        for (int i = 0; i < entities.size(); i++) {
-            insertSubEntities(entities.get(i), db);
-            db.insert(getTableName(), null, getContentValues(entities.get(i)));
+    public void insert(List<Entity> entities) {
+        SQLiteDatabase db = DbManager.getDatabase();
+        try {
+            for (int i = 0; i < entities.size(); i++) {
+                insertSubEntities(entities.get(i));
+                db.insert(getTableName(), null, getContentValues(entities.get(i)));
+            }
+        }
+        finally {
+            DbManager.closeDatabase();
         }
     }
 
-    public void insertSubEntities(Entity entity, SQLiteDatabase db) {
+    public void insertSubEntities(Entity entity) {
         // Should be implemented if the entity has other entities that need to be stored.
         // i.e. Arrival has both a stop and a route.
     }
 
-    public List<Entity> query(SQLiteDatabase db) {
+    public List<Entity> query() {
         List<Entity> entities = new ArrayList<>();
+        SQLiteDatabase db = DbManager.getDatabase();
 
-        Cursor cursor = db.query(getTableName(), getColumns(), null, null, null, null, null);
-        while(cursor.moveToNext()) {
-            entities.add(getNewEntity(cursor, db));
+        try {
+            Cursor cursor = db.query(getTableName(), getColumns(), null, null, null, null, null);
+            while (cursor.moveToNext()) {
+                entities.add(getNewEntity(cursor));
+            }
+            cursor.close();
         }
-        cursor.close();
+        finally {
+            DbManager.closeDatabase();
+        }
 
         return entities;
     }
@@ -84,6 +93,6 @@ public abstract class BaseDbOperator {
     protected abstract String getTableName();
     protected abstract ContentValues getContentValues(Entity entity);
     protected abstract String[] getColumns();
-    protected abstract Entity getNewEntity(Cursor cursor, SQLiteDatabase db);
+    protected abstract Entity getNewEntity(Cursor cursor);
 
 }

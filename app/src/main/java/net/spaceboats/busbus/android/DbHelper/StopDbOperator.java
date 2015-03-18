@@ -40,7 +40,7 @@ public class StopDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor, SQLiteDatabase db) {
+    protected Entity getNewEntity(Cursor cursor) {
         Stop stop = new Stop(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_NAME)),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LATITUDE))),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LONGITUDE))),
@@ -60,14 +60,21 @@ public class StopDbOperator extends BaseDbOperator {
         return columns;
     }
 
-    public Entity queryWithId(SQLiteDatabase db, String id) {
+    public Entity queryWithId(String id) {
+        SQLiteDatabase db = DbManager.getDatabase();
         String selection = FavoritesContract.Stop.COLUMN_ID + "= ?";
         String[] args = {id};
-        Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
-        cursor.moveToFirst();
-        Entity route = getNewEntity(cursor, db);
-        cursor.close();
+        Entity stop;
+        try {
+            Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
+            cursor.moveToFirst();
+            stop = getNewEntity(cursor);
+            cursor.close();
+        }
+        finally {
+            DbManager.closeDatabase();
+        }
 
-        return route;
+        return stop;
     }
 }

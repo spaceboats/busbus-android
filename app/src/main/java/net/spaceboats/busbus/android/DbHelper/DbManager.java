@@ -9,23 +9,23 @@ import android.util.Log;
  */
 public class DbManager {
 
-    static int mOpenCounter;
+    private static int sOpenCounter;
 
-    private static SQLiteDatabase mDatabase;
-    private static FavoritesDbHelper mDbHelper;
+    private static SQLiteDatabase sDatabase;
+    private static FavoritesDbHelper sDbHelper;
 
     public static void initDb(Context context) {
         if(isInitialized()) {
             Log.v("DbManager", "DbManager was already initialized");
             return;
         }
-        mDbHelper = new FavoritesDbHelper(context);
-        mOpenCounter = 0;
-        mDatabase = null;
+        sDbHelper = new FavoritesDbHelper(context);
+        sOpenCounter = 0;
+        sDatabase = null;
     }
 
     public static boolean isInitialized() {
-        if(mDbHelper == null)
+        if(sDbHelper == null)
             return false;
         return true;
     }
@@ -35,23 +35,23 @@ public class DbManager {
             throw new IllegalStateException("Make sure to call initDB first");
         }
 
-        mOpenCounter++;
-        if(mDatabase == null) {
-            mDatabase = mDbHelper.getWritableDatabase();
+        sOpenCounter++;
+        if(sDatabase == null) {
+            sDatabase = sDbHelper.getWritableDatabase();
         }
 
-        return mDatabase;
+        return sDatabase;
     }
 
     public static void closeDatabase() {
-        if(mDatabase == null) {
-            throw new IllegalStateException("Database was never initialized. Probably never called getDatabse()");
+        if(sDatabase == null) {
+            throw new IllegalStateException("Database was never initialized. Probably never called getDatabase()");
         }
 
-        mOpenCounter--;
-        if(mOpenCounter <= 0) {
-            mDatabase.close();
-            mDatabase = null;
+        sOpenCounter--;
+        if(sOpenCounter <= 0) {
+            sDatabase.close();
+            sDatabase = null;
         }
     }
 }
