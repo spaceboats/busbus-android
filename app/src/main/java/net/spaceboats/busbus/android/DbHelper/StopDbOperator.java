@@ -60,21 +60,8 @@ public class StopDbOperator extends BaseDbOperator {
         return columns;
     }
 
-    public Entity queryWithId(String id) {
-        SQLiteDatabase db = DbManager.getDatabase();
-        String selection = FavoritesContract.Stop.COLUMN_ID + "= ?";
-        String[] args = {id};
-        Entity stop;
-        try {
-            Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
-            cursor.moveToFirst();
-            stop = getNewEntity(cursor);
-            cursor.close();
-        }
-        finally {
-            DbManager.closeDatabase();
-        }
-
-        return stop;
+    @Override
+    protected String getIdSelection() {
+        return FavoritesContract.Stop.COLUMN_ID + "= ?";
     }
 }

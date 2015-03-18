@@ -74,4 +74,9 @@ public class ArrivalDbOperator extends BaseDbOperator {
         routeDbOperator.insert(arrival.getRoute());
         stopDbOperator.insert(arrival.getStop());
     }
+
+    @Override
+    protected String getIdSelection() {
+        return "";
+    }
 }

@@ -90,9 +90,27 @@ public abstract class BaseDbOperator {
         return entities;
     }
 
+    public Entity queryWithId(String id) {
+        SQLiteDatabase db = DbManager.getDatabase();
+        String[] args = {id};
+        Entity entity;
+        try {
+            Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), args, null, null, null);
+            cursor.moveToFirst();
+            entity = getNewEntity(cursor);
+            cursor.close();
+        }
+        finally {
+            DbManager.closeDatabase();
+        }
+
+        return entity;
+    }
+
     protected abstract String getTableName();
     protected abstract ContentValues getContentValues(Entity entity);
     protected abstract String[] getColumns();
     protected abstract Entity getNewEntity(Cursor cursor);
+    protected abstract String getIdSelection();
 
 }

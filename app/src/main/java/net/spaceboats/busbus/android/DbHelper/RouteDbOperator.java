@@ -58,21 +58,8 @@ public class RouteDbOperator extends BaseDbOperator {
         return columns;
     }
 
-    public Entity queryWithId(String id) {
-        SQLiteDatabase db = DbManager.getDatabase();
-        String selection = FavoritesContract.Route.COLUMN_ID + "= ?";
-        String[] args = {id};
-        Entity route;
-        try {
-            Cursor cursor = db.query(getTableName(), getColumns(), selection, args, null, null, null);
-            cursor.moveToFirst();
-            route = getNewEntity(cursor);
-            cursor.close();
-        }
-        finally {
-            DbManager.closeDatabase();
-        }
-
-        return route;
+    @Override
+    protected String getIdSelection() {
+        return FavoritesContract.Route.COLUMN_ID + "= ?";
     }
 }
