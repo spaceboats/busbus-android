@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 import org.json.JSONException;
 import java.util.Date;
@@ -127,5 +128,12 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
             urlBuilder.addQueryParam("_expand", "routes,stops");
             switchFragment(urlBuilder.getURL(), Arrival.class);
         }
+    }
+
+    @Override
+    public void favoriteClicked(Entity entity) {
+        // Should probably do this in a different thread
+        EntityDbDelegator dbDelegator = new EntityDbDelegator(getApplicationContext());
+        dbDelegator.insert(entity);
     }
 }

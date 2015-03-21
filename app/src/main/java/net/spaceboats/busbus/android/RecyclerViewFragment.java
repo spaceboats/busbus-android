@@ -30,6 +30,7 @@ public class RecyclerViewFragment extends Fragment {
 
     public interface PassBackData {
         public void itemClicked(Entity entity);
+        public void favoriteClicked(Entity entity);
     }
 
 
@@ -76,6 +77,10 @@ public class RecyclerViewFragment extends Fragment {
         mAdapter = new MyRecyclerAdapter(new MyRecyclerAdapter.MyClickListener() {
             public void entityClicked(Entity entity) {
                 mPassBackData.itemClicked(entity);
+            }
+
+            public void favoriteClicked(Entity entity){
+                mPassBackData.favoriteClicked(entity);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

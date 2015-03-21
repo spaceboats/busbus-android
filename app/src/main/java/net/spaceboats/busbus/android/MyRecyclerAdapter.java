@@ -25,6 +25,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     // what function to call when an item is clicked.
     public interface MyClickListener {
         public void entityClicked(Entity entity);
+        public void favoriteClicked(Entity entity);
     }
 
     public MyRecyclerAdapter(MyClickListener clickListener) {
