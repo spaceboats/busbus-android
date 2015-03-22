@@ -27,22 +27,23 @@ public abstract class BaseDbOperator {
     }
 
     public void insert(Entity entity) {
-        List<Entity> entities = new ArrayList<>();
-        entities.add(entity);
-        insert(entities);
+        SQLiteDatabase db = DbManager.getDatabase();
+
+        try {
+            insertSubEntities(entity);
+            db.replace(getTableName(), null, getContentValues(entity));
+        }
+        finally {
+            DbManager.closeDatabase();
+        }
     }
 
     public void insertAsTransaction(Entity entity) {
-        List<Entity> entities = new ArrayList<>();
-        entities.add(entity);
-        insertAsTransaction(entities);
-    }
-
-    public void insertAsTransaction(List<Entity> entities) {
         SQLiteDatabase db = DbManager.getDatabase();
+
         db.beginTransaction();
         try {
-            insert(entities);
+            insert(entity);
             db.setTransactionSuccessful();
         }
         catch (Exception e) {
@@ -50,19 +51,6 @@ public abstract class BaseDbOperator {
         }
         finally {
             db.endTransaction();
-            DbManager.closeDatabase();
-        }
-    }
-
-    public void insert(List<Entity> entities) {
-        SQLiteDatabase db = DbManager.getDatabase();
-        try {
-            for (int i = 0; i < entities.size(); i++) {
-                insertSubEntities(entities.get(i));
-                db.replace(getTableName(), null, getContentValues(entities.get(i)));
-            }
-        }
-        finally {
             DbManager.closeDatabase();
         }
     }
