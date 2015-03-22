@@ -85,4 +85,9 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
     public void itemClicked(Entity entity) {
 
     }
+
+    @Override
+    public void favoriteClicked(Entity entity) {
+
+    }
 }

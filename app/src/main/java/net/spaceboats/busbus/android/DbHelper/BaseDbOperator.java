@@ -59,7 +59,7 @@ public abstract class BaseDbOperator {
         try {
             for (int i = 0; i < entities.size(); i++) {
                 insertSubEntities(entities.get(i));
-                db.insert(getTableName(), null, getContentValues(entities.get(i)));
+                db.replace(getTableName(), null, getContentValues(entities.get(i)));
             }
         }
         finally {
