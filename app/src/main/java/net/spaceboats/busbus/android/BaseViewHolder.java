@@ -8,16 +8,9 @@ import android.view.View;
  */
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
-    View rootView;
-
     public BaseViewHolder(View view) {
         super(view);
-        rootView = view;
     }
 
     public abstract void setData(Entity entity);
-
-    public View getRootView() {
-        return rootView;
-    }
 }

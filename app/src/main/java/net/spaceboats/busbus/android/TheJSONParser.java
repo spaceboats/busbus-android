@@ -4,6 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by agustafs on 3/10/15.
  */
@@ -28,16 +31,18 @@ public class TheJSONParser {
     public static final String ARRIVAL_JSON_TIME = "time";
 
 
-    public static void addRoutes(MyRecyclerAdapter adapter, String data)
+    public static List<Entity> getRouteList(String data)
         throws JSONException {
 
         JSONObject dataObj = new JSONObject(data);
-
         JSONArray routesArray = dataObj.getJSONArray(ROUTES_JSON_ID);
+        List<Entity> entities = new ArrayList<>();
         for (int i = 0; i < routesArray.length(); i++) {
             JSONObject routeObj = routesArray.getJSONObject(i);
-            adapter.addItem(i, getRoute(routeObj));
+            entities.add(getRoute(routeObj));
         }
+
+        return entities;
     }
 
     private static Route getRoute(JSONObject routeObj)
@@ -52,18 +57,21 @@ public class TheJSONParser {
         return new Route(routeNumber, routeName, routeColor);
     }
 
-    public static void addStops(MyRecyclerAdapter adapter, String data)
+    public static List<Entity> getStopList(String data)
         throws JSONException {
 
         JSONObject dataObj = new JSONObject(data);
         JSONArray stopsArray = dataObj.getJSONArray(STOPS_JSON_ID);
+        List<Entity> entities = new ArrayList<>();
         for(int i = 0; i < stopsArray.length(); i++) {
             JSONObject stopObj = stopsArray.getJSONObject(i);
-            adapter.addItem(i, getStop(stopObj));
+            entities.add(getStop(stopObj));
         }
+
+        return entities;
     }
 
-    public static Stop getStop(JSONObject stopObj)
+    private static Stop getStop(JSONObject stopObj)
         throws JSONException {
         String stopName = null;
         String stopDescription = null;
@@ -76,15 +84,18 @@ public class TheJSONParser {
         return new Stop(stopName, latitude, longitude, stopDescription);
     }
 
-    public static void addArrivals(MyRecyclerAdapter adapter, String data)
+    public static List<Entity> getArrivalList(String data)
         throws JSONException {
 
         JSONObject dataObj = new JSONObject(data);
         JSONArray arrivalsArray = dataObj.getJSONArray(ARRIVALS_JSON_ID);
+        List<Entity> entities = new ArrayList<>();
         for(int i = 0; i < arrivalsArray.length(); i++) {
             JSONObject arrivalObj = arrivalsArray.getJSONObject(i);
-            adapter.addItem(i, getArrival(arrivalObj));
+            entities.add(getArrival(arrivalObj));
         }
+
+        return entities;
     }
 
     private static Arrival getArrival(JSONObject arrivalObj)
