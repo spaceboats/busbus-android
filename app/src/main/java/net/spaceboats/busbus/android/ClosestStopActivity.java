@@ -13,7 +13,6 @@ import android.transition.Transition;
 import android.util.Log;
 import android.widget.Toast;
 
-import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 import org.json.JSONException;
@@ -94,12 +93,8 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
             if(result != null && recyclerViewFragment != null) {
                 Log.v("DataBroadcastReceiver", result);
                 try {
-                    if(mMyClass == Arrival.class) {
-                        List<Entity> arrivalList = TheJSONParser.getArrivalList(result);
-                        ArrivalDbOperator arrivalDbOperator = new ArrivalDbOperator(getApplicationContext());
-                        arrivalDbOperator.insertAsTransaction(arrivalList);
-                        recyclerViewFragment.updateData(arrivalList);
-                    }
+                    if(mMyClass == Arrival.class)
+                        recyclerViewFragment.updateData(TheJSONParser.getArrivalList(result));
                     else if(mMyClass == Stop.class)
                         recyclerViewFragment.updateData(TheJSONParser.getStopList(result));
                     else if(mMyClass == Route.class)

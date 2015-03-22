@@ -9,10 +9,7 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.spaceboats.busbus.android.DbHelper.ArrivalDbOperator;
-import net.spaceboats.busbus.android.DbHelper.FavoritesContract;
-import net.spaceboats.busbus.android.DbHelper.RouteDbOperator;
-import net.spaceboats.busbus.android.DbHelper.StopDbOperator;
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 import java.util.List;
 
@@ -49,12 +46,9 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
     @Override
     public void onResume() {
         super.onResume();
-        RouteDbOperator routeDbOperator = new RouteDbOperator(getApplicationContext());
-        StopDbOperator stopDbOperator = new StopDbOperator(getApplicationContext());
-        ArrivalDbOperator arrivalDbOperator = new ArrivalDbOperator(getApplicationContext());
-        List<Entity> entityList = routeDbOperator.query();
-        //entityList.addAll(stopDbOperator.query());
-        //entityList.addAll(arrivalDbOperator.query());
+
+        EntityDbDelegator dbDelegator = new EntityDbDelegator(getApplicationContext());
+        List<Entity> entityList = dbDelegator.queryArrivals();
         recyclerViewFragment.updateData(entityList);
     }
 

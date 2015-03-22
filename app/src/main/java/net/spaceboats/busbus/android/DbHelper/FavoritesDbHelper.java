@@ -3,7 +3,6 @@ package net.spaceboats.busbus.android.DbHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by zralston on 3/15/15.
