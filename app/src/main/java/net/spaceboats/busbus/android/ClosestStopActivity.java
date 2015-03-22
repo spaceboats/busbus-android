@@ -125,6 +125,7 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
     @Override
     public void favoriteClicked(Entity entity) {
         // Should probably do this in a different thread
+        entity.setFavorite(true);
         EntityDbDelegator dbDelegator = new EntityDbDelegator(getApplicationContext());
         dbDelegator.insert(entity);
     }

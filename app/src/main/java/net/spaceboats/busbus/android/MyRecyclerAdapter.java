@@ -127,11 +127,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 mClickListener.entityClicked(viewHolder.getArrival());
             }
         });
-        viewHolder.mFavorite.setOnClickListener(new View.OnClickListener() {
+        viewHolder.getFavoriteImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClickListener.favoriteClicked(viewHolder.getArrival());
-                viewHolder.mFavorite.setImageResource(R.drawable.star_filled);
+                Entity entity = viewHolder.getArrival();
+                if(!entity.isFavorite()) {
+                    mClickListener.favoriteClicked(viewHolder.getArrival());
+                    viewHolder.setFavorite(true);
+                }
             }
         });
         return viewHolder;

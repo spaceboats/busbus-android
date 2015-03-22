@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -112,11 +114,30 @@ public class RecyclerViewFragment extends Fragment {
     public void updateData(List<Entity> entities) {
         if(entities.size() != 0) {
             sortEntities(entities);
+            if(Arrival.class.isInstance(entities.get(0)))
+                updateFavorites(entities);
             mAdapter.updateItems(entities);
         }
     }
 
     public void sortEntities(List<Entity> entities) {
         Collections.sort(entities);
+    }
+
+    // Do this somewhere else, but just putting here for now.
+    public void updateFavorites(List<Entity> entityList) {
+        EntityDbDelegator dbDelegator = new EntityDbDelegator(getActivity().getApplicationContext());
+        List<Entity> favorites = dbDelegator.queryArrivals();
+
+        // awful way to do this, but will work for now.
+        for(Entity favorite : favorites) {
+            for(Entity entity : entityList) {
+                Arrival fav = (Arrival) favorite;
+                Arrival ent = (Arrival) entity;
+                if(fav.getRoute().getId().equals(ent.getRoute().getId()))
+                    if(fav.getStop().getId().equals(ent.getStop().getId()))
+                        entity.setFavorite(true);
+            }
+        }
     }
 }
