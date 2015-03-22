@@ -68,11 +68,4 @@ public class FavoritesDbHelper extends SQLiteOpenHelper{
         db.execSQL(SQL_DELETE_ROUTE);
         onCreate(db);
     }
-
-    public void deleteAll() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(SQL_DELETE_ARRIVAL);
-        db.execSQL(SQL_DELETE_STOP);
-        db.execSQL(SQL_DELETE_ROUTE);
-    }
 }

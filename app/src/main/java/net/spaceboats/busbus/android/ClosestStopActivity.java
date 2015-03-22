@@ -17,7 +17,6 @@ import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 import org.json.JSONException;
 import java.util.Date;
-import java.util.List;
 
 public class ClosestStopActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
 
@@ -28,8 +27,6 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //FavoritesDbHelper sqlHelper = new FavoritesDbHelper(getApplicationContext());
-        //sqlHelper.deleteAll();
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closest_stop);
