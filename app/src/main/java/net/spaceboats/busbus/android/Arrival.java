@@ -55,6 +55,6 @@ public class Arrival extends Entity {
     public int compareTo(Entity entity) {
         if(!Arrival.class.isInstance(entity))
             return super.compareTo(entity);
-        return (int) (this.getTimeInSeconds() -  ((Arrival) (entity)).getTimeInSeconds());
+        return Long.compare(this.getTimeInSeconds(), ((Arrival) (entity)).getTimeInSeconds());
     }
 }
