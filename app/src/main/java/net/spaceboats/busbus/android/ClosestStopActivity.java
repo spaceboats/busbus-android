@@ -31,6 +31,8 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closest_stop);
 
+        EntityDbDelegator.initDbDelegator(getApplicationContext());
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -126,7 +128,6 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
     public void favoriteClicked(Entity entity) {
         // Should probably do this in a different thread
         entity.setFavorite(true);
-        EntityDbDelegator dbDelegator = new EntityDbDelegator(getApplicationContext());
-        dbDelegator.insert(entity);
+        EntityDbDelegator.insert(entity);
     }
 }

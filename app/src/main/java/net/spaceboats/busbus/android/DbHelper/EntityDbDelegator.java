@@ -15,27 +15,33 @@ import java.util.List;
  */
 public class EntityDbDelegator {
 
-    private static List<Entity> arrivals;
-    private boolean dbUpdated;
-    private RouteDbOperator routeDbOperator;
-    private StopDbOperator stopDbOperator;
-    private ArrivalDbOperator arrivalDbOperator;
+    private static List<Entity> sArrivals;
+    private static boolean sDbUpdated;
+    private static RouteDbOperator sRouteDbOperator;
+    private static StopDbOperator sStopDbOperator;
+    private static ArrivalDbOperator sArrivalDbOperator;
 
-    public EntityDbDelegator(Context context) {
-        routeDbOperator = new RouteDbOperator(context);
-        stopDbOperator = new StopDbOperator(context);
-        arrivalDbOperator = new ArrivalDbOperator(context);
-        dbUpdated = true;
+    public static void initDbDelegator(Context context) {
+        if(!isInitialized()) {
+            sRouteDbOperator = new RouteDbOperator(context);
+            sStopDbOperator = new StopDbOperator(context);
+            sArrivalDbOperator = new ArrivalDbOperator(context);
+            sDbUpdated = true;
+        }
     }
 
-    public void insert(List<Entity> entities) {
+    public static boolean isInitialized() {
+        return sRouteDbOperator != null;
+    }
+
+    public static void insert(List<Entity> entities) {
         for(int i = 0; i < entities.size(); i++) {
             insert(entities.get(i));
         }
     }
 
-    public void insert(Entity entity) {
-        dbUpdated = true;
+    public static void insert(Entity entity) {
+        sDbUpdated = true;
         if(Route.class.isInstance(entity))
             insertRoute((Route) entity);
         else if(Stop.class.isInstance(entity))
@@ -46,21 +52,21 @@ public class EntityDbDelegator {
             Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
     }
 
-    public List<Entity> queryArrivals() {
-        if(dbUpdated)
-            arrivals = arrivalDbOperator.query();
-        return arrivals;
+    public static List<Entity> queryArrivals() {
+        if(sDbUpdated)
+            sArrivals = sArrivalDbOperator.query();
+        return sArrivals;
     }
 
-    private void insertRoute(Route route) {
-        routeDbOperator.insertAsTransaction(route);
+    private static void insertRoute(Route route) {
+        sRouteDbOperator.insertAsTransaction(route);
     }
 
-    private void insertStop(Stop stop) {
-        stopDbOperator.insertAsTransaction(stop);
+    private static void insertStop(Stop stop) {
+        sStopDbOperator.insertAsTransaction(stop);
     }
 
-    private void insertArrival(Arrival arrival) {
-        arrivalDbOperator.insertAsTransaction(arrival);
+    private static void insertArrival(Arrival arrival) {
+        sArrivalDbOperator.insertAsTransaction(arrival);
     }
 }

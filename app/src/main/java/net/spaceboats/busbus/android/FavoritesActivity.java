@@ -24,6 +24,8 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closest_stop);
 
+        EntityDbDelegator.initDbDelegator(getApplicationContext());
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -47,8 +49,7 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
     public void onResume() {
         super.onResume();
 
-        EntityDbDelegator dbDelegator = new EntityDbDelegator(getApplicationContext());
-        List<Entity> entityList = dbDelegator.queryArrivals();
+        List<Entity> entityList = EntityDbDelegator.queryArrivals();
         recyclerViewFragment.updateData(entityList);
     }
 

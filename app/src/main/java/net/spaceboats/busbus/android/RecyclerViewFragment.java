@@ -63,6 +63,8 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        EntityDbDelegator.initDbDelegator(getActivity().getApplicationContext());
+
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
 
@@ -126,8 +128,7 @@ public class RecyclerViewFragment extends Fragment {
 
     // Do this somewhere else, but just putting here for now.
     public void updateFavorites(List<Entity> entityList) {
-        EntityDbDelegator dbDelegator = new EntityDbDelegator(getActivity().getApplicationContext());
-        List<Entity> favorites = dbDelegator.queryArrivals();
+        List<Entity> favorites = EntityDbDelegator.queryArrivals();
 
         // awful way to do this, but will work for now.
         for(Entity favorite : favorites) {
