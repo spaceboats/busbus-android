@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class EntityDbDelegator {
 
+    private static List<Entity> arrivals;
+    private boolean dbUpdated;
     private RouteDbOperator routeDbOperator;
     private StopDbOperator stopDbOperator;
     private ArrivalDbOperator arrivalDbOperator;
@@ -23,6 +25,7 @@ public class EntityDbDelegator {
         routeDbOperator = new RouteDbOperator(context);
         stopDbOperator = new StopDbOperator(context);
         arrivalDbOperator = new ArrivalDbOperator(context);
+        dbUpdated = true;
     }
 
     public void insert(List<Entity> entities) {
@@ -32,6 +35,7 @@ public class EntityDbDelegator {
     }
 
     public void insert(Entity entity) {
+        dbUpdated = true;
         if(Route.class.isInstance(entity))
             insertRoute((Route) entity);
         else if(Stop.class.isInstance(entity))
@@ -43,7 +47,9 @@ public class EntityDbDelegator {
     }
 
     public List<Entity> queryArrivals() {
-        return arrivalDbOperator.query();
+        if(dbUpdated)
+            arrivals = arrivalDbOperator.query();
+        return arrivals;
     }
 
     private void insertRoute(Route route) {

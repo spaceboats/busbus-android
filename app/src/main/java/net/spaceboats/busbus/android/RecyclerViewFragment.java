@@ -134,9 +134,8 @@ public class RecyclerViewFragment extends Fragment {
             for(Entity entity : entityList) {
                 Arrival fav = (Arrival) favorite;
                 Arrival ent = (Arrival) entity;
-                if(fav.getRoute().getId().equals(ent.getRoute().getId()))
-                    if(fav.getStop().getId().equals(ent.getStop().getId()))
-                        entity.setFavorite(true);
+                if(fav.equals(ent))
+                    entity.setFavorite(true);
             }
         }
     }
