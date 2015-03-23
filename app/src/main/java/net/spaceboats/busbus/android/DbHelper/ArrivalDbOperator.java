@@ -3,14 +3,11 @@ package net.spaceboats.busbus.android.DbHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import net.spaceboats.busbus.android.Arrival;
 import net.spaceboats.busbus.android.Entity;
 import net.spaceboats.busbus.android.Route;
 import net.spaceboats.busbus.android.Stop;
-
-import java.util.List;
 
 /**
  * Created by zralston on 3/15/15.
@@ -45,12 +42,10 @@ public class ArrivalDbOperator extends BaseDbOperator {
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
 
-        String id = cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID));
-
         Route route = (Route) routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
         Stop stop = (Stop) stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
 
-        return new Arrival(-1, null, stop, route);
+        return new Arrival(-1, "", stop, route);
     }
 
     @Override
@@ -68,7 +63,6 @@ public class ArrivalDbOperator extends BaseDbOperator {
 
         Arrival arrival = (Arrival) entity;
 
-        // TODO: Fix the fact that this trys to insert something that is already in the database
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
         routeDbOperator.insert(arrival.getRoute());

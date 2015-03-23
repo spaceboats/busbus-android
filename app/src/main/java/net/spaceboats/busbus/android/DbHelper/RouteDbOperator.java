@@ -3,7 +3,6 @@ package net.spaceboats.busbus.android.DbHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import net.spaceboats.busbus.android.Entity;
 import net.spaceboats.busbus.android.Route;

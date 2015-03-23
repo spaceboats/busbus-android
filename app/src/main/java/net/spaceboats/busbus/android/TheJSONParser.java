@@ -75,8 +75,8 @@ public class TheJSONParser {
 
     private static Stop getStop(JSONObject stopObj)
         throws JSONException {
-        String stopName = null;
-        String stopDescription = null;
+        String stopName = "";
+        String stopDescription = "";
         if (!stopObj.isNull(STOP_JSON_NAME))
             stopName = stopObj.getString(STOP_JSON_NAME);
         if (!stopObj.isNull(STOP_JSON_DESCRIPTION))
@@ -110,7 +110,7 @@ public class TheJSONParser {
         if(route == null)
             return null;
         int time = arrivalObj.getInt(ARRIVAL_JSON_TIME);
-        String headSign = null;
+        String headSign = "";
         if(!arrivalObj.isNull(ARRIVAL_JSON_HEADSIGN))
             headSign = arrivalObj.getString(ARRIVAL_JSON_HEADSIGN);
         return new Arrival(time, headSign, getStop(stopObj), route);
