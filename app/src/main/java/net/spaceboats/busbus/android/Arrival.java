@@ -83,8 +83,8 @@ public class Arrival extends Entity {
 
         Arrival arrival = (Arrival) o;
 
-        if (mTimeSeconds != arrival.mTimeSeconds) return false;
-        if (!mHeadsign.equals(arrival.mHeadsign)) return false;
+        //if (mTimeSeconds != arrival.mTimeSeconds) return false;
+        //if (!mHeadsign.equals(arrival.mHeadsign)) return false;
         if (!mRoute.equals(arrival.mRoute)) return false;
         if (!mStop.equals(arrival.mStop)) return false;
 
