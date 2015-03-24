@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class RecyclerViewFragment extends Fragment {
 
     public interface PassBackData {
         public void itemClicked(Entity entity);
+        public void favoriteClicked(Entity entity);
     }
 
 
@@ -60,6 +63,8 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        EntityDbDelegator.initDbDelegator(getActivity().getApplicationContext());
+
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
 
@@ -76,6 +81,10 @@ public class RecyclerViewFragment extends Fragment {
         mAdapter = new MyRecyclerAdapter(new MyRecyclerAdapter.MyClickListener() {
             public void entityClicked(Entity entity) {
                 mPassBackData.itemClicked(entity);
+            }
+
+            public void favoriteClicked(Entity entity){
+                mPassBackData.favoriteClicked(entity);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -105,11 +114,30 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     public void updateData(List<Entity> entities) {
-        sortEntities(entities);
-        mAdapter.updateItems(entities);
+        if(entities.size() != 0) {
+            sortEntities(entities);
+            if(Arrival.class.isInstance(entities.get(0)))
+                updateFavorites(entities);
+            mAdapter.updateItems(entities);
+        }
     }
 
     public void sortEntities(List<Entity> entities) {
         Collections.sort(entities);
+    }
+
+    // Do this somewhere else, but just putting here for now.
+    public void updateFavorites(List<Entity> entityList) {
+        List<Entity> favorites = EntityDbDelegator.queryArrivals();
+
+        // awful way to do this, but will work for now.
+        for(Entity favorite : favorites) {
+            for(Entity entity : entityList) {
+                Arrival fav = (Arrival) favorite;
+                Arrival ent = (Arrival) entity;
+                if(fav.equals(ent))
+                    entity.setFavorite(true);
+            }
+        }
     }
 }

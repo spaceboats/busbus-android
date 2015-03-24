@@ -3,17 +3,11 @@ package net.spaceboats.busbus.android;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 
 public class RouteActivity extends ActionBarActivity {

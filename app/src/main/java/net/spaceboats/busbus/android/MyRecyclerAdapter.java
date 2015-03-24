@@ -25,6 +25,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     // what function to call when an item is clicked.
     public interface MyClickListener {
         public void entityClicked(Entity entity);
+        public void favoriteClicked(Entity entity);
     }
 
     public MyRecyclerAdapter(MyClickListener clickListener) {
@@ -124,6 +125,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             @Override
             public void onClick(View v) {
                 mClickListener.entityClicked(viewHolder.getArrival());
+            }
+        });
+        viewHolder.getFavoriteImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Entity entity = viewHolder.getArrival();
+                if(!entity.isFavorite()) {
+                    mClickListener.favoriteClicked(viewHolder.getArrival());
+                    viewHolder.setFavorite(true);
+                }
             }
         });
         return viewHolder;

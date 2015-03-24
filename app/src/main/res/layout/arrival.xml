@@ -26,17 +26,29 @@
 
             <TextView
                 android:id="@+id/stopName"
-                android:layout_weight="5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"/>
+                android:layout_marginLeft="2dp"
+                android:layout_weight="5" />
 
             <TextView
                 android:id="@+id/nextArrivalTime"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"/>
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/favoriteUnfilled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star_unfilled" />
+
+            <ImageView
+                android:id="@+id/favoriteFilled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star_filled" />
 
         </LinearLayout>
 

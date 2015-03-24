@@ -1,5 +1,6 @@
 package net.spaceboats.busbus.android;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,15 +9,23 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
-public class FavoritesActivity extends ActionBarActivity {
+import java.util.List;
+
+
+public class FavoritesActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
 
     private Toolbar toolbar;
+    private RecyclerViewFragment recyclerViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
+        setContentView(R.layout.activity_closest_stop);
+
+        EntityDbDelegator.initDbDelegator(getApplicationContext());
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -25,6 +34,23 @@ public class FavoritesActivity extends ActionBarActivity {
         fade.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setExitTransition(fade);
         getWindow().setEnterTransition(fade);
+
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            recyclerViewFragment =
+                    RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
+                            getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
+            transaction.replace(R.id.fragment_placeholder, recyclerViewFragment);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        List<Entity> entityList = EntityDbDelegator.queryArrivals();
+        recyclerViewFragment.updateData(entityList);
     }
 
 
@@ -48,5 +74,15 @@ public class FavoritesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void itemClicked(Entity entity) {
+
+    }
+
+    @Override
+    public void favoriteClicked(Entity entity) {
+
     }
 }

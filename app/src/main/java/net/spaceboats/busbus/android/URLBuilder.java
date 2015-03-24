@@ -7,8 +7,6 @@ import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.PriorityQueue;
 
 /**
  * Created by agustafs on 3/11/15.

@@ -13,6 +13,8 @@ import android.transition.Transition;
 import android.util.Log;
 import android.widget.Toast;
 
+import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+
 import org.json.JSONException;
 import java.util.Date;
 
@@ -28,6 +30,8 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closest_stop);
+
+        EntityDbDelegator.initDbDelegator(getApplicationContext());
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -108,13 +112,22 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
     @Override
     public void itemClicked(Entity entity) {
         if(Route.class.isInstance(entity)) {
+            setTitle("Route " + ((Route)entity).getNumber());
             URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ARRIVALS);
             //urlBuilder.addQueryParam("start_time", "1426075200");
             Date date = new Date();
-            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 1800));
+            urlBuilder.addQueryParam("start_time", Long.toString(date.getTime()/1000));
+            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 900));
             urlBuilder.addQueryParam("route.id", "RT_" + ((Route) entity).getNumber());
             urlBuilder.addQueryParam("_expand", "routes,stops");
             switchFragment(urlBuilder.getURL(), Arrival.class);
         }
+    }
+
+    @Override
+    public void favoriteClicked(Entity entity) {
+        // Should probably do this in a different thread
+        entity.setFavorite(true);
+        EntityDbDelegator.insert(entity);
     }
 }
