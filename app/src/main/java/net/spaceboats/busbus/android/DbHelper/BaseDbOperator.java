@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import net.spaceboats.busbus.android.Entity;
+import net.spaceboats.busbus.android.Entites.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

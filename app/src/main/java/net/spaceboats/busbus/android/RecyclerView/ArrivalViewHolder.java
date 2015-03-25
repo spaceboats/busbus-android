@@ -1,8 +1,13 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.RecyclerView;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.R;
+import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.Utils;
 
 import android.content.Context;
 import android.net.Uri;

@@ -19,7 +19,7 @@
         </activity>
 
         <service
-            android:name=".TransitDataIntentService"
+            android:name=".Utils.TransitDataIntentService"
             android:exported="false" >
         </service>
 

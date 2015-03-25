@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+import net.spaceboats.busbus.android.Entites.Entity;
 
 import java.util.List;
 

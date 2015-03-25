@@ -1,10 +1,15 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.RecyclerView;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
+import net.spaceboats.busbus.android.R;
+import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 
 /**
  * Created by zralston on 3/12/15.

@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import net.spaceboats.busbus.android.Entity;
-import net.spaceboats.busbus.android.Route;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
 
 /**
  * Created by zralston on 3/15/15.

@@ -1,4 +1,9 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.Utils;
+
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
+import net.spaceboats.busbus.android.Entites.Stop;
 
 import org.json.JSONArray;
 import org.json.JSONException;

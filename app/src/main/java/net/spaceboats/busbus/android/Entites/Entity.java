@@ -1,4 +1,4 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.Entites;
 
 /**
  * Created by zralston on 3/10/15.

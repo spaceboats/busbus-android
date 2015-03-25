@@ -1,9 +1,15 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.RecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
+import net.spaceboats.busbus.android.Entites.Stop;
+import net.spaceboats.busbus.android.R;
 
 import java.util.ArrayList;
 import java.util.List;

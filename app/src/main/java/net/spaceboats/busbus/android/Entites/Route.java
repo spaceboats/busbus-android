@@ -1,4 +1,4 @@
-package net.spaceboats.busbus.android;
+package net.spaceboats.busbus.android.Entites;
 
 import android.support.annotation.NonNull;
 

@@ -3,10 +3,10 @@ package net.spaceboats.busbus.android.DbHelper;
 import android.content.Context;
 import android.util.Log;
 
-import net.spaceboats.busbus.android.Arrival;
-import net.spaceboats.busbus.android.Entity;
-import net.spaceboats.busbus.android.Route;
-import net.spaceboats.busbus.android.Stop;
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
+import net.spaceboats.busbus.android.Entites.Stop;
 
 import java.util.List;
 

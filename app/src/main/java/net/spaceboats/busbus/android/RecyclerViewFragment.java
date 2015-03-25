@@ -13,6 +13,9 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 
 import java.util.Collections;
 import java.util.List;

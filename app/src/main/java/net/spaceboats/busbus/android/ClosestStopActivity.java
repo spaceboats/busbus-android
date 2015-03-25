@@ -14,6 +14,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
+import net.spaceboats.busbus.android.Entites.Stop;
+import net.spaceboats.busbus.android.Utils.TheJSONParser;
+import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
+import net.spaceboats.busbus.android.Utils.URLBuilder;
 
 import org.json.JSONException;
 import java.util.Date;
