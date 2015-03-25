@@ -11,11 +11,12 @@ import android.view.MenuItem;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 
 import java.util.List;
 
 
-public class FavoritesActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
+public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener {
 
     private Toolbar toolbar;
     private RecyclerViewFragment recyclerViewFragment;
@@ -78,7 +79,7 @@ public class FavoritesActivity extends ActionBarActivity implements RecyclerView
     }
 
     @Override
-    public void itemClicked(Entity entity) {
+    public void entityClicked(Entity entity) {
 
     }
 

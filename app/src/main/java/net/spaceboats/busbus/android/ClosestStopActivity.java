@@ -18,6 +18,7 @@ import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
+import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 import net.spaceboats.busbus.android.Utils.TheJSONParser;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 import net.spaceboats.busbus.android.Utils.URLBuilder;
@@ -25,7 +26,7 @@ import net.spaceboats.busbus.android.Utils.URLBuilder;
 import org.json.JSONException;
 import java.util.Date;
 
-public class ClosestStopActivity extends ActionBarActivity implements RecyclerViewFragment.PassBackData {
+public class ClosestStopActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener {
 
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
@@ -117,7 +118,7 @@ public class ClosestStopActivity extends ActionBarActivity implements RecyclerVi
     }
 
     @Override
-    public void itemClicked(Entity entity) {
+    public void entityClicked(Entity entity) {
         if(Route.class.isInstance(entity)) {
             setTitle("Route " + ((Route)entity).getNumber());
             URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ARRIVALS);

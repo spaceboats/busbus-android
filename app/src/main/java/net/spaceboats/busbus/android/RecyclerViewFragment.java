@@ -29,15 +29,9 @@ public class RecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private PassBackData mPassBackData;
+    private MyRecyclerAdapter.MyClickListener mPassBackData;
 
     private View rootView;
-
-    public interface PassBackData {
-        public void itemClicked(Entity entity);
-        public void favoriteClicked(Entity entity);
-    }
-
 
     public RecyclerViewFragment() {
         // Required empty public constructor
@@ -58,7 +52,7 @@ public class RecyclerViewFragment extends Fragment {
         super.onAttach(activity);
 
         // makes sure that the activity implements this interface
-        mPassBackData = (PassBackData) activity;
+        mPassBackData = (MyRecyclerAdapter.MyClickListener) activity;
     }
 
 
@@ -81,15 +75,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // Route adapter that will handle adding and removing items.
-        mAdapter = new MyRecyclerAdapter(new MyRecyclerAdapter.MyClickListener() {
-            public void entityClicked(Entity entity) {
-                mPassBackData.itemClicked(entity);
-            }
-
-            public void favoriteClicked(Entity entity){
-                mPassBackData.favoriteClicked(entity);
-            }
-        });
+        mAdapter = new MyRecyclerAdapter(mPassBackData);
         mRecyclerView.setAdapter(mAdapter);
 
 
