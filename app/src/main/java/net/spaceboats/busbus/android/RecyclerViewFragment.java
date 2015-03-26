@@ -111,6 +111,10 @@ public class RecyclerViewFragment extends Fragment {
         }
     }
 
+    public void removeEntity(int position) {
+        mAdapter.removeItem(position);
+    }
+
     public void sortEntities(List<Entity> entities) {
         Collections.sort(entities);
     }

@@ -16,6 +16,11 @@ public class RouteDbOperator extends BaseDbOperator {
         super(context);
     }
 
+    protected void validateEntityType(Entity entity) {
+        if (!Route.class.isInstance(entity))
+            throw new IllegalArgumentException("Entity is not of type Route");
+    }
+
     @Override
     protected String getTableName() {
         return FavoritesContract.Route.TABLE_NAME;
@@ -23,9 +28,7 @@ public class RouteDbOperator extends BaseDbOperator {
 
     @Override
     protected ContentValues getContentValues(Entity entity) {
-        if(!Route.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Route");
-
+        validateEntityType(entity);
         Route route = (Route) entity;
 
         ContentValues values = new ContentValues();
@@ -60,5 +63,23 @@ public class RouteDbOperator extends BaseDbOperator {
     @Override
     protected String getIdSelection() {
         return FavoritesContract.Route.COLUMN_ID + "= ?";
+    }
+
+    @Override
+    protected String getDeleteWhereClause() {
+        return FavoritesContract.Route.COLUMN_ID + "= ? and "
+                + FavoritesContract.Route.COLUMN_NAME + "= ? and "
+                + FavoritesContract.Route.COLUMN_SHORT_NAME + "= ? and "
+                + FavoritesContract.Route.COLUMN_COLOR + "= ?";
+    }
+
+    @Override
+    protected String[] getDeleteWhereArgs(Entity entity) {
+        validateEntityType(entity);
+        Route route = (Route) entity;
+
+        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
+        String[] args = {route.getId(), route.getName(), route.getNumber(), route.getColor()};
+        return args;
     }
 }

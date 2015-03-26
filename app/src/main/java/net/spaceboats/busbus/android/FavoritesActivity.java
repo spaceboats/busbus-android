@@ -84,7 +84,15 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
     }
 
     @Override
-    public void favoriteClicked(Entity entity) {
+    public void entityFavorited(Entity entity) {
 
+    }
+
+    @Override
+    public void entityUnFavorited(Entity entity, int position) {
+        // TODO: Should probably do this in a different thread
+        entity.setFavorite(false);
+        EntityDbDelegator.delete(entity);
+        recyclerViewFragment.removeEntity(position);
     }
 }

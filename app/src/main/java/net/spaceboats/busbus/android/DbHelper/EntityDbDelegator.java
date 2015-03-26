@@ -52,6 +52,19 @@ public class EntityDbDelegator {
             Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
     }
 
+    public static void delete(Entity entity) {
+        sDbUpdated = true;
+        sDbUpdated = true;
+        if(Route.class.isInstance(entity))
+            deleteRoute((Route) entity);
+        else if(Stop.class.isInstance(entity))
+            deleteStop((Stop) entity);
+        else if(Arrival.class.isInstance(entity))
+            deleteArrival((Arrival) entity);
+        else
+            Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
+    }
+
     public static List<Entity> queryArrivals() {
         if(sDbUpdated)
             sArrivals = sArrivalDbOperator.query();
@@ -68,5 +81,17 @@ public class EntityDbDelegator {
 
     private static void insertArrival(Arrival arrival) {
         sArrivalDbOperator.insertAsTransaction(arrival);
+    }
+
+    private static void deleteRoute(Route route) {
+        sRouteDbOperator.deleteAsTransaction(route);
+    }
+
+    private static void deleteStop(Stop stop) {
+        sStopDbOperator.deleteAsTransaction(stop);
+    }
+
+    private static void deleteArrival(Arrival arrival) {
+        sArrivalDbOperator.deleteAsTransaction(arrival);
     }
 }

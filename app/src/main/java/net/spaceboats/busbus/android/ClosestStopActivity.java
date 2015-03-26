@@ -133,9 +133,16 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
     }
 
     @Override
-    public void favoriteClicked(Entity entity) {
-        // Should probably do this in a different thread
+    public void entityFavorited(Entity entity) {
+        // TODO: Should probably do this in a different thread
         entity.setFavorite(true);
         EntityDbDelegator.insert(entity);
+    }
+
+    @Override
+    public void entityUnFavorited(Entity entity, int postion) {
+        // TODO: Should probably do this in a different thread
+        entity.setFavorite(false);
+        EntityDbDelegator.delete(entity);
     }
 }

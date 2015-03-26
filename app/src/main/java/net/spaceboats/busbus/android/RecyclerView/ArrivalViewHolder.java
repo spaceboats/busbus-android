@@ -7,7 +7,6 @@ import android.widget.TextView;
 import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.R;
-import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 
 import java.util.Date;
 
@@ -57,7 +56,11 @@ public class ArrivalViewHolder extends BaseViewHolder {
         }
     }
 
-    public ImageView getFavoriteImageView() {
+    public ImageView getFavoritedImageView() {
+        return mFavoriteFilled;
+    }
+
+    public ImageView getUnFavoritedImageView() {
         return mFavoriteUnfilled;
     }
 

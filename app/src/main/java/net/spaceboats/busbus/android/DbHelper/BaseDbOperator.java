@@ -38,6 +38,18 @@ public abstract class BaseDbOperator {
         }
     }
 
+    public void delete(Entity entity) {
+        SQLiteDatabase db = DbManager.getDatabase();
+
+        try {
+            //deleteSubEntities(entity);
+            db.delete(getTableName(), getDeleteWhereClause(), getDeleteWhereArgs(entity));
+        }
+        finally {
+            DbManager.closeDatabase();
+        }
+    }
+
     public void insertAsTransaction(Entity entity) {
         SQLiteDatabase db = DbManager.getDatabase();
 
@@ -55,24 +67,49 @@ public abstract class BaseDbOperator {
         }
     }
 
+    public void deleteAsTransaction(Entity entity) {
+        SQLiteDatabase db = DbManager.getDatabase();
+
+        db.beginTransaction();
+        try {
+            delete(entity);
+            db.setTransactionSuccessful();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            db.endTransaction();
+            DbManager.closeDatabase();
+        }
+    }
+
     public void insertSubEntities(Entity entity) {
         // Should be implemented if the entity has other entities that need to be stored.
+        // i.e. Arrival has both a stop and a route.
+    }
+
+    public void deleteSubEntities(Entity entity) {
+        // Should be implemented if the entity has other entities that need to be deleted.
         // i.e. Arrival has both a stop and a route.
     }
 
     public List<Entity> query() {
         List<Entity> entities = new ArrayList<>();
         SQLiteDatabase db = DbManager.getDatabase();
+        Cursor cursor = db.query(getTableName(), getColumns(), null, null, null, null, null);
 
         try {
-            Cursor cursor = db.query(getTableName(), getColumns(), null, null, null, null, null);
             while (cursor.moveToNext()) {
-                entities.add(getNewEntity(cursor));
+                //TODO: Try and figure out why arrivals will have a null route and stop.
+                Entity entity = getNewEntity(cursor);
+                if(entity != null)
+                    entities.add(entity);
             }
-            cursor.close();
         }
         finally {
             DbManager.closeDatabase();
+            cursor.close();
         }
 
         return entities;
@@ -81,15 +118,16 @@ public abstract class BaseDbOperator {
     public Entity queryWithId(String id) {
         SQLiteDatabase db = DbManager.getDatabase();
         String[] args = {id};
-        Entity entity;
+        Entity entity = null;
+        Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), args, null, null, null);
+
         try {
-            Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), args, null, null, null);
-            cursor.moveToFirst();
-            entity = getNewEntity(cursor);
-            cursor.close();
+            if(cursor.moveToFirst())
+                entity = getNewEntity(cursor);
         }
         finally {
             DbManager.closeDatabase();
+            cursor.close();
         }
 
         return entity;
@@ -100,5 +138,7 @@ public abstract class BaseDbOperator {
     protected abstract String[] getColumns();
     protected abstract Entity getNewEntity(Cursor cursor);
     protected abstract String getIdSelection();
+    protected abstract String getDeleteWhereClause();
+    protected abstract String[] getDeleteWhereArgs(Entity entity);
 
 }

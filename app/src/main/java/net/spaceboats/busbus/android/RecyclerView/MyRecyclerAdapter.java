@@ -31,7 +31,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     // what function to call when an item is clicked.
     public interface MyClickListener {
         public void entityClicked(Entity entity);
-        public void favoriteClicked(Entity entity);
+        public void entityFavorited(Entity entity);
+        public void entityUnFavorited(Entity entity, int position);
     }
 
     public MyRecyclerAdapter(MyClickListener clickListener) {
@@ -133,13 +134,23 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 mClickListener.entityClicked(viewHolder.getArrival());
             }
         });
-        viewHolder.getFavoriteImageView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.getUnFavoritedImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Entity entity = viewHolder.getArrival();
                 if(!entity.isFavorite()) {
-                    mClickListener.favoriteClicked(viewHolder.getArrival());
+                    mClickListener.entityFavorited(viewHolder.getArrival());
                     viewHolder.setFavorite(true);
+                }
+            }
+        });
+        viewHolder.getFavoritedImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Entity entity = viewHolder.getArrival();
+                if(entity.isFavorite()) {
+                    mClickListener.entityUnFavorited(viewHolder.getArrival(), viewHolder.getPosition());
+                    viewHolder.setFavorite(false);
                 }
             }
         });

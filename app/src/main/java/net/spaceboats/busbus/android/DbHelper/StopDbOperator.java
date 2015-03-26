@@ -16,6 +16,11 @@ public class StopDbOperator extends BaseDbOperator {
         super(context);
     }
 
+    protected void validateEntityType(Entity entity) {
+        if (!Stop.class.isInstance(entity))
+            throw new IllegalArgumentException("Entity is not of type Stop");
+    }
+
     @Override
     protected String getTableName() {
         return FavoritesContract.Stop.TABLE_NAME;
@@ -23,9 +28,7 @@ public class StopDbOperator extends BaseDbOperator {
 
     @Override
     protected ContentValues getContentValues(Entity entity) {
-        if(!Stop.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Stop");
-
+        validateEntityType(entity);
         Stop stop = (Stop) entity;
 
         ContentValues values = new ContentValues();
@@ -55,12 +58,35 @@ public class StopDbOperator extends BaseDbOperator {
                 FavoritesContract.Stop.COLUMN_NAME,
                 FavoritesContract.Stop.COLUMN_LATITUDE,
                 FavoritesContract.Stop.COLUMN_LONGITUDE,
-                FavoritesContract.Stop.COLUMN_DESCRIPTION };
+                FavoritesContract.Stop.COLUMN_DESCRIPTION};
         return columns;
     }
 
     @Override
     protected String getIdSelection() {
         return FavoritesContract.Stop.COLUMN_ID + "= ?";
+    }
+
+    @Override
+    protected String getDeleteWhereClause() {
+        return FavoritesContract.Stop.COLUMN_ID + " = ? and "
+                + FavoritesContract.Stop.COLUMN_NAME + " = ? and "
+                + FavoritesContract.Stop.COLUMN_LATITUDE + " = ? and "
+                + FavoritesContract.Stop.COLUMN_LONGITUDE + " = ? and "
+                + FavoritesContract.Stop.COLUMN_DESCRIPTION + " = ?";
+    }
+
+    @Override
+    protected String[] getDeleteWhereArgs(Entity entity) {
+        validateEntityType(entity);
+        Stop stop = (Stop) entity;
+
+        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
+        String[] args = {stop.getId(),
+                stop.getStopName(),
+                Double.toString(stop.getLatitude()),
+                Double.toString(stop.getLongitude()),
+                stop.getDescription()};
+        return args;
     }
 }

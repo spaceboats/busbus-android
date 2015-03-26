@@ -18,6 +18,11 @@ public class ArrivalDbOperator extends BaseDbOperator {
         super(context);
     }
 
+    protected void validateEntityType(Entity entity) {
+        if(!Arrival.class.isInstance(entity))
+            throw new IllegalArgumentException("Entity is not of type Arrival");
+    }
+
     @Override
     protected String getTableName() {
         return FavoritesContract.Arrival.TABLE_NAME;
@@ -25,9 +30,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
 
     @Override
     protected ContentValues getContentValues(Entity entity) {
-        if(!Arrival.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Arrival");
-
+        validateEntityType(entity);
         Arrival arrival = (Arrival) entity;
 
         ContentValues values = new ContentValues();
@@ -45,6 +48,10 @@ public class ArrivalDbOperator extends BaseDbOperator {
         Route route = (Route) routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
         Stop stop = (Stop) stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
 
+        // TODO: Figure out why route and stop are null...
+        if(route == null || stop == null)
+            return null;
+
         return new Arrival(-1, "", stop, route);
     }
 
@@ -58,8 +65,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
 
     @Override
     public void insertSubEntities(Entity entity) {
-        if(!Arrival.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Arrival");
+        validateEntityType(entity);
 
         Arrival arrival = (Arrival) entity;
 
@@ -70,7 +76,35 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
+    public void deleteSubEntities(Entity entity) {
+        validateEntityType(entity);
+
+        Arrival arrival = (Arrival) entity;
+
+        RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
+        StopDbOperator stopDbOperator = new StopDbOperator(mContext);
+        routeDbOperator.delete(arrival.getRoute());
+        stopDbOperator.delete(arrival.getStop());
+    }
+
+    @Override
     protected String getIdSelection() {
         return "";
+    }
+
+    @Override
+    protected String getDeleteWhereClause() {
+        return FavoritesContract.Arrival.COLUMN_ROUTE_ID + " = ? and "
+                + FavoritesContract.Arrival.COLUMN_STOP_ID + " = ?";
+    }
+
+    @Override
+    protected String[] getDeleteWhereArgs(Entity entity) {
+        validateEntityType(entity);
+        Arrival arrival = (Arrival) entity;
+
+        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
+        String[] args = {arrival.getRoute().getId(), arrival.getStop().getId()};
+        return args;
     }
 }
