@@ -42,13 +42,13 @@
                 android:id="@+id/favoriteUnfilled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star_unfilled" />
+                android:src="@drawable/ic_star_unfilled" />
 
             <ImageView
                 android:id="@+id/favoriteFilled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star_filled" />
+                android:src="@drawable/ic_star_filled" />
 
         </LinearLayout>
 
