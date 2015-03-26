@@ -82,9 +82,6 @@ public class Arrival extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
 
         Arrival arrival = (Arrival) o;
-
-        //if (mTimeSeconds != arrival.mTimeSeconds) return false;
-        //if (!mHeadsign.equals(arrival.mHeadsign)) return false;
         if (!mRoute.equals(arrival.mRoute)) return false;
         if (!mStop.equals(arrival.mStop)) return false;
 
@@ -95,8 +92,6 @@ public class Arrival extends Entity {
     public int hashCode() {
         int result = mStop.hashCode();
         result = 31 * result + mRoute.hashCode();
-        result = 31 * result + mHeadsign.hashCode();
-        result = 31 * result + (int) (mTimeSeconds ^ (mTimeSeconds >>> 32));
         return result;
     }
 }
