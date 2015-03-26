@@ -42,7 +42,6 @@ public abstract class BaseDbOperator {
         SQLiteDatabase db = DbManager.getDatabase();
 
         try {
-            //deleteSubEntities(entity);
             db.delete(getTableName(), getDeleteWhereClause(), getDeleteWhereArgs(entity));
         }
         finally {
@@ -89,11 +88,6 @@ public abstract class BaseDbOperator {
         // i.e. Arrival has both a stop and a route.
     }
 
-    public void deleteSubEntities(Entity entity) {
-        // Should be implemented if the entity has other entities that need to be deleted.
-        // i.e. Arrival has both a stop and a route.
-    }
-
     public List<Entity> query() {
         List<Entity> entities = new ArrayList<>();
         SQLiteDatabase db = DbManager.getDatabase();
@@ -101,10 +95,7 @@ public abstract class BaseDbOperator {
 
         try {
             while (cursor.moveToNext()) {
-                //TODO: Try and figure out why arrivals will have a null route and stop.
-                Entity entity = getNewEntity(cursor);
-                if(entity != null)
-                    entities.add(entity);
+                entities.add(getNewEntity(cursor));
             }
         }
         finally {

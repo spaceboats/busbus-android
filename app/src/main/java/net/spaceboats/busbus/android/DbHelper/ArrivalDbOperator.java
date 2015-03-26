@@ -48,10 +48,6 @@ public class ArrivalDbOperator extends BaseDbOperator {
         Route route = (Route) routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
         Stop stop = (Stop) stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
 
-        // TODO: Figure out why route and stop are null...
-        if(route == null || stop == null)
-            return null;
-
         return new Arrival(-1, "", stop, route);
     }
 
@@ -73,18 +69,6 @@ public class ArrivalDbOperator extends BaseDbOperator {
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
         routeDbOperator.insert(arrival.getRoute());
         stopDbOperator.insert(arrival.getStop());
-    }
-
-    @Override
-    public void deleteSubEntities(Entity entity) {
-        validateEntityType(entity);
-
-        Arrival arrival = (Arrival) entity;
-
-        RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
-        StopDbOperator stopDbOperator = new StopDbOperator(mContext);
-        routeDbOperator.delete(arrival.getRoute());
-        stopDbOperator.delete(arrival.getStop());
     }
 
     @Override
