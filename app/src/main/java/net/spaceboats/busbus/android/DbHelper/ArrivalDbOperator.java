@@ -12,15 +12,10 @@ import net.spaceboats.busbus.android.Entites.Stop;
 /**
  * Created by zralston on 3/15/15.
  */
-public class ArrivalDbOperator extends BaseDbOperator {
+public class ArrivalDbOperator extends BaseDbOperator<Arrival> {
 
     public ArrivalDbOperator(Context context) {
         super(context);
-    }
-
-    protected void validateEntityType(Entity entity) {
-        if(!Arrival.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Arrival");
     }
 
     @Override
@@ -29,10 +24,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected ContentValues getContentValues(Entity entity) {
-        validateEntityType(entity);
-        Arrival arrival = (Arrival) entity;
-
+    protected ContentValues getContentValues(Arrival arrival) {
         ContentValues values = new ContentValues();
         values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRoute().getId());
         values.put(FavoritesContract.Arrival.COLUMN_STOP_ID, arrival.getStop().getId());
@@ -41,12 +33,12 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor) {
+    protected Arrival getNewEntity(Cursor cursor) {
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
 
-        Route route = (Route) routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
-        Stop stop = (Stop) stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
+        Route route = routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
+        Stop stop = stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
 
         return new Arrival(-1, "", stop, route);
     }
@@ -60,11 +52,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    public void insertSubEntities(Entity entity) {
-        validateEntityType(entity);
-
-        Arrival arrival = (Arrival) entity;
-
+    public void insertSubEntities(Arrival arrival) {
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
         routeDbOperator.insert(arrival.getRoute());
@@ -83,10 +71,7 @@ public class ArrivalDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected String[] getDeleteWhereArgs(Entity entity) {
-        validateEntityType(entity);
-        Arrival arrival = (Arrival) entity;
-
+    protected String[] getDeleteWhereArgs(Arrival arrival) {
         // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
         String[] args = {arrival.getRoute().getId(), arrival.getStop().getId()};
         return args;

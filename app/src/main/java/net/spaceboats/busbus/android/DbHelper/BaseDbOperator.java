@@ -13,9 +13,7 @@ import java.util.List;
 /**
  * Created by zralston on 3/16/15.
  */
-public abstract class BaseDbOperator {
-    // TODO: See if I can change this to use generics instead.
-    // i.e "BaseDbOperator<T extends Entity>"
+public abstract class BaseDbOperator<T extends Entity> {
 
     Context mContext;
 
@@ -26,7 +24,7 @@ public abstract class BaseDbOperator {
         }
     }
 
-    public void insert(Entity entity) {
+    public void insert(T entity) {
         SQLiteDatabase db = DbManager.getDatabase();
 
         try {
@@ -38,7 +36,7 @@ public abstract class BaseDbOperator {
         }
     }
 
-    public void delete(Entity entity) {
+    public void delete(T entity) {
         SQLiteDatabase db = DbManager.getDatabase();
 
         try {
@@ -49,7 +47,7 @@ public abstract class BaseDbOperator {
         }
     }
 
-    public void insertAsTransaction(Entity entity) {
+    public void insertAsTransaction(T entity) {
         SQLiteDatabase db = DbManager.getDatabase();
 
         db.beginTransaction();
@@ -66,7 +64,7 @@ public abstract class BaseDbOperator {
         }
     }
 
-    public void deleteAsTransaction(Entity entity) {
+    public void deleteAsTransaction(T entity) {
         SQLiteDatabase db = DbManager.getDatabase();
 
         db.beginTransaction();
@@ -83,7 +81,7 @@ public abstract class BaseDbOperator {
         }
     }
 
-    public void insertSubEntities(Entity entity) {
+    public void insertSubEntities(T entity) {
         // Should be implemented if the entity has other entities that need to be stored.
         // i.e. Arrival has both a stop and a route.
     }
@@ -106,10 +104,10 @@ public abstract class BaseDbOperator {
         return entities;
     }
 
-    public Entity queryWithId(String id) {
+    public T queryWithId(String id) {
         SQLiteDatabase db = DbManager.getDatabase();
         String[] args = {id};
-        Entity entity = null;
+        T entity = null;
         Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), args, null, null, null);
 
         try {
@@ -125,11 +123,11 @@ public abstract class BaseDbOperator {
     }
 
     protected abstract String getTableName();
-    protected abstract ContentValues getContentValues(Entity entity);
+    protected abstract ContentValues getContentValues(T entity);
     protected abstract String[] getColumns();
-    protected abstract Entity getNewEntity(Cursor cursor);
+    protected abstract T getNewEntity(Cursor cursor);
     protected abstract String getIdSelection();
     protected abstract String getDeleteWhereClause();
-    protected abstract String[] getDeleteWhereArgs(Entity entity);
+    protected abstract String[] getDeleteWhereArgs(T entity);
 
 }

@@ -10,15 +10,10 @@ import net.spaceboats.busbus.android.Entites.Route;
 /**
  * Created by zralston on 3/15/15.
  */
-public class RouteDbOperator extends BaseDbOperator {
+public class RouteDbOperator extends BaseDbOperator<Route> {
 
     public RouteDbOperator(Context context) {
         super(context);
-    }
-
-    protected void validateEntityType(Entity entity) {
-        if (!Route.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Route");
     }
 
     @Override
@@ -27,9 +22,7 @@ public class RouteDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected ContentValues getContentValues(Entity entity) {
-        validateEntityType(entity);
-        Route route = (Route) entity;
+    protected ContentValues getContentValues(Route route) {
 
         ContentValues values = new ContentValues();
         values.put(FavoritesContract.Route.COLUMN_ID, route.getId());
@@ -41,7 +34,7 @@ public class RouteDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor) {
+    protected Route getNewEntity(Cursor cursor) {
         Route route = new Route(cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_SHORT_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_COLOR)),
@@ -74,10 +67,7 @@ public class RouteDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected String[] getDeleteWhereArgs(Entity entity) {
-        validateEntityType(entity);
-        Route route = (Route) entity;
-
+    protected String[] getDeleteWhereArgs(Route route) {
         // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
         String[] args = {route.getId(), route.getName(), route.getNumber(), route.getColor()};
         return args;

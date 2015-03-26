@@ -10,15 +10,10 @@ import net.spaceboats.busbus.android.Entites.Stop;
 /**
  * Created by zralston on 3/15/15.
  */
-public class StopDbOperator extends BaseDbOperator {
+public class StopDbOperator extends BaseDbOperator<Stop> {
 
     public StopDbOperator(Context context) {
         super(context);
-    }
-
-    protected void validateEntityType(Entity entity) {
-        if (!Stop.class.isInstance(entity))
-            throw new IllegalArgumentException("Entity is not of type Stop");
     }
 
     @Override
@@ -27,10 +22,7 @@ public class StopDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected ContentValues getContentValues(Entity entity) {
-        validateEntityType(entity);
-        Stop stop = (Stop) entity;
-
+    protected ContentValues getContentValues(Stop stop) {
         ContentValues values = new ContentValues();
         values.put(FavoritesContract.Stop.COLUMN_ID, stop.getId());
         values.put(FavoritesContract.Stop.COLUMN_NAME, stop.getStopName());
@@ -42,7 +34,7 @@ public class StopDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected Entity getNewEntity(Cursor cursor) {
+    protected Stop getNewEntity(Cursor cursor) {
         Stop stop = new Stop(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_NAME)),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LATITUDE))),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LONGITUDE))),
@@ -77,10 +69,7 @@ public class StopDbOperator extends BaseDbOperator {
     }
 
     @Override
-    protected String[] getDeleteWhereArgs(Entity entity) {
-        validateEntityType(entity);
-        Stop stop = (Stop) entity;
-
+    protected String[] getDeleteWhereArgs(Stop stop) {
         // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
         String[] args = {stop.getId(),
                 stop.getStopName(),
