@@ -24,9 +24,9 @@
             android:foreground="@drawable/ripple"
             android:onClick="launchClosestStop"
             android:orientation="horizontal"
-            card_view:cardBackgroundColor="#424242"
+            card_view:cardBackgroundColor="@color/myCardViewBackground"
             card_view:cardCornerRadius="0dp"
-            card_view:cardElevation="5dp">
+            card_view:cardElevation="5dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             android:foreground="@drawable/ripple"
             android:onClick="launchFavorites"
             android:orientation="horizontal"
-            card_view:cardBackgroundColor="#424242"
+            card_view:cardBackgroundColor="@color/myCardViewBackground"
             card_view:cardCornerRadius="0dp"
             card_view:cardElevation="5dp">
 
