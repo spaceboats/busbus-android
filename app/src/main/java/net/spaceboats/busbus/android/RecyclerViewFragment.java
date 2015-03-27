@@ -105,7 +105,7 @@ public class RecyclerViewFragment extends Fragment {
     public void updateData(List<Entity> entities) {
         if(entities.size() != 0) {
             sortEntities(entities);
-            if(Arrival.class.isInstance(entities.get(0)))
+            if(entities.get(0) instanceof Arrival)
                 updateFavorites(entities);
             mAdapter.updateItems(entities);
         }

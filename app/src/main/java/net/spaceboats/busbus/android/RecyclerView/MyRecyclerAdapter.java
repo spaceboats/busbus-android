@@ -58,17 +58,20 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if(Route.class.isInstance(entities.get(position))) {
-            return ROUTE_VIEWTYPE;
+        Entity tempEntity = entities.get(position);
+        int viewType = DEFAULT_VIEWTYPE;
+
+        if(tempEntity instanceof Route) {
+            viewType = ROUTE_VIEWTYPE;
         }
-        else if(Stop.class.isInstance(entities.get(position))) {
-            return STOP_VIEWTYPE;
+        else if(tempEntity instanceof Stop) {
+            viewType = STOP_VIEWTYPE;
         }
-        else if(Arrival.class.isInstance(entities.get(position))) {
-            return ARRIVAL_VIEWTYPE;
+        else if(tempEntity instanceof Arrival) {
+            viewType = ARRIVAL_VIEWTYPE;
         }
 
-        return DEFAULT_VIEWTYPE;
+        return viewType;
     }
 
     @Override
@@ -78,18 +81,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        BaseViewHolder viewHolder = null;
+
         if(viewType == ROUTE_VIEWTYPE) {
-            return createRouteViewHolder(viewGroup);
+            viewHolder = createRouteViewHolder(viewGroup);
         }
         else if(viewType == STOP_VIEWTYPE) {
-            return createStopViewHolder(viewGroup);
+            viewHolder = createStopViewHolder(viewGroup);
         }
         else if(viewType == ARRIVAL_VIEWTYPE) {
-            return createArrivalViewHolder(viewGroup);
+            viewHolder = createArrivalViewHolder(viewGroup);
         }
 
-        //TODO: Maybe don't return null?
-        return null;
+        return viewHolder;
     }
 
     @Override

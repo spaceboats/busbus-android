@@ -42,11 +42,11 @@ public class EntityDbDelegator {
 
     public static void insert(Entity entity) {
         sDbUpdated = true;
-        if(Route.class.isInstance(entity))
+        if(entity instanceof Route)
             insertRoute((Route) entity);
-        else if(Stop.class.isInstance(entity))
+        else if(entity instanceof Stop)
             insertStop((Stop) entity);
-        else if(Arrival.class.isInstance(entity))
+        else if(entity instanceof Arrival)
             insertArrival((Arrival) entity);
         else
             Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
@@ -54,11 +54,11 @@ public class EntityDbDelegator {
 
     public static void delete(Entity entity) {
         sDbUpdated = true;
-        if(Route.class.isInstance(entity))
+        if(entity instanceof Route)
             deleteRoute((Route) entity);
-        else if(Stop.class.isInstance(entity))
+        else if(entity instanceof Stop)
             deleteStop((Stop) entity);
-        else if(Arrival.class.isInstance(entity))
+        else if(entity instanceof Arrival)
             deleteArrival((Arrival) entity);
         else
             Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
