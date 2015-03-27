@@ -54,7 +54,6 @@ public class EntityDbDelegator {
 
     public static void delete(Entity entity) {
         sDbUpdated = true;
-        sDbUpdated = true;
         if(Route.class.isInstance(entity))
             deleteRoute((Route) entity);
         else if(Stop.class.isInstance(entity))
