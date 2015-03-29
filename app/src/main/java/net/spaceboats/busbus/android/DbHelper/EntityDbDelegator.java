@@ -65,8 +65,10 @@ public class EntityDbDelegator {
     }
 
     public static List<Entity> queryArrivals() {
-        if(sDbUpdated)
+        if(sDbUpdated) {
             sArrivals = sArrivalDbOperator.query();
+            sDbUpdated = false;
+        }
         return sArrivals;
     }
 
