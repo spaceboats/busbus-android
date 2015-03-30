@@ -7,7 +7,7 @@ import android.util.Log;
 /**
  * Created by Zane on 3/17/2015.
  */
-public class DbManager {
+class DbManager {
 
     private static int sOpenCounter;
 

@@ -10,7 +10,7 @@ import net.spaceboats.busbus.android.Entites.Stop;
 /**
  * Created by zralston on 3/15/15.
  */
-public class StopDbOperator extends BaseDbOperator<Stop> {
+class StopDbOperator extends BaseDbOperator<Stop> {
 
     public StopDbOperator(Context context) {
         super(context);

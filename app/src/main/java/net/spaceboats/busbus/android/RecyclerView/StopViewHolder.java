@@ -11,7 +11,7 @@ import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 /**
  * Created by zralston on 3/12/15.
  */
-public class StopViewHolder extends BaseViewHolder {
+class StopViewHolder extends BaseViewHolder {
 
     private TextView mStopNameTextView;
     private Stop mStop;

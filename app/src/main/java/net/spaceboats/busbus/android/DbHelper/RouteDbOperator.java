@@ -10,7 +10,7 @@ import net.spaceboats.busbus.android.Entites.Route;
 /**
  * Created by zralston on 3/15/15.
  */
-public class RouteDbOperator extends BaseDbOperator<Route> {
+class RouteDbOperator extends BaseDbOperator<Route> {
 
     public RouteDbOperator(Context context) {
         super(context);

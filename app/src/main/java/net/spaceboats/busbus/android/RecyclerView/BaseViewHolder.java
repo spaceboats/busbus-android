@@ -8,7 +8,7 @@ import net.spaceboats.busbus.android.Entites.Entity;
 /**
  * Created by zralston on 3/12/15.
  */
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public BaseViewHolder(View view) {
         super(view);

@@ -14,7 +14,7 @@ import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 /**
  * Created by zralston on 3/12/15.
  */
-public class RouteViewHolder extends BaseViewHolder {
+class RouteViewHolder extends BaseViewHolder {
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;

@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 /**
  * Created by zralston on 3/15/15.
  */
-public final class FavoritesContract {
+final class FavoritesContract {
 
     public FavoritesContract() { }
 

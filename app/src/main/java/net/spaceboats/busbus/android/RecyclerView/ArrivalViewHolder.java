@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created by zralston on 3/12/15.
  */
-public class ArrivalViewHolder extends BaseViewHolder {
+class ArrivalViewHolder extends BaseViewHolder {
 
     private TextView mStopNameTextView;
     private TextView mNextArrivalTime;

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by zralston on 3/15/15.
  */
-public class FavoritesDbHelper extends SQLiteOpenHelper{
+class FavoritesDbHelper extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "favorites.db";
 

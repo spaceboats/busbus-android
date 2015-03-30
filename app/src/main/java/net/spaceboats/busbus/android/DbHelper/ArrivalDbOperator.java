@@ -12,7 +12,7 @@ import net.spaceboats.busbus.android.Entites.Stop;
 /**
  * Created by zralston on 3/15/15.
  */
-public class ArrivalDbOperator extends BaseDbOperator<Arrival> {
+class ArrivalDbOperator extends BaseDbOperator<Arrival> {
 
     public ArrivalDbOperator(Context context) {
         super(context);

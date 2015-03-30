@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by zralston on 3/16/15.
  */
-public abstract class BaseDbOperator<T extends Entity> {
+abstract class BaseDbOperator<T extends Entity> {
 
     Context mContext;
 
