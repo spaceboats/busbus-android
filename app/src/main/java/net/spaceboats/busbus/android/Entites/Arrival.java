@@ -44,6 +44,14 @@ public class Arrival extends Entity {
         return mRoute;
     }
 
+    public String getStopId() {
+        return mStop.getId();
+    }
+
+    public String getRouteId() {
+        return mRoute.getId();
+    }
+
     public String getHeadsign() {
         return mHeadsign;
     }

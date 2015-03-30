@@ -1,6 +1,5 @@
 package net.spaceboats.busbus.android;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import net.spaceboats.busbus.android.DbHelper.DbManager;
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 

@@ -26,8 +26,8 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
     @Override
     protected ContentValues getContentValues(Arrival arrival) {
         ContentValues values = new ContentValues();
-        values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRoute().getId());
-        values.put(FavoritesContract.Arrival.COLUMN_STOP_ID, arrival.getStop().getId());
+        values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRouteId());
+        values.put(FavoritesContract.Arrival.COLUMN_STOP_ID, arrival.getStopId());
 
         return values;
     }
@@ -73,7 +73,7 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
     @Override
     protected String[] getDeleteWhereArgs(Arrival arrival) {
         // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
-        String[] args = {arrival.getRoute().getId(), arrival.getStop().getId()};
+        String[] args = {arrival.getRouteId(), arrival.getStopId()};
         return args;
     }
 }
