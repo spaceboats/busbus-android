@@ -122,12 +122,34 @@ abstract class BaseDbOperator<T extends Entity> {
         return entity;
     }
 
+    protected String getDeleteWhereClause() {
+        String[] columns = getColumns();
+
+        String result = "";
+        for(int i = 0; i < columns.length - 1; i++) {
+            result += columns[i] + " = ? and ";
+        }
+
+        result += columns[columns.length - 1] + " = ?";
+        return result;
+    }
+
+    protected String[] getDeleteWhereArgs(T entity) {
+        ContentValues contentValues = getContentValues(entity);
+        String[] columns = getColumns();
+
+        String[] args = new String[contentValues.size()];
+        for(int i = 0; i < contentValues.size(); i++) {
+            args[i] = contentValues.getAsString(columns[i]);
+        }
+
+        return args;
+    }
+
     protected abstract String getTableName();
     protected abstract ContentValues getContentValues(T entity);
     protected abstract String[] getColumns();
     protected abstract T getNewEntity(Cursor cursor);
     protected abstract String getIdSelection();
-    protected abstract String getDeleteWhereClause();
-    protected abstract String[] getDeleteWhereArgs(T entity);
 
 }

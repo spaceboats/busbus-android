@@ -64,16 +64,4 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
         return "";
     }
 
-    @Override
-    protected String getDeleteWhereClause() {
-        return FavoritesContract.Arrival.COLUMN_ROUTE_ID + " = ? and "
-                + FavoritesContract.Arrival.COLUMN_STOP_ID + " = ?";
-    }
-
-    @Override
-    protected String[] getDeleteWhereArgs(Arrival arrival) {
-        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
-        String[] args = {arrival.getRouteId(), arrival.getStopId()};
-        return args;
-    }
 }

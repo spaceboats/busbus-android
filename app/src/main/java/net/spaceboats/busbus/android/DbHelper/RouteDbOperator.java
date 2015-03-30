@@ -58,18 +58,4 @@ class RouteDbOperator extends BaseDbOperator<Route> {
         return FavoritesContract.Route.COLUMN_ID + "= ?";
     }
 
-    @Override
-    protected String getDeleteWhereClause() {
-        return FavoritesContract.Route.COLUMN_ID + "= ? and "
-                + FavoritesContract.Route.COLUMN_NAME + "= ? and "
-                + FavoritesContract.Route.COLUMN_SHORT_NAME + "= ? and "
-                + FavoritesContract.Route.COLUMN_COLOR + "= ?";
-    }
-
-    @Override
-    protected String[] getDeleteWhereArgs(Route route) {
-        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
-        String[] args = {route.getId(), route.getName(), route.getNumber(), route.getColor()};
-        return args;
-    }
 }

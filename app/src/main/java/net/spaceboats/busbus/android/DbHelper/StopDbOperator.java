@@ -59,23 +59,4 @@ class StopDbOperator extends BaseDbOperator<Stop> {
         return FavoritesContract.Stop.COLUMN_ID + "= ?";
     }
 
-    @Override
-    protected String getDeleteWhereClause() {
-        return FavoritesContract.Stop.COLUMN_ID + " = ? and "
-                + FavoritesContract.Stop.COLUMN_NAME + " = ? and "
-                + FavoritesContract.Stop.COLUMN_LATITUDE + " = ? and "
-                + FavoritesContract.Stop.COLUMN_LONGITUDE + " = ? and "
-                + FavoritesContract.Stop.COLUMN_DESCRIPTION + " = ?";
-    }
-
-    @Override
-    protected String[] getDeleteWhereArgs(Stop stop) {
-        // TODO: Decouple the order of this with delete where clause somehow. Since they both rely on same ordering
-        String[] args = {stop.getId(),
-                stop.getStopName(),
-                Double.toString(stop.getLatitude()),
-                Double.toString(stop.getLongitude()),
-                stop.getDescription()};
-        return args;
-    }
 }
