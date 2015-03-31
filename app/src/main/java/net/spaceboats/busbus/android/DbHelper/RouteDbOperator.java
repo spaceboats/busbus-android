@@ -35,22 +35,18 @@ class RouteDbOperator extends BaseDbOperator<Route> {
 
     @Override
     protected Route getNewEntity(Cursor cursor) {
-        Route route = new Route(cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_SHORT_NAME)),
+        return new Route(cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_SHORT_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_COLOR)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_ID)));
-
-        return route;
     }
 
     @Override
     protected String[] getColumns() {
-        String[] columns = {FavoritesContract.Route.COLUMN_ID,
+        return new String[]{FavoritesContract.Route.COLUMN_ID,
                 FavoritesContract.Route.COLUMN_NAME,
                 FavoritesContract.Route.COLUMN_SHORT_NAME,
                 FavoritesContract.Route.COLUMN_COLOR};
-
-        return columns;
     }
 
     @Override

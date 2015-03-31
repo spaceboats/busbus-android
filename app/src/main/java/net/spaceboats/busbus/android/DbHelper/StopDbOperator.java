@@ -35,23 +35,20 @@ class StopDbOperator extends BaseDbOperator<Stop> {
 
     @Override
     protected Stop getNewEntity(Cursor cursor) {
-        Stop stop = new Stop(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_NAME)),
+        return new Stop(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_NAME)),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LATITUDE))),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LONGITUDE))),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_DESCRIPTION)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_ID)));
-
-        return stop;
     }
 
     @Override
     protected String[] getColumns() {
-        String[] columns = {FavoritesContract.Stop.COLUMN_ID,
+        return new String[]{FavoritesContract.Stop.COLUMN_ID,
                 FavoritesContract.Stop.COLUMN_NAME,
                 FavoritesContract.Stop.COLUMN_LATITUDE,
                 FavoritesContract.Stop.COLUMN_LONGITUDE,
                 FavoritesContract.Stop.COLUMN_DESCRIPTION};
-        return columns;
     }
 
     @Override

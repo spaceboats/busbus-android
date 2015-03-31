@@ -25,9 +25,7 @@ class DbManager {
     }
 
     public static boolean isInitialized() {
-        if(sDbHelper == null)
-            return false;
-        return true;
+        return sDbHelper != null;
     }
 
     public static SQLiteDatabase getDatabase() {

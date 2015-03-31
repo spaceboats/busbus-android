@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 
 import net.spaceboats.busbus.android.Entites.Arrival;
-import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
 
@@ -45,10 +44,8 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
 
     @Override
     protected String[] getColumns() {
-        String[] columns = {FavoritesContract.Arrival.COLUMN_ROUTE_ID,
-                FavoritesContract.Arrival.COLUMN_STOP_ID };
-
-        return columns;
+        return new String[]{FavoritesContract.Arrival.COLUMN_ROUTE_ID,
+                FavoritesContract.Arrival.COLUMN_STOP_ID};
     }
 
     @Override
