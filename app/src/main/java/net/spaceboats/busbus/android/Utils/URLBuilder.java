@@ -20,9 +20,11 @@ class URLBuilder {
     private Uri.Builder builder;
     private String expandArgs;
     private Context mContext;
+    private boolean expandAdded;
 
     public URLBuilder(Context context, String entity) {
         expandArgs = "";
+        expandAdded = false;
         mContext = context;
         builder = new Uri.Builder();
         builder.scheme(SCHEME)
@@ -42,8 +44,15 @@ class URLBuilder {
         addQueryParam(entityName + ENTITY_ATTRIBUTE_SEPARATOR + attributeName, value);
     }
 
+    protected void addExpandQueryParam() {
+        if(!expandAdded) {
+            addQueryParam(EXPAND, expandArgs);
+            expandAdded = true;
+        }
+    }
+
     public String getURL() {
-        addQueryParam(EXPAND, expandArgs);
+        addExpandQueryParam();
         try {
             URL url = new URL(builder.build().toString());
             return url.toString();
