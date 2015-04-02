@@ -51,10 +51,10 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
 
         RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
         Log.v("TestURL", routeURLBuilder.getURL());
-        TransitDataIntentService.startActionGetRoutes(this, routeURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
+        TransitDataIntentService.startAction(this, routeURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
 
         dataBroadcastReceiver = new DataBroadcastReceiver(this);
-        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
+        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
     }
@@ -62,19 +62,19 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
     private void switchToArrivalFragment(String url) {
         Log.v(getClass().getSimpleName(), url);
         replaceRecyclerViewFragment();
-        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
     }
 
     private void switchToStopFragment(String url) {
         Log.v(getClass().getSimpleName(), url);
         replaceRecyclerViewFragment();
-        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_STOPS);
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_STOPS);
     }
 
     private void switchToRouteFragment(String url) {
         Log.v(getClass().getSimpleName(), url);
         replaceRecyclerViewFragment();
-        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
     }
 
     private void replaceRecyclerViewFragment() {

@@ -20,7 +20,7 @@ public class TransitDataIntentService extends IntentService {
     public static final String ACTION_GET_ROUTES = "net.spaceboats.busbus.android.action.GET_ROUTES";
     public static final String ACTION_GET_ARRIVALS = "net.spaceboats.busbus.android.action.GET_ARRIVALS";
     public static final String ACTION_GET_STOPS = "net.spaceboats.busbus.android.action.GET_STOPS";
-    public static final String ACTION_TransitDataIntentService = "net.spaceboats.busbus.androidintentservice.RESPONSE";
+    public static final String ACTION_TRASIT_DATA_INTENT_SERVICE = "net.spaceboats.busbus.androidintentservice.RESPONSE";
     private static final String EXTRA_URL = "net.spaceboats.busbus.android.extra.URL";
     public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
     public static final String EXTRA_ENTITY_TYPE_OUT = "EXTRA_ENTITY_TYPE";
@@ -32,7 +32,7 @@ public class TransitDataIntentService extends IntentService {
     /**
      * Creates a Service to send Http request and broadcast response
      */
-    public static void startActionGetRoutes(Context context, String param1, String action) {
+    public static void startAction(Context context, String param1, String action) {
         Intent intent = new Intent(context, TransitDataIntentService.class);
         intent.setAction(action);
         intent.putExtra(EXTRA_URL, param1);
@@ -52,13 +52,11 @@ public class TransitDataIntentService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_GET_ROUTES.equals(action)) {
                 ENTITY_TYPE = ENTITY_TYPE_ROUTES;
-                final String param1 = intent.getStringExtra(EXTRA_URL);
-                handleActionGetRoutes(param1);
+                handleAction(intent.getStringExtra(EXTRA_URL));
             }
             else if (ACTION_GET_ARRIVALS.equals(action)) {
                 ENTITY_TYPE = ENTITY_TYPE_ARRIVALS;
-                final String param1 = intent.getStringExtra(EXTRA_URL);
-                handleActionGetRoutes(param1);
+                handleAction(intent.getStringExtra(EXTRA_URL));
             }
         }
     }
@@ -67,7 +65,7 @@ public class TransitDataIntentService extends IntentService {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
-    private void handleActionGetRoutes(String url) {
+    private void handleAction(String url) {
         HttpURLConnection httpURLConnection = null;
         BufferedReader bufferedReader = null;
 
@@ -111,7 +109,7 @@ public class TransitDataIntentService extends IntentService {
         }
 
         Intent intentResponse = new Intent();
-        intentResponse.setAction(ACTION_TransitDataIntentService);
+        intentResponse.setAction(ACTION_TRASIT_DATA_INTENT_SERVICE);
         intentResponse.addCategory(Intent.CATEGORY_DEFAULT);
         intentResponse.putExtra(EXTRA_KEY_OUT, responseData);
         intentResponse.putExtra(EXTRA_ENTITY_TYPE_OUT, ENTITY_TYPE);

@@ -49,7 +49,7 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
         }
 
         dataBroadcastReceiver = new DataBroadcastReceiver(this);
-        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
+        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
     }
@@ -77,7 +77,7 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
             arrivalURLBuilder.addStopId(arrival.getStopId());
             arrivalURLBuilder.expandStop();
             arrivalURLBuilder.expandRoute();
-            TransitDataIntentService.startActionGetRoutes(this, arrivalURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ARRIVALS);
+            TransitDataIntentService.startAction(this, arrivalURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ARRIVALS);
         }
     }
 
