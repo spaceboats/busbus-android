@@ -14,11 +14,9 @@ import java.net.URL;
 public class URLBuilder {
     protected static final String SCHEME = "http";
     protected static final String AUTHORITY = "ec2-54-68-11-133.us-west-2.compute.amazonaws.com";
-    protected static final String ROUTES = "routes";
-    protected static final String STOPS = "stops";
-    protected static final String ARRIVALS = "arrivals";
-    protected static final String EXPAND_SEPARATOR = ",";
     protected static final String EXPAND = "_expand";
+    protected static final String EXPAND_SEPARATOR = ",";
+    protected static final String ENTITY_ATTRIBUTE_SEPARATOR = ".";
     private Uri.Builder builder;
     private String expandArgs;
     private Context mContext;
@@ -38,6 +36,10 @@ public class URLBuilder {
 
     public void addToExpandArgs(String entityName) {
         expandArgs += entityName + EXPAND_SEPARATOR;
+    }
+
+    protected void addEntityAttrParam(String entityName, String attributeName, String value) {
+        addQueryParam(entityName + ENTITY_ATTRIBUTE_SEPARATOR + attributeName, value);
     }
 
     public String getURL() {
