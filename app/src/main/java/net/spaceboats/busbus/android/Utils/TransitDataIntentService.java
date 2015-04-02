@@ -23,6 +23,11 @@ public class TransitDataIntentService extends IntentService {
     public static final String ACTION_TransitDataIntentService = "net.spaceboats.busbus.androidintentservice.RESPONSE";
     private static final String EXTRA_URL = "net.spaceboats.busbus.android.extra.URL";
     public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
+    public static final String EXTRA_ENTITY_TYPE_OUT = "EXTRA_ENTITY_TYPE";
+    public static final String ENTITY_TYPE_ARRIVALS = "ARRIVALS";
+    public static final String ENTITY_TYPE_ROUTES = "ROUTES";
+    public static final String ENTITY_TYPE_STOPS = "STOPS";
+    private String ENTITY_TYPE;
 
     /**
      * Creates a Service to send Http request and broadcast response
@@ -46,10 +51,12 @@ public class TransitDataIntentService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_ROUTES.equals(action)) {
+                ENTITY_TYPE = ENTITY_TYPE_ROUTES;
                 final String param1 = intent.getStringExtra(EXTRA_URL);
                 handleActionGetRoutes(param1);
             }
             else if (ACTION_GET_ARRIVALS.equals(action)) {
+                ENTITY_TYPE = ENTITY_TYPE_ARRIVALS;
                 final String param1 = intent.getStringExtra(EXTRA_URL);
                 handleActionGetRoutes(param1);
             }
@@ -107,6 +114,7 @@ public class TransitDataIntentService extends IntentService {
         intentResponse.setAction(ACTION_TransitDataIntentService);
         intentResponse.addCategory(Intent.CATEGORY_DEFAULT);
         intentResponse.putExtra(EXTRA_KEY_OUT, responseData);
+        intentResponse.putExtra(EXTRA_ENTITY_TYPE_OUT, ENTITY_TYPE);
         sendBroadcast(intentResponse);
     }
 }

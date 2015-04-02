@@ -44,6 +44,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void addItemToEnd(Entity entity) {
+        addItem(entities.size(), entity);
+    }
+
     public void addItem(int position, Entity entity){
         if(entity != null) {
             entities.add(position, entity);

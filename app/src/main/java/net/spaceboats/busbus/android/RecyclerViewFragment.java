@@ -102,34 +102,68 @@ public class RecyclerViewFragment extends Fragment {
         return rootView;
     }
 
+    /*
+    Summary: Overwrites the data currently in the recyclerView
+    Note: The entities are sorted before being inserted based on the entities' compareTo function
+     */
     public void updateData(List<Entity> entities) {
-        if(entities.size() != 0) {
-            sortEntities(entities);
-            if(entities.get(0) instanceof Arrival)
-                updateFavorites(entities);
-            mAdapter.updateItems(entities);
-        }
+        sortEntities(entities);
+        markFavorites(entities);
+        mAdapter.updateItems(entities);
     }
 
+    /*
+    Summary: Adds the entity to the end of the recyclerView
+     */
+    public void addEntity(Entity entity) {
+        markFavorites(entity);
+        mAdapter.addItemToEnd(entity);
+    }
+
+    /*
+    Summary: Removes the entity at the position in the recyclerView
+     */
     public void removeEntity(int position) {
         mAdapter.removeItem(position);
     }
 
+    /*
+    Summary: Sorts the List of entities by using the entities compareTo function
+     */
     public void sortEntities(List<Entity> entities) {
-        Collections.sort(entities);
+        if(entities.size() != 0)
+            Collections.sort(entities);
     }
 
-    // Do this somewhere else, but just putting here for now.
-    public void updateFavorites(List<Entity> entityList) {
+    /*
+    Summary: Will set all entities' favorite attribute to true if it is a favorite.
+     */
+    public void markFavorites(List<Entity> entityList) {
         List<Entity> favorites = EntityDbDelegator.queryArrivals();
 
-        // awful way to do this, but will work for now.
-        for(Entity favorite : favorites) {
-            for(Entity entity : entityList) {
+        for (Entity entity : entityList) {
+            markFavorites(entity, favorites);
+        }
+    }
+
+    // TODO: Find somewhere else to put this function and the one above.
+    /*
+    Summary: Sets the entity favorite attribute to true if it is a favorite
+     */
+    public void markFavorites(Entity entity) {
+        markFavorites(entity, EntityDbDelegator.queryArrivals());
+    }
+
+    /*
+    Summary: Sets the entity favorite attribute to true if it is in the favorites list
+     */
+    public void markFavorites(Entity entity, List<Entity> favorites) {
+        if(entity instanceof Arrival) {
+            Arrival arrival = (Arrival) entity;
+            for(Entity favorite : favorites) {
                 Arrival fav = (Arrival) favorite;
-                Arrival ent = (Arrival) entity;
-                if(fav.equals(ent))
-                    entity.setFavorite(true);
+                if(fav.equals(arrival))
+                    arrival.setFavorite(true);
             }
         }
     }

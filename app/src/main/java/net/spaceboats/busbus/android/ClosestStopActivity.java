@@ -1,7 +1,5 @@
 package net.spaceboats.busbus.android;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.FragmentTransaction;
@@ -11,28 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
-import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
-import net.spaceboats.busbus.android.Entites.Stop;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
+import net.spaceboats.busbus.android.Utils.DataBroadcastReceiver;
 import net.spaceboats.busbus.android.Utils.RouteURLBuilder;
-import net.spaceboats.busbus.android.Utils.TheJSONParser;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
-import org.json.JSONException;
 import java.util.Date;
+import java.util.List;
 
-public class ClosestStopActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener {
+public class ClosestStopActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener, DataBroadcastReceiver.IBroadcastReceiver {
 
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
     private RecyclerViewFragment recyclerViewFragment;
-    private Class mMyClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,41 +46,44 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
         getWindow().setEnterTransition(fade);
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            recyclerViewFragment =
-                    RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
-                                                     getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
-            transaction.replace(R.id.fragment_placeholder, recyclerViewFragment);
-            transaction.commit();
+            replaceRecyclerViewFragment();
         }
 
-        mMyClass = Route.class;
         RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
         Log.v("TestURL", routeURLBuilder.getURL());
         TransitDataIntentService.startActionGetRoutes(this, routeURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
 
-        dataBroadcastReceiver = new DataBroadcastReceiver();
+        dataBroadcastReceiver = new DataBroadcastReceiver(this);
         IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
     }
 
-    public void switchFragment(String url, Class myClass) {
-        Log.v("stuff", url);
-        mMyClass = myClass;
+    private void switchToArrivalFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
+    }
+
+    private void switchToStopFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_STOPS);
+    }
+
+    private void switchToRouteFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
+    }
+
+    private void replaceRecyclerViewFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         recyclerViewFragment =
                 RecyclerViewFragment.newinstance(getIntent().getIntExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), 0),
                         getIntent().getIntExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), 0));
         transaction.replace(R.id.fragment_placeholder, recyclerViewFragment);
         transaction.commit();
-
-        if(myClass == Arrival.class)
-            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
-        else if(myClass == Stop.class)
-            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_STOPS);
-        else if(myClass == Route.class)
-            TransitDataIntentService.startActionGetRoutes(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
     }
 
     @Override
@@ -95,32 +92,9 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
         unregisterReceiver(dataBroadcastReceiver);
     }
 
-    public class DataBroadcastReceiver extends BroadcastReceiver {
-        public void onReceive(Context context, Intent intent) {
-            String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
-            if(result != null && recyclerViewFragment != null) {
-                Log.v("DataBroadcastReceiver", result);
-                try {
-                    if(mMyClass == Arrival.class)
-                        recyclerViewFragment.updateData(TheJSONParser.getArrivalList(result));
-                    else if(mMyClass == Stop.class)
-                        recyclerViewFragment.updateData(TheJSONParser.getStopList(result));
-                    else if(mMyClass == Route.class)
-                        recyclerViewFragment.updateData(TheJSONParser.getRouteList(result));
-                } catch (JSONException je) {
-                    Log.v("JSON Error", "Could not parse JSON");
-                    Toast.makeText(getApplicationContext(), "Could not get route data",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-            else
-                Log.v("DataBroadcastReceiver", "Received null message");
-        }
-    }
-
     @Override
     public void entityClicked(Entity entity) {
-        if(Route.class.isInstance(entity)) {
+        if(entity instanceof Route) {
             setTitle("Route " + ((Route)entity).getNumber());
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             Date date = new Date();
@@ -130,7 +104,7 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();
             //arrivalURLBuilder.addLimit("1");
-            switchFragment(arrivalURLBuilder.getURL(), Arrival.class);
+            switchToArrivalFragment(arrivalURLBuilder.getURL());
         }
     }
 
@@ -156,5 +130,10 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
                 EntityDbDelegator.delete(entity);
             }
         }).start();
+    }
+
+    @Override
+    public void entityListReceived(List<Entity> entityList) {
+        recyclerViewFragment.updateData(entityList);
     }
 }
