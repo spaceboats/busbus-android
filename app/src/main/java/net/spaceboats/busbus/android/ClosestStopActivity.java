@@ -19,6 +19,7 @@ import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
+import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
 import net.spaceboats.busbus.android.Utils.TheJSONParser;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 import net.spaceboats.busbus.android.Utils.URLBuilder;
@@ -121,14 +122,15 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
     public void entityClicked(Entity entity) {
         if(Route.class.isInstance(entity)) {
             setTitle("Route " + ((Route)entity).getNumber());
-            URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ARRIVALS);
-            //urlBuilder.addQueryParam("start_time", "1426075200");
+            ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             Date date = new Date();
-            urlBuilder.addQueryParam("start_time", Long.toString(date.getTime()/1000));
-            urlBuilder.addQueryParam("end_time", Long.toString(date.getTime()/1000 + 900));
-            urlBuilder.addQueryParam("route.id", "RT_" + ((Route) entity).getNumber());
-            urlBuilder.addQueryParam("_expand", "routes,stops");
-            switchFragment(urlBuilder.getURL(), Arrival.class);
+            arrivalURLBuilder.addStartTime(Long.toString(date.getTime()/1000));
+            arrivalURLBuilder.addEndTime(Long.toString(date.getTime()/1000 + 900));
+            arrivalURLBuilder.addRouteId("RT_" + ((Route) entity).getNumber());
+            arrivalURLBuilder.expandRoute();
+            arrivalURLBuilder.expandStop();
+            //arrivalURLBuilder.addLimit("1");
+            switchFragment(arrivalURLBuilder.getURL(), Arrival.class);
         }
     }
 
