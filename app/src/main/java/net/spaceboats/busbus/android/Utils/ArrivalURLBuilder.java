@@ -2,9 +2,6 @@ package net.spaceboats.busbus.android.Utils;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by zralston on 4/1/15.
  */
@@ -13,16 +10,9 @@ public class ArrivalURLBuilder extends URLBuilder {
     protected static final String ARRIVALS_LIMIT = "_limit";
     protected static final String ARRIVALS_START_TIME = "start_time";
     protected static final String ARRIVALS_END_TIME = "end_time";
-    protected static final String ARRIVALS_STOP_ID = "stop.id";
-    protected static final String ARRIVALS_ROUTE_ID = "route.id";
-    protected static final String ARRIVALS_EXPAND = "_expand";
-    protected static final String ARRIVALS_EXPAND_ROUTE = "routes";
-    protected static final String ARRIVALS_EXPAND_STOP = "stops";
-    protected static final String ARRIVALS_EXPAND_PROVIDER = "providers";
-    protected static final String ARRIVALS_EXPAND_SEPARATOR = ",";
 
     public ArrivalURLBuilder(Context context) {
-        super(context, ARRIVALS);
+        super(context, JSONKeys.ENTITY_ARRIVALS);
     }
 
     public void addLimit(String amount) {
@@ -38,22 +28,22 @@ public class ArrivalURLBuilder extends URLBuilder {
     }
 
     public void addStopId(String id) {
-        addQueryParam(ARRIVALS_STOP_ID, id);
+        addEntityAttrParam(JSONKeys.STOP, JSONKeys.STOP_ID, id);
     }
 
     public void addRouteId(String id) {
-        addQueryParam(ARRIVALS_ROUTE_ID, id);
+        addEntityAttrParam(JSONKeys.ROUTE, JSONKeys.ROUTE_ID, id);
     }
 
     public void expandRoute() {
-        addToExpandArgs(ARRIVALS_EXPAND_ROUTE);
+        addToExpandArgs(JSONKeys.ENTITY_ROUTES);
     }
 
     public void expandStop() {
-        addToExpandArgs(ARRIVALS_EXPAND_STOP);
+        addToExpandArgs(JSONKeys.ENTITY_STOPS);
     }
 
     public void expandProvider() {
-        addToExpandArgs(ARRIVALS_EXPAND_PROVIDER);
+        addToExpandArgs(JSONKeys.ENTITY_PROVIDERS);
     }
 }

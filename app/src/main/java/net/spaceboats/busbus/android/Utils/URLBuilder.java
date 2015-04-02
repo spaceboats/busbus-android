@@ -11,20 +11,20 @@ import java.net.URL;
 /**
  * Created by agustafs on 3/11/15.
  */
-public class URLBuilder {
+class URLBuilder {
     protected static final String SCHEME = "http";
     protected static final String AUTHORITY = "ec2-54-68-11-133.us-west-2.compute.amazonaws.com";
-    protected static final String ROUTES = "routes";
-    protected static final String STOPS = "stops";
-    protected static final String ARRIVALS = "arrivals";
-    protected static final String EXPAND_SEPARATOR = ",";
     protected static final String EXPAND = "_expand";
+    protected static final String EXPAND_SEPARATOR = ",";
+    protected static final String ENTITY_ATTRIBUTE_SEPARATOR = ".";
     private Uri.Builder builder;
     private String expandArgs;
     private Context mContext;
+    private boolean expandAdded;
 
     public URLBuilder(Context context, String entity) {
         expandArgs = "";
+        expandAdded = false;
         mContext = context;
         builder = new Uri.Builder();
         builder.scheme(SCHEME)
@@ -40,8 +40,19 @@ public class URLBuilder {
         expandArgs += entityName + EXPAND_SEPARATOR;
     }
 
+    protected void addEntityAttrParam(String entityName, String attributeName, String value) {
+        addQueryParam(entityName + ENTITY_ATTRIBUTE_SEPARATOR + attributeName, value);
+    }
+
+    protected void addExpandQueryParam() {
+        if(!expandAdded) {
+            addQueryParam(EXPAND, expandArgs);
+            expandAdded = true;
+        }
+    }
+
     public String getURL() {
-        addQueryParam(EXPAND, expandArgs);
+        addExpandQueryParam();
         try {
             URL url = new URL(builder.build().toString());
             return url.toString();
