@@ -11,7 +11,7 @@ import java.net.URL;
 /**
  * Created by agustafs on 3/11/15.
  */
-public class URLBuilder {
+class URLBuilder {
     protected static final String SCHEME = "http";
     protected static final String AUTHORITY = "ec2-54-68-11-133.us-west-2.compute.amazonaws.com";
     protected static final String EXPAND = "_expand";

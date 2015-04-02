@@ -20,9 +20,9 @@ import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
+import net.spaceboats.busbus.android.Utils.RouteURLBuilder;
 import net.spaceboats.busbus.android.Utils.TheJSONParser;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
-import net.spaceboats.busbus.android.Utils.URLBuilder;
 
 import org.json.JSONException;
 import java.util.Date;
@@ -61,9 +61,9 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
         }
 
         mMyClass = Route.class;
-        URLBuilder urlBuilder = new URLBuilder(getApplicationContext(), URLBuilder.ROUTES);
-        Log.v("TestURL", urlBuilder.getURL());
-        TransitDataIntentService.startActionGetRoutes(this, urlBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
+        RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
+        Log.v("TestURL", routeURLBuilder.getURL());
+        TransitDataIntentService.startActionGetRoutes(this, routeURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
 
         dataBroadcastReceiver = new DataBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TransitDataIntentService);
@@ -125,7 +125,7 @@ public class ClosestStopActivity extends ActionBarActivity implements MyRecycler
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             Date date = new Date();
             arrivalURLBuilder.addStartTime(Long.toString(date.getTime()/1000));
-            arrivalURLBuilder.addEndTime(Long.toString(date.getTime()/1000 + 900));
+            arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
             arrivalURLBuilder.addRouteId("RT_" + ((Route) entity).getNumber());
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();

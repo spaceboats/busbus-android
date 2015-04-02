@@ -2,9 +2,6 @@ package net.spaceboats.busbus.android.Utils;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by zralston on 4/1/15.
  */
