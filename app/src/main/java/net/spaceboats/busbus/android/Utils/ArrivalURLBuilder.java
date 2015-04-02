@@ -20,11 +20,9 @@ public class ArrivalURLBuilder extends URLBuilder {
     protected static final String ARRIVALS_EXPAND_STOP = "stops";
     protected static final String ARRIVALS_EXPAND_PROVIDER = "providers";
     protected static final String ARRIVALS_EXPAND_SEPARATOR = ",";
-    private String expandArgs;
 
     public ArrivalURLBuilder(Context context) {
         super(context, ARRIVALS);
-        expandArgs = "";
     }
 
     public void addLimit(String amount) {
@@ -57,15 +55,5 @@ public class ArrivalURLBuilder extends URLBuilder {
 
     public void expandProvider() {
         addToExpandArgs(ARRIVALS_EXPAND_PROVIDER);
-    }
-
-    private void addToExpandArgs(String entityName) {
-        expandArgs += entityName + ARRIVALS_EXPAND_SEPARATOR;
-    }
-
-    @Override
-    public String getURL() {
-        addQueryParam(ARRIVALS_EXPAND, expandArgs);
-        return super.getURL();
     }
 }
