@@ -2,30 +2,52 @@ package net.spaceboats.busbus.android;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private Toolbar toolbar;
     private int clicked_x_coord = 0;
     private int clicked_y_coord = 0;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+
+    @Override
+    public void onConnectionSuspended(int x) {
+        Log.v("Location", "Connection Suspended");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.v("Location", "Connection Failed");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+            buildGoogleApiClient();
+        }
         setContentView(R.layout.activity_main);
 
         EntityDbDelegator.initDbDelegator(getApplicationContext());
@@ -55,6 +77,26 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    public void onResume() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        //if(SERVICE_DISABLED) {
+            Log.v("GooglePlayServicesStatus" + resultCode, "hello");
+        //}
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,5 +141,26 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
         intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
         startActivity(intent, options.toBundle());
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            Log.v("Latitude", String.valueOf(mLastLocation.getLatitude()));
+            Log.v("Longitude", String.valueOf(mLastLocation.getLongitude()));
+        }
+        else {
+            Log.v("Location", "FAILED");
+        }
     }
 }
