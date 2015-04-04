@@ -19,18 +19,20 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 
 
-public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener{
 
     private Toolbar toolbar;
     private int clicked_x_coord = 0;
     private int clicked_y_coord = 0;
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
 
     @Override
     public void onConnectionSuspended(int x) {
@@ -153,14 +155,15 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            Log.v("Latitude", String.valueOf(mLastLocation.getLatitude()));
-            Log.v("Longitude", String.valueOf(mLastLocation.getLongitude()));
-        }
-        else {
-            Log.v("Location", "FAILED");
-        }
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setNumUpdates(1);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.v("Latitude", String.valueOf(location.getLatitude()));
+        Log.v("Longitude", String.valueOf(location.getLongitude()));
     }
 }
