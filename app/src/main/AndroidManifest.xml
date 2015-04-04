@@ -15,10 +15,6 @@
             android:name=".ClosestStopActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name=".RouteActivity"
-            android:label="@string/title_activity_route" >
-        </activity>
 
         <service
             android:name=".Utils.TransitDataIntentService"
