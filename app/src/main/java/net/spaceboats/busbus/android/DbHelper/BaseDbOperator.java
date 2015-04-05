@@ -81,7 +81,7 @@ abstract class BaseDbOperator<T extends Entity> {
         }
     }
 
-    public void insertSubEntities(T entity) {
+    protected void insertSubEntities(T entity) {
         // Should be implemented if the entity has other entities that need to be stored.
         // i.e. Arrival has both a stop and a route.
     }
