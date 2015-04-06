@@ -20,7 +20,6 @@ class RouteViewHolder extends BaseViewHolder {
     private TextView mRouteNameTextView;
     private ImageView mRouteColorImageView;
     private Route mRoute;
-    String routeColor = "#000000";
 
     public RouteViewHolder(View view) {
         super(view);
@@ -33,7 +32,7 @@ class RouteViewHolder extends BaseViewHolder {
         mRoute = (Route) entity;
 
         setRouteNumber("Route " + mRoute.getNumber());
-        setBackgroundColor(mRoute.getColor());
+        setRouteColor(mRoute.getColor());
         setRouteName(mRoute.getName());
     }
 
@@ -45,9 +44,8 @@ class RouteViewHolder extends BaseViewHolder {
         this.mRouteNumberTextView.setText(number);
     }
 
-    private void setBackgroundColor(String color){
+    private void setRouteColor(String color){
         this.mRouteColorImageView.getDrawable().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
-        this.routeColor = color;
     }
 
     private void setRouteName(String name){
