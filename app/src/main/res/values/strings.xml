@@ -10,13 +10,13 @@
     <string name="all_routes">Routes</string>
     <string name="favorites">Favorites</string>
     <string name="title_activity_route">Route</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="title_activity_main">busbus</string>
+    <string name="title_activity_favorites">Favorites</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="EXTRA_X_CLICKED_POSITION">net.spaceboats.busbus.android.extra.X_CLICK_POSITION</string>
     <string name="EXTRA_Y_CLICKED_POSITION">net.spaceboats.busbus.android.extra.Y_CLICK_POSITION</string>
-    <string name="title_activity_closest_stop">ClosestStopActivity</string>
+    <string name="title_activity_closest_stop">Closest stop</string>
     <string name="EXTRA_LOCATION_LATITUDE">net.spaceboats.busbus.android.extra.LOCATION_LATITUDE</string>
     <string name="EXTRA_LOCATION_LONGITUDE">net.spaceboats.busbus.android.extra.LOCATION_LONGITUDE</string>
 
