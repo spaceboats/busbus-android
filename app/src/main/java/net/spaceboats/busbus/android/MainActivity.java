@@ -166,5 +166,13 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     public void onLocationChanged(Location location) {
         Log.v("Latitude", String.valueOf(location.getLatitude()));
         Log.v("Longitude", String.valueOf(location.getLongitude()));
+        Intent intent = new Intent(this, ClosestStopActivity.class);
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
+
+        intent.putExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), location.getLatitude());
+        intent.putExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), location.getLongitude());
+        startActivity(intent, options.toBundle());
+
     }
 }
