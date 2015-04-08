@@ -133,8 +133,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         startActivity(intent, options.toBundle());
     }
 
-    public void launchClosestStop(View view) {
-        Intent intent = new Intent(this, ClosestStopActivity.class);
+    public void launchRoutes(View view) {
+        Intent intent = new Intent(this, RoutesActivity.class);
 
         View parentView = view.getRootView();
 

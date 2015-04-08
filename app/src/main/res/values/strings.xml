@@ -16,5 +16,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="EXTRA_X_CLICKED_POSITION">net.spaceboats.busbus.android.extra.X_CLICK_POSITION</string>
     <string name="EXTRA_Y_CLICKED_POSITION">net.spaceboats.busbus.android.extra.Y_CLICK_POSITION</string>
+    <string name="title_activity_closest_stop">ClosestStopActivity</string>
 
 </resources>

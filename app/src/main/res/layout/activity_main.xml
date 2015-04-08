@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:foreground="@drawable/ripple"
-            android:onClick="launchClosestStop"
+            android:onClick="launchRoutes"
             android:orientation="horizontal"
             card_view:cardBackgroundColor="@color/myCardViewBackground"
             card_view:cardCornerRadius="0dp"

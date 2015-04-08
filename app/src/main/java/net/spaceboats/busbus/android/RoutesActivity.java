@@ -8,28 +8,29 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
-import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
 import net.spaceboats.busbus.android.Utils.DataBroadcastReceiver;
+import net.spaceboats.busbus.android.Utils.RouteURLBuilder;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
+import java.util.Date;
 import java.util.List;
 
-
-public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener, DataBroadcastReceiver.IBroadcastReceiver {
+public class RoutesActivity extends ActionBarActivity implements MyRecyclerAdapter.MyClickListener, DataBroadcastReceiver.IBroadcastReceiver {
 
     private Toolbar toolbar;
-    private RecyclerViewFragment recyclerViewFragment;
     private DataBroadcastReceiver dataBroadcastReceiver;
+    private RecyclerViewFragment recyclerViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
 
@@ -48,10 +49,32 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
             replaceRecyclerViewFragment();
         }
 
+        RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
+        Log.v("TestURL", routeURLBuilder.getURL());
+        TransitDataIntentService.startAction(this, routeURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ROUTES);
+
         dataBroadcastReceiver = new DataBroadcastReceiver(this);
         IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
+    }
+
+    private void switchToArrivalFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
+    }
+
+    private void switchToStopFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_STOPS);
+    }
+
+    private void switchToRouteFragment(String url) {
+        Log.v(getClass().getSimpleName(), url);
+        replaceRecyclerViewFragment();
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
     }
 
     private void replaceRecyclerViewFragment() {
@@ -64,63 +87,41 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        List<Entity> favoriteArrivals = EntityDbDelegator.queryArrivals();
-
-        // Used to figure out the next arrival time for each favorite
-        for(Entity entity : favoriteArrivals) {
-            Arrival arrival = (Arrival) entity;
-            ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
-            arrivalURLBuilder.addRouteId(arrival.getRouteId());
-            arrivalURLBuilder.addStopId(arrival.getStopId());
-            arrivalURLBuilder.expandStop();
-            arrivalURLBuilder.expandRoute();
-            TransitDataIntentService.startAction(this, arrivalURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ARRIVALS);
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(dataBroadcastReceiver);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_favorites, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void entityClicked(Entity entity) {
-
+        if(entity instanceof Route) {
+            setTitle("Route " + ((Route)entity).getNumber());
+            ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
+            Date date = new Date();
+            arrivalURLBuilder.addStartTime(Long.toString(date.getTime()/1000));
+            arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
+            arrivalURLBuilder.addRouteId("RT_" + ((Route) entity).getNumber());
+            arrivalURLBuilder.expandRoute();
+            arrivalURLBuilder.expandStop();
+            //arrivalURLBuilder.addLimit("1");
+            switchToArrivalFragment(arrivalURLBuilder.getURL());
+        }
     }
 
     @Override
-    public void entityFavorited(Entity entity) {
+    public void entityFavorited(final Entity entity) {
+        entity.setFavorite(true);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EntityDbDelegator.insert(entity);
+            }
+        }).start();
     }
 
     @Override
-    public void entityUnFavorited(final Entity entity, int position) {
+    public void entityUnFavorited(final Entity entity, int postion) {
         entity.setFavorite(false);
 
         new Thread(new Runnable() {
@@ -129,14 +130,10 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
                 EntityDbDelegator.delete(entity);
             }
         }).start();
-
-        recyclerViewFragment.removeEntity(position);
     }
 
     @Override
     public void entityListReceived(List<Entity> entityList) {
-        // TODO: Change this later after I can query for the next arrival from busbus web.
-        recyclerViewFragment.sortEntities(entityList);
-        recyclerViewFragment.addEntity(entityList.get(0));
+        recyclerViewFragment.updateData(entityList);
     }
 }
