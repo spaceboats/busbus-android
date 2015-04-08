@@ -58,6 +58,10 @@ public class TransitDataIntentService extends IntentService {
                 ENTITY_TYPE = ENTITY_TYPE_ARRIVALS;
                 handleAction(intent.getStringExtra(EXTRA_URL));
             }
+            else if (ACTION_GET_STOPS.equals(action)) {
+                ENTITY_TYPE = ENTITY_TYPE_STOPS;
+                handleAction(intent.getStringExtra(EXTRA_URL));
+            }
         }
     }
 

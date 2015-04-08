@@ -15,6 +15,7 @@ import java.util.Date;
  */
 class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
+    private TextView mRouteNumberTextView;
     private TextView mStopNameTextView;
     private TextView mNextArrivalTime;
     private ImageView mFavoriteUnfilled;
@@ -22,6 +23,7 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     public ArrivalViewHolder(View view) {
         super(view);
+        mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
         mStopNameTextView = (TextView) itemView.findViewById(R.id.stopName);
         mNextArrivalTime = (TextView) itemView.findViewById(R.id.nextArrivalTime);
         mFavoriteUnfilled = (ImageView) itemView.findViewById(R.id.favoriteUnfilled);
@@ -30,10 +32,15 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     public void setData(Entity entity) {
         mEntity = (Arrival) entity;
-        setStopName(mEntity.getStop().getStopName());
+        setRouteNumber("Route " + mEntity.getRoute().getNumber());
+        setStopName("@ " + mEntity.getStop().getStopName());
         Date date = new Date();
         setNextArrivalTime(mEntity.getStringOfTimeDiff(date.getTime()/1000));
         setFavorite(entity.isFavorite());
+    }
+
+    public void setRouteNumber(String number) {
+        this.mRouteNumberTextView.setText(number);
     }
 
     public void setStopName(String name) {

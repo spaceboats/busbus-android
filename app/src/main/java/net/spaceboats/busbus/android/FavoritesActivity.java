@@ -136,7 +136,9 @@ public class FavoritesActivity extends ActionBarActivity implements MyRecyclerAd
     @Override
     public void entityListReceived(List<Entity> entityList) {
         // TODO: Change this later after I can query for the next arrival from busbus web.
-        recyclerViewFragment.sortEntities(entityList);
-        recyclerViewFragment.addEntity(entityList.get(0));
+        if(entityList.size() > 0) {
+            recyclerViewFragment.sortEntities(entityList);
+            recyclerViewFragment.addEntity(entityList.get(0));
+        }
     }
 }
