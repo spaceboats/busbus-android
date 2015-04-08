@@ -46,6 +46,8 @@ final class JSONKeys {
     public static final String STOP_LATITUDE = "latitude";
     public static final String STOP_LONGITUDE = "longitude";
     public static final String STOP_DESCRIPTION = DESCRIPTION;
+    public static final String STOP_DISTANCE = "distance";
+    public static final String STOP_DISTANCE_PATH_EXTENSION = "find";
 
     /*
     Route attributes

@@ -51,6 +51,10 @@ class URLBuilder {
         }
     }
 
+    protected void addToPath(String pathExtension) {
+        builder.appendPath(pathExtension);
+    }
+
     public String getURL() {
         addExpandQueryParam();
         try {
