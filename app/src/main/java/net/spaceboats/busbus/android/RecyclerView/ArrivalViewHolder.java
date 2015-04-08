@@ -1,5 +1,7 @@
 package net.spaceboats.busbus.android.RecyclerView;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import java.util.Date;
 class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     private TextView mRouteNumberTextView;
+    private ImageView mRouteColorImageView;
     private TextView mStopNameTextView;
     private TextView mNextArrivalTime;
     private ImageView mFavoriteUnfilled;
@@ -24,6 +27,7 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
     public ArrivalViewHolder(View view) {
         super(view);
         mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
+        mRouteColorImageView = (ImageView) itemView.findViewById(R.id.routeColor);
         mStopNameTextView = (TextView) itemView.findViewById(R.id.stopName);
         mNextArrivalTime = (TextView) itemView.findViewById(R.id.nextArrivalTime);
         mFavoriteUnfilled = (ImageView) itemView.findViewById(R.id.favoriteUnfilled);
@@ -34,9 +38,14 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
         mEntity = (Arrival) entity;
         setRouteNumber("Route " + mEntity.getRoute().getNumber());
         setStopName("@ " + mEntity.getStop().getStopName());
+        setRouteColor(mEntity.getRoute().getColor());
         Date date = new Date();
         setNextArrivalTime(mEntity.getStringOfTimeDiff(date.getTime()/1000));
         setFavorite(entity.isFavorite());
+    }
+
+    private void setRouteColor(String color){
+        this.mRouteColorImageView.getDrawable().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_OVER);
     }
 
     public void setRouteNumber(String number) {
