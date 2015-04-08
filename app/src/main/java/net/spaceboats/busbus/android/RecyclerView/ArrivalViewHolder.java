@@ -13,13 +13,12 @@ import java.util.Date;
 /**
  * Created by zralston on 3/12/15.
  */
-class ArrivalViewHolder extends BaseViewHolder {
+class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     private TextView mStopNameTextView;
     private TextView mNextArrivalTime;
     private ImageView mFavoriteUnfilled;
     private ImageView mFavoriteFilled;
-    private Arrival mArrival;
 
     public ArrivalViewHolder(View view) {
         super(view);
@@ -30,10 +29,10 @@ class ArrivalViewHolder extends BaseViewHolder {
     }
 
     public void setData(Entity entity) {
-        mArrival = (Arrival) entity;
-        setStopName(mArrival.getStop().getStopName());
+        mEntity = (Arrival) entity;
+        setStopName(mEntity.getStop().getStopName());
         Date date = new Date();
-        setNextArrivalTime(mArrival.getStringOfTimeDiff(date.getTime()/1000));
+        setNextArrivalTime(mEntity.getStringOfTimeDiff(date.getTime()/1000));
         setFavorite(entity.isFavorite());
     }
 
@@ -62,9 +61,5 @@ class ArrivalViewHolder extends BaseViewHolder {
 
     public ImageView getUnFavoritedImageView() {
         return mFavoriteUnfilled;
-    }
-
-    public Arrival getArrival() {
-        return mArrival;
     }
 }

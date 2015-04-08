@@ -113,7 +113,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClickListener.entityClicked(viewHolder.getRoute());
+                mClickListener.entityClicked(viewHolder.getEntity());
             }
         });
         return viewHolder;
@@ -126,7 +126,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClickListener.entityClicked(viewHolder.getStop());
+                mClickListener.entityClicked(viewHolder.getEntity());
             }
         });
         return viewHolder;
@@ -139,15 +139,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClickListener.entityClicked(viewHolder.getArrival());
+                mClickListener.entityClicked(viewHolder.getEntity());
             }
         });
         viewHolder.getUnFavoritedImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Entity entity = viewHolder.getArrival();
+                Entity entity = viewHolder.getEntity();
                 if(!entity.isFavorite()) {
-                    mClickListener.entityFavorited(viewHolder.getArrival());
+                    mClickListener.entityFavorited(viewHolder.getEntity());
                     viewHolder.setFavorite(true);
                 }
             }
@@ -155,9 +155,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         viewHolder.getFavoritedImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Entity entity = viewHolder.getArrival();
+                Entity entity = viewHolder.getEntity();
                 if(entity.isFavorite()) {
-                    mClickListener.entityUnFavorited(viewHolder.getArrival(), viewHolder.getPosition());
+                    mClickListener.entityUnFavorited(viewHolder.getEntity(), viewHolder.getPosition());
                     viewHolder.setFavorite(false);
                 }
             }

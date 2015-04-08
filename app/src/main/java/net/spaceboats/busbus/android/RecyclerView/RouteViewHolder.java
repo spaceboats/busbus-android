@@ -14,12 +14,11 @@ import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 /**
  * Created by zralston on 3/12/15.
  */
-class RouteViewHolder extends BaseViewHolder {
+class RouteViewHolder extends BaseViewHolder<Route> {
 
     private TextView mRouteNumberTextView;
     private TextView mRouteNameTextView;
     private ImageView mRouteColorImageView;
-    private Route mRoute;
 
     public RouteViewHolder(View view) {
         super(view);
@@ -29,15 +28,11 @@ class RouteViewHolder extends BaseViewHolder {
     }
 
     public void setData(Entity entity) {
-        mRoute = (Route) entity;
+        mEntity = (Route) entity;
 
-        setRouteNumber("Route " + mRoute.getNumber());
-        setRouteColor(mRoute.getColor());
-        setRouteName(mRoute.getName());
-    }
-
-    public Route getRoute() {
-        return mRoute;
+        setRouteNumber("Route " + mEntity.getNumber());
+        setRouteColor(mEntity.getColor());
+        setRouteName(mEntity.getName());
     }
 
     private void setRouteNumber(String number) {

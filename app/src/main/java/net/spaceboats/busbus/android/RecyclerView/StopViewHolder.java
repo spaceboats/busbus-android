@@ -11,10 +11,9 @@ import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 /**
  * Created by zralston on 3/12/15.
  */
-class StopViewHolder extends BaseViewHolder {
+class StopViewHolder extends BaseViewHolder<Stop> {
 
     private TextView mStopNameTextView;
-    private Stop mStop;
 
     public StopViewHolder(View view) {
         super(view);
@@ -22,15 +21,12 @@ class StopViewHolder extends BaseViewHolder {
     }
 
     public void setData(Entity entity) {
-        mStop = (Stop) entity;
-        setStopName(mStop.getStopName());
+        mEntity = (Stop) entity;
+        setStopName(mEntity.getStopName());
     }
 
     private void setStopName(String name) {
         this.mStopNameTextView.setText(name);
     }
 
-    public Stop getStop() {
-        return mStop;
-    }
 }

@@ -8,10 +8,16 @@ import net.spaceboats.busbus.android.Entites.Entity;
 /**
  * Created by zralston on 3/12/15.
  */
-abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+abstract class BaseViewHolder<T extends Entity> extends RecyclerView.ViewHolder {
+
+    protected T mEntity;
 
     public BaseViewHolder(View view) {
         super(view);
+    }
+
+    public T getEntity() {
+        return mEntity;
     }
 
     public abstract void setData(Entity entity);
