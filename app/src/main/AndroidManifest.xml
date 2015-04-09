@@ -41,6 +41,10 @@
             android:name=".ClosestStopActivity"
             android:label="@string/title_activity_closest_stop" >
         </activity>
+        <activity
+            android:name=".ArrivalsActivity"
+            android:label="@string/title_activity_arrivals" >
+        </activity>
     </application>
 
 </manifest>
