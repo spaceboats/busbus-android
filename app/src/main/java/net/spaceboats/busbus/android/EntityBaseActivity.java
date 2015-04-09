@@ -47,9 +47,6 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
         }
 
         dataBroadcastReceiver = new DataBroadcastReceiver(this);
-        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(dataBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -75,8 +72,16 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(dataBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         unregisterReceiver(dataBroadcastReceiver);
     }
 
