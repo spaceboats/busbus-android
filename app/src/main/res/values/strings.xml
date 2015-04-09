@@ -19,5 +19,8 @@
     <string name="title_activity_closest_stop">Closest stop</string>
     <string name="EXTRA_LOCATION_LATITUDE">net.spaceboats.busbus.android.extra.LOCATION_LATITUDE</string>
     <string name="EXTRA_LOCATION_LONGITUDE">net.spaceboats.busbus.android.extra.LOCATION_LONGITUDE</string>
+    <string name="EXTRA_ENTITY_URL">net.spaceboats.busbus.android.extra.ENTITY_URL</string>
+    <string name="EXTRA_APP_BAR_TITLE">net.spaceboats.busbus.android.extra.APP_BAR_TITLE</string>
+    <string name="title_activity_arrivals">Arrivals</string>
 
 </resources>
