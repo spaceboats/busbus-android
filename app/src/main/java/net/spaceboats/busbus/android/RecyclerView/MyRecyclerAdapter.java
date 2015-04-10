@@ -45,19 +45,21 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItemToEnd(Entity entity) {
-        addItem(entities.size(), entity);
+        addItem(getItemCount(), entity);
     }
 
     public void addItem(int position, Entity entity){
-        if(entity != null) {
+        if(entity != null && position < getItemCount()) {
             entities.add(position, entity);
             notifyItemInserted(position);
         }
     }
 
     public void removeItem(int position){
-        entities.remove(position);
-        notifyItemRemoved(position);
+        if(position < getItemCount()) {
+            entities.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     @Override
