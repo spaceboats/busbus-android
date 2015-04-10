@@ -49,7 +49,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItem(int position, Entity entity){
-        if(entity != null && position < getItemCount()) {
+        if(entity != null && position <= getItemCount()) {
             entities.add(position, entity);
             notifyItemInserted(position);
         }
@@ -159,7 +159,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             public void onClick(View v) {
                 Entity entity = viewHolder.getEntity();
                 if(entity.isFavorite()) {
-                    mClickListener.entityUnFavorited(viewHolder.getEntity(), viewHolder.getPosition());
+                    mClickListener.entityUnFavorited(viewHolder.getEntity(), viewHolder.getAdapterPosition());
                     viewHolder.setFavorite(false);
                 }
             }
