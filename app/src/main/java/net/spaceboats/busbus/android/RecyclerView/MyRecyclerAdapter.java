@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
+    // TODO: Come up with a way to display route/stop sections for arrivals,
+    // so we don't have to keep displaying the same route name on each item.
     private static final int DEFAULT_VIEWTYPE = 0;
     private static final int ROUTE_VIEWTYPE = 1;
     private static final int STOP_VIEWTYPE = 2;
@@ -49,7 +51,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItem(int position, Entity entity){
-        if(entity != null && position <= getItemCount()) {
+        if(entity != null && position <= getItemCount() && position >= 0) {
             entities.add(position, entity);
             notifyItemInserted(position);
         }
