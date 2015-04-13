@@ -26,12 +26,12 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     public ArrivalViewHolder(View view) {
         super(view);
-        mRouteNumberTextView = (TextView) itemView.findViewById(R.id.routeNumber);
-        mRouteColorImageView = (ImageView) itemView.findViewById(R.id.routeColor);
-        mStopNameTextView = (TextView) itemView.findViewById(R.id.stopName);
-        mNextArrivalTime = (TextView) itemView.findViewById(R.id.nextArrivalTime);
-        mFavoriteUnfilled = (ImageView) itemView.findViewById(R.id.favoriteUnfilled);
-        mFavoriteFilled = (ImageView) itemView.findViewById(R.id.favoriteFilled);
+        mRouteNumberTextView = (TextView) view.findViewById(R.id.routeNumber);
+        mRouteColorImageView = (ImageView) view.findViewById(R.id.routeColor);
+        mStopNameTextView = (TextView) view.findViewById(R.id.stopName);
+        mNextArrivalTime = (TextView) view.findViewById(R.id.nextArrivalTime);
+        mFavoriteUnfilled = (ImageView) view.findViewById(R.id.favoriteUnfilled);
+        mFavoriteFilled = (ImageView) view.findViewById(R.id.favoriteFilled);
     }
 
     public void setData(Entity entity) {
