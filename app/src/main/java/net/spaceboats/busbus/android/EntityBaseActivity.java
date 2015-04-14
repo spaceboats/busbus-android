@@ -74,7 +74,7 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRASIT_DATA_INTENT_SERVICE);
+        IntentFilter intentFilter = new IntentFilter(TransitDataIntentService.ACTION_TRANSIT_DATA_INTENT_SERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(dataBroadcastReceiver, intentFilter);
     }
