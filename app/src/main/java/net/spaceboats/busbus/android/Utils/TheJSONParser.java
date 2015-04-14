@@ -95,7 +95,7 @@ public class TheJSONParser {
         if(route == null)
             return null;
         int time = arrivalObj.getInt(JSONKeys.ARRIVAL_TIME);
-        String headSign = "";
+        String headSign = "N/A";
         if(!arrivalObj.isNull(JSONKeys.ARRIVAL_HEADSIGN))
             headSign = arrivalObj.getString(JSONKeys.ARRIVAL_HEADSIGN);
         return new Arrival(time, headSign, getStop(stopObj), route);
