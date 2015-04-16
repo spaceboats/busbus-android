@@ -26,7 +26,6 @@ public class RoutesActivity extends EntityBaseActivity {
         if(url == null) {
             RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
             url = routeURLBuilder.getURL();
-            Log.v("TestURL", url);
         }
 
         TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
@@ -43,8 +42,6 @@ public class RoutesActivity extends EntityBaseActivity {
     }
 
     private void switchToArrivalActivity(String url, String appBarTitle) {
-        Log.v(getClass().getSimpleName(), url);
-
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
         Intent intent = new Intent(this, ArrivalsActivity.class);
         intent.putExtra(getString(R.string.EXTRA_ENTITY_URL), url);

@@ -30,7 +30,7 @@ public class DataBroadcastReceiver extends BroadcastReceiver {
         String result = intent.getStringExtra(TransitDataIntentService.EXTRA_KEY_OUT);
         String entityType = intent.getStringExtra(TransitDataIntentService.EXTRA_ENTITY_TYPE_OUT);
         if(result != null) {
-            Log.v("DataBroadcastReceiver", result);
+            Log.v(getClass().getName(), result);
             try {
                 switch (entityType) {
                     case TransitDataIntentService.ENTITY_TYPE_ARRIVALS:
@@ -44,10 +44,10 @@ public class DataBroadcastReceiver extends BroadcastReceiver {
                         break;
                 }
             } catch (JSONException je) {
-                Log.v("JSON Error", "Could not parse JSON");
+                Log.v(getClass().getName(), "Could not parse JSON");
             }
         }
         else
-            Log.v("DataBroadcastReceiver", "Received null message");
+            Log.v(getClass().getName(), "Received null message");
     }
 }

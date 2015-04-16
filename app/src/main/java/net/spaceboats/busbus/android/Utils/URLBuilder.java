@@ -58,10 +58,14 @@ class URLBuilder {
     public String getURL() {
         addExpandQueryParam();
         try {
+            // TODO: why is there a URL variable here?
             URL url = new URL(builder.build().toString());
-            return url.toString();
+            String urlStr = url.toString();
+            Log.v(getClass().getName(), urlStr);
+            return urlStr;
         } catch (MalformedURLException ue) {
-            Log.v("URL Error", "Could not generate URL" + ue);
+            Log.v(getClass().getName(), "Could not generate URL" + ue);
+            // TODO: Remove this toast and probably throw an exception so the activity can make toast
             Toast.makeText(mContext, "Couldn't retrieve data",
                     Toast.LENGTH_LONG).show();
         }

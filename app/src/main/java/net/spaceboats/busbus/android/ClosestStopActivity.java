@@ -27,13 +27,10 @@ public class ClosestStopActivity extends EntityBaseActivity {
         stopURLBuilder.addLatitude(String.valueOf(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), 0)));
         stopURLBuilder.addLongitude(String.valueOf(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), 0)));
         stopURLBuilder.addDistance("100");
-        Log.v("TestURL", stopURLBuilder.getURL());
         TransitDataIntentService.startAction(this, stopURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_STOPS);
     }
 
     private void switchToArrivalActivity(String url, String appBarTitle) {
-        Log.v(getClass().getSimpleName(), url);
-
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
         Intent intent = new Intent(this, ArrivalsActivity.class);
         intent.putExtra(getString(R.string.EXTRA_ENTITY_URL), url);
