@@ -36,12 +36,12 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     @Override
     public void onConnectionSuspended(int x) {
-        Log.v("Location", "Connection Suspended");
+        Log.v(getClass().getName(), "Connection Suspended");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.v("Location", "Connection Failed");
+        Log.v(getClass().getName(), "Connection Failed");
     }
 
     @Override
@@ -77,15 +77,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
                 return false;
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        //if(SERVICE_DISABLED) {
-            Log.v("GooglePlayServicesStatus" + resultCode, "hello");
-        //}
-        super.onResume();
     }
 
     @Override
@@ -164,8 +155,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.v("Latitude", String.valueOf(location.getLatitude()));
-        Log.v("Longitude", String.valueOf(location.getLongitude()));
+        Log.v(getClass().getName() + "/Latitude", String.valueOf(location.getLatitude()));
+        Log.v(getClass().getName() + "/Longitude", String.valueOf(location.getLongitude()));
         Intent intent = new Intent(this, ClosestStopActivity.class);
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));

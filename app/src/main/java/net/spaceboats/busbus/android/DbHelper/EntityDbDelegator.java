@@ -49,7 +49,7 @@ public class EntityDbDelegator {
         else if(entity instanceof Arrival)
             insertArrival((Arrival) entity);
         else
-            Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
+            Log.v(EntityDbDelegator.class.getName(), "Entity was an unknown type");
     }
 
     public static void delete(Entity entity) {
@@ -61,7 +61,7 @@ public class EntityDbDelegator {
         else if(entity instanceof Arrival)
             deleteArrival((Arrival) entity);
         else
-            Log.v("DbHelper/DbDelegator", "Entity was an unknown type");
+            Log.v(EntityDbDelegator.class.getName(), "Entity was an unknown type");
     }
 
     public static List<Entity> queryArrivals() {

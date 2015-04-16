@@ -16,7 +16,7 @@ class DbManager {
 
     public static void initDb(Context context) {
         if(isInitialized()) {
-            Log.v("DbManager", "DbManager was already initialized");
+            Log.v(DbManager.class.getName(), "DbManager was already initialized");
             return;
         }
         sDbHelper = new FavoritesDbHelper(context);

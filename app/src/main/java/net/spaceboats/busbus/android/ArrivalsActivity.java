@@ -24,7 +24,6 @@ public class ArrivalsActivity extends EntityBaseActivity {
         if(url == null) {
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             url = arrivalURLBuilder.getURL();
-            Log.v("TestURL", url);
         }
 
         TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
