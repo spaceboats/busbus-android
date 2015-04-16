@@ -1,9 +1,12 @@
 package net.spaceboats.busbus.android.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
@@ -29,6 +32,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<Entity> entities = new ArrayList<>();
 
+    private int lastPositionAnimated = -1;
+
     // Whatever creates this adapter must implement this interface, so we know
     // what function to call when an item is clicked.
     public interface MyClickListener {
@@ -48,6 +53,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addItemToEnd(Entity entity) {
         addItem(getItemCount(), entity);
+
+        // Apparently notifyItemInserted(position) in addItem() doesn't allow for the animation in
+        // the bindViewHolder() to run correctly, so this call has to happen.
+        notifyDataSetChanged();
     }
 
     public void addItem(int position, Entity entity){
@@ -104,8 +113,24 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return viewHolder;
     }
 
+    private void runEnterAnimation(View view, int position) {
+        if (position > lastPositionAnimated) {
+            lastPositionAnimated = position;
+            view.setAlpha(0.f);
+            view.setTranslationY(100);
+            view.animate()
+                    .alpha(1.f)
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(2.f))
+                    .setStartDelay(position * 15)
+                    .setDuration(200)
+                    .start();
+        }
+    }
+
     @Override
     public void onBindViewHolder(BaseViewHolder viewHolder, int position) {
+        runEnterAnimation(viewHolder.itemView, position);
         Entity item = entities.get(position);
         viewHolder.setData(item);
     }

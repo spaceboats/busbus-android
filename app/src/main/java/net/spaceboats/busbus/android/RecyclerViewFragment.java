@@ -78,7 +78,7 @@ public class RecyclerViewFragment extends Fragment {
         mAdapter = new MyRecyclerAdapter(mPassBackData);
         mRecyclerView.setAdapter(mAdapter);
 
-
+/*
         rootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -98,6 +98,7 @@ public class RecyclerViewFragment extends Fragment {
                 anim.start();
             }
         });
+        */
 
         return rootView;
     }

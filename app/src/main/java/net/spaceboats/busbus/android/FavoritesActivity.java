@@ -56,7 +56,7 @@ public class FavoritesActivity extends EntityBaseActivity {
     @Override
     public void entityListReceived(List<Entity> entityList) {
         // TODO: Change this later after I can query for the next arrival from busbus web.
-        if(entityList.size() > 0) {
+        if (entityList.size() > 0) {
             recyclerViewFragment.sortEntities(entityList);
             recyclerViewFragment.addEntity(entityList.get(0));
         }
