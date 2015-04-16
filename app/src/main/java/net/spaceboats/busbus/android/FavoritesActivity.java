@@ -50,6 +50,7 @@ public class FavoritesActivity extends EntityBaseActivity {
     public void entityUnFavorited(final Entity entity, int position) {
         super.entityUnFavorited(entity, position);
 
+        // TODO: add an undo button for last deleted facorite
         recyclerViewFragment.removeEntity(position);
     }
 
