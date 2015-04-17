@@ -58,7 +58,6 @@ class URLBuilder {
     public String getURL() {
         addExpandQueryParam();
         try {
-            // TODO: why is there a URL variable here?
             URL url = new URL(builder.build().toString());
             String urlStr = url.toString();
             Log.v(getClass().getName(), urlStr);

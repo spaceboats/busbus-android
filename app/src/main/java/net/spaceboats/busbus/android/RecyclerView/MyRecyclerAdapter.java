@@ -117,7 +117,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         if (position > lastPositionAnimated) {
             lastPositionAnimated = position;
             view.setAlpha(0.f);
-            view.setTranslationY(100);
+            view.setTranslationY(150);
             view.animate()
                     .alpha(1.f)
                     .translationY(0)
