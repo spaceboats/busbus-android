@@ -20,6 +20,7 @@ public class TransitDataIntentService extends IntentService {
     public static final String ACTION_GET_ROUTES = "net.spaceboats.busbus.android.action.GET_ROUTES";
     public static final String ACTION_GET_ARRIVALS = "net.spaceboats.busbus.android.action.GET_ARRIVALS";
     public static final String ACTION_GET_STOPS = "net.spaceboats.busbus.android.action.GET_STOPS";
+    public static final String ACTION_GET_PROVIDERS = "net.spaceboats.busbus.android.action.GET_PROVIDERS";
     public static final String ACTION_TRANSIT_DATA_INTENT_SERVICE = "net.spaceboats.busbus.androidintentservice.RESPONSE";
     private static final String EXTRA_URL = "net.spaceboats.busbus.android.extra.URL";
     public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
@@ -27,6 +28,7 @@ public class TransitDataIntentService extends IntentService {
     public static final String ENTITY_TYPE_ARRIVALS = "ARRIVALS";
     public static final String ENTITY_TYPE_ROUTES = "ROUTES";
     public static final String ENTITY_TYPE_STOPS = "STOPS";
+    public static final String ENTITY_TYPE_PROVIDERS = "PROVIDERS";
     private String ENTITY_TYPE;
 
     /**
@@ -60,6 +62,10 @@ public class TransitDataIntentService extends IntentService {
             }
             else if (ACTION_GET_STOPS.equals(action)) {
                 ENTITY_TYPE = ENTITY_TYPE_STOPS;
+                handleAction(intent.getStringExtra(EXTRA_URL));
+            }
+            else if(ACTION_GET_PROVIDERS.equals(action)) {
+                ENTITY_TYPE = ENTITY_TYPE_PROVIDERS;
                 handleAction(intent.getStringExtra(EXTRA_URL));
             }
         }
