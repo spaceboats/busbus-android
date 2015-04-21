@@ -40,6 +40,7 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
         setStopName("@ " + mEntity.getStop().getStopName() + " to " + mEntity.getHeadsign());
         setRouteColor(mEntity.getRoute().getColor());
         Date date = new Date();
+        // TODO: Fix negative times being shown when user scrolls down then back up.
         setNextArrivalTime(mEntity.getStringOfTimeDiff(date.getTime()/1000));
         setFavorite(entity.isFavorite());
     }
