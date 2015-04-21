@@ -28,7 +28,6 @@ public class ProviderActivity extends EntityBaseActivity {
             url = providerURLBuilder.getURL();
         }
 
-        // TODO: Change this to get providers
         TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_PROVIDERS);
     }
 
