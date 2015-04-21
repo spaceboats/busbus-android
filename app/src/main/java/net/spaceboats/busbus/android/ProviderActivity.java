@@ -29,7 +29,7 @@ public class ProviderActivity extends EntityBaseActivity {
         }
 
         // TODO: Change this to get providers
-        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ARRIVALS);
+        TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_PROVIDERS);
     }
 
     @Override
