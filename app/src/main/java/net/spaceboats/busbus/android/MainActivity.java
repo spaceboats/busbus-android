@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -33,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     private int clicked_x_coord = 0;
     private int clicked_y_coord = 0;
     private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
 
     @Override
     public void onConnectionSuspended(int x) {
@@ -63,7 +65,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         getWindow().setExitTransition(fade);
         getWindow().setEnterTransition(fade);
 
-        final CardView cardView = (CardView) findViewById(R.id.closestStops);
+        final CardView cardView = (CardView) findViewById(R.id.routesCardView);
 
         cardView.setOnTouchListener(new View.OnTouchListener(){
             @Override
@@ -136,6 +138,21 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         startActivity(intent, options.toBundle());
     }
 
+    public void launchClosestStops(View view) {
+        if(mLocation != null) {
+            Intent intent = new Intent(this, ClosestStopActivity.class);
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
+
+            intent.putExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), mLocation.getLatitude());
+            intent.putExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), mLocation.getLongitude());
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Failed to get location data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -149,8 +166,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setNumUpdates(1);
-        locationRequest.setInterval(2000);
-        // TODO: Figure out why closest stops updates twice instead of once.
+        locationRequest.setInterval(1000);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
     }
 
@@ -158,13 +174,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     public void onLocationChanged(Location location) {
         Log.v(getClass().getName() + "/Latitude", String.valueOf(location.getLatitude()));
         Log.v(getClass().getName() + "/Longitude", String.valueOf(location.getLongitude()));
-        Intent intent = new Intent(this, ClosestStopActivity.class);
-
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
-
-        intent.putExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), location.getLatitude());
-        intent.putExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), location.getLongitude());
-        startActivity(intent, options.toBundle());
-
+        mLocation = location;
     }
 }
