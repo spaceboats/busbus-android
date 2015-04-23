@@ -45,6 +45,10 @@
             android:name=".ArrivalsActivity"
             android:label="@string/title_activity_arrivals" >
         </activity>
+        <activity
+            android:name=".ProviderActivity"
+            android:label="@string/title_activity_providers" >
+        </activity>
     </application>
 
 </manifest>

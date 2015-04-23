@@ -22,5 +22,6 @@
     <string name="EXTRA_ENTITY_URL">net.spaceboats.busbus.android.extra.ENTITY_URL</string>
     <string name="EXTRA_APP_BAR_TITLE">net.spaceboats.busbus.android.extra.APP_BAR_TITLE</string>
     <string name="title_activity_arrivals">Arrivals</string>
+    <string name="title_activity_providers">Providers</string>
 
 </resources>

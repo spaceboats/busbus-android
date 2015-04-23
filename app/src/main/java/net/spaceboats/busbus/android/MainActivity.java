@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -117,40 +118,35 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     public void launchFavorites(View view) {
         Intent intent = new Intent(this, FavoritesActivity.class);
-        View parentView = view.getRootView();
-
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
-
         intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
         intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
-        startActivity(intent, options.toBundle());
+
+        startActivity(intent, getActivityOptions().toBundle());
     }
 
     public void launchRoutes(View view) {
         Intent intent = new Intent(this, RoutesActivity.class);
-
-        View parentView = view.getRootView();
-
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(parentView.findViewById(R.id.app_bar), "app_bar"));
-
         intent.putExtra(getString(R.string.EXTRA_X_CLICKED_POSITION), clicked_x_coord);
         intent.putExtra(getString(R.string.EXTRA_Y_CLICKED_POSITION), clicked_y_coord);
-        startActivity(intent, options.toBundle());
+
+        startActivity(intent, getActivityOptions().toBundle());
     }
 
     public void launchClosestStops(View view) {
         if(mLocation != null) {
             Intent intent = new Intent(this, ClosestStopActivity.class);
-
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
-
             intent.putExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), mLocation.getLatitude());
             intent.putExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), mLocation.getLongitude());
-            startActivity(intent, options.toBundle());
+
+            startActivity(intent, getActivityOptions().toBundle());
         }
         else {
             Toast.makeText(getApplicationContext(), "Failed to get location data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private ActivityOptions getActivityOptions() {
+        return ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.app_bar), "app_bar");
     }
 
     protected synchronized void buildGoogleApiClient() {

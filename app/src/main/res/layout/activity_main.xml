@@ -48,7 +48,7 @@
                         android:textSize="32sp" />
 
                     <ImageView
-                        android:id="@+id/busIcon"
+                        android:id="@+id/routesIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_bus" />
@@ -132,7 +132,7 @@
                         android:textSize="32sp" />
 
                     <ImageView
-                        android:id="@+id/busIcon2"
+                        android:id="@+id/closestStopsIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_pin" />
