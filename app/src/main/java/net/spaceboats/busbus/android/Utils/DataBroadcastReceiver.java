@@ -42,6 +42,9 @@ public class DataBroadcastReceiver extends BroadcastReceiver {
                     case TransitDataIntentService.ENTITY_TYPE_STOPS:
                         mReceiver.entityListReceived(TheJSONParser.getStopList(result));
                         break;
+                    case TransitDataIntentService.ENTITY_TYPE_PROVIDERS:
+                        mReceiver.entityListReceived(TheJSONParser.getProviderList(result));
+                        break;
                 }
             } catch (JSONException je) {
                 Log.v(getClass().getName(), "Could not parse JSON");

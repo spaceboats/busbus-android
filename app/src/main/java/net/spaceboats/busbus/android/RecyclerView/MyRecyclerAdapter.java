@@ -10,6 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
 import net.spaceboats.busbus.android.R;
@@ -28,6 +29,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private static final int ROUTE_VIEWTYPE = 1;
     private static final int STOP_VIEWTYPE = 2;
     private static final int ARRIVAL_VIEWTYPE = 4;
+    private static final int PROVIDER_VIEWTYPE = 8;
     private MyClickListener mClickListener;
 
     private List<Entity> entities = new ArrayList<>();
@@ -87,6 +89,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         else if(tempEntity instanceof Arrival) {
             viewType = ARRIVAL_VIEWTYPE;
         }
+        else if(tempEntity instanceof Provider) {
+            viewType = PROVIDER_VIEWTYPE;
+        }
 
         return viewType;
     }
@@ -108,6 +113,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
         else if(viewType == ARRIVAL_VIEWTYPE) {
             viewHolder = createArrivalViewHolder(viewGroup);
+        }
+        else if(viewType == PROVIDER_VIEWTYPE) {
+            viewHolder = createProviderViewHolder(viewGroup);
         }
 
         return viewHolder;
@@ -189,6 +197,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     mClickListener.entityUnFavorited(viewHolder.getEntity(), viewHolder.getAdapterPosition());
                     viewHolder.setFavorite(false);
                 }
+            }
+        });
+        return viewHolder;
+    }
+
+    private ProviderViewHolder createProviderViewHolder(ViewGroup viewGroup) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        final View view = inflater.inflate(R.layout.provider, viewGroup, false);
+        final ProviderViewHolder viewHolder = new ProviderViewHolder(view);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.entityClicked(viewHolder.getEntity());
             }
         });
         return viewHolder;

@@ -66,7 +66,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         getWindow().setExitTransition(fade);
         getWindow().setEnterTransition(fade);
 
-        final CardView cardView = (CardView) findViewById(R.id.routesCardView);
+
+        final CardView cardView = (CardView) findViewById(R.id.providersCardView);
 
         cardView.setOnTouchListener(new View.OnTouchListener(){
             @Override
@@ -143,6 +144,12 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         else {
             Toast.makeText(getApplicationContext(), "Failed to get location data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void launchProviders(View view) {
+        Intent intent = new Intent(this, ProviderActivity.class);
+
+        startActivity(intent, getActivityOptions().toBundle());
     }
 
     private ActivityOptions getActivityOptions() {

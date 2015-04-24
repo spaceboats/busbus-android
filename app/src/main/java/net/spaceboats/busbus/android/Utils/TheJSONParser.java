@@ -2,6 +2,7 @@ package net.spaceboats.busbus.android.Utils;
 
 import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.Entites.Stop;
 
@@ -99,5 +100,26 @@ public class TheJSONParser {
         if(!arrivalObj.isNull(JSONKeys.ARRIVAL_HEADSIGN))
             headSign = arrivalObj.getString(JSONKeys.ARRIVAL_HEADSIGN);
         return new Arrival(time, headSign, getStop(stopObj), route);
+    }
+
+    public static List<Entity> getProviderList(String data)
+        throws JSONException {
+
+        JSONObject dataObj = new JSONObject(data);
+        JSONArray providersArray = dataObj.getJSONArray(JSONKeys.ENTITY_PROVIDERS);
+        List<Entity> entities = new ArrayList<>();
+        for (int i = 0; i < providersArray.length(); i++) {
+            JSONObject providerObj = providersArray.getJSONObject(i);
+            entities.add(getProvider(providerObj));
+        }
+
+        return entities;
+    }
+
+    private static Provider getProvider(JSONObject providerObj)
+            throws JSONException {
+        String providerCredit = providerObj.getString(JSONKeys.PROVIDER_CREDIT);
+        String providerId = providerObj.getString(JSONKeys.PROVIDER_ID);
+        return new Provider(providerCredit, providerId);
     }
 }
