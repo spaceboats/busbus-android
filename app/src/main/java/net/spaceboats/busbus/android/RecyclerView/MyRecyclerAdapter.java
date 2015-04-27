@@ -140,7 +140,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void onBindViewHolder(BaseViewHolder viewHolder, int position) {
         runEnterAnimation(viewHolder.itemView, position);
         Entity item = entities.get(position);
-        viewHolder.setData(item);
+        if(!viewHolder.setData(item))
+            removeItem(position);
     }
 
     private RouteViewHolder createRouteViewHolder(ViewGroup viewGroup) {

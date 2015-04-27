@@ -10,7 +10,7 @@ import net.spaceboats.busbus.android.R;
 /**
  * Created by zralston on 4/23/15.
  */
-public class ProviderViewHolder extends BaseViewHolder<Provider> {
+class ProviderViewHolder extends BaseViewHolder<Provider> {
 
     private TextView mProviderCreditTextView;
 
@@ -19,9 +19,11 @@ public class ProviderViewHolder extends BaseViewHolder<Provider> {
         mProviderCreditTextView = (TextView) view.findViewById(R.id.providerName);
     }
 
-    public void setData(Entity entity) {
+    public boolean setData(Entity entity) {
         mEntity = (Provider) entity;
         setProviderName(mEntity.getCredit());
+
+        return true;
     }
 
     public void setProviderName(String name) {
