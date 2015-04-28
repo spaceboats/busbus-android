@@ -2,7 +2,9 @@ package net.spaceboats.busbus.android.RecyclerView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,11 +139,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder viewHolder, int position) {
+    public void onBindViewHolder(BaseViewHolder viewHolder, final int position) {
         runEnterAnimation(viewHolder.itemView, position);
         Entity item = entities.get(position);
-        if(!viewHolder.setData(item))
-            removeItem(position);
+        if(!viewHolder.setData(item)) {
+            // TODO: See if there is a better way to do this?
+            android.os.Handler handler = new android.os.Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    removeItem(position);
+                }
+            }, 1000);
+        }
     }
 
     private RouteViewHolder createRouteViewHolder(ViewGroup viewGroup) {
