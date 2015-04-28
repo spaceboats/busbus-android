@@ -212,6 +212,26 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 mClickListener.entityClicked(viewHolder.getEntity());
             }
         });
+        viewHolder.getUnFavoritedImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Entity entity = viewHolder.getEntity();
+                if(!entity.isFavorite()) {
+                    mClickListener.entityFavorited(viewHolder.getEntity());
+                    viewHolder.setFavorite(true);
+                }
+            }
+        });
+        viewHolder.getFavoritedImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Entity entity = viewHolder.getEntity();
+                if(entity.isFavorite()) {
+                    mClickListener.entityUnFavorited(viewHolder.getEntity(), viewHolder.getAdapterPosition());
+                    viewHolder.setFavorite(false);
+                }
+            }
+        });
         return viewHolder;
     }
 }

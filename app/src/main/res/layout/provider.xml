@@ -22,13 +22,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/providerName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"/>
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/favoriteUnfilled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_unfilled" />
+
+            <ImageView
+                android:id="@+id/favoriteFilled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_filled" />
 
         </LinearLayout>
 
