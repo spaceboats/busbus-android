@@ -27,12 +27,14 @@ class RouteViewHolder extends BaseViewHolder<Route> {
         mRouteNameTextView = (TextView) view.findViewById(R.id.routeName);
     }
 
-    public void setData(Entity entity) {
+    public boolean setData(Entity entity) {
         mEntity = (Route) entity;
 
         setRouteNumber("Route " + mEntity.getNumber());
         setRouteColor(mEntity.getColor());
         setRouteName(mEntity.getName());
+
+        return true;
     }
 
     private void setRouteNumber(String number) {

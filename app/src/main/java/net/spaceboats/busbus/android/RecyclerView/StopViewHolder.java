@@ -20,9 +20,11 @@ class StopViewHolder extends BaseViewHolder<Stop> {
         mStopNameTextView = (TextView) itemView.findViewById(R.id.stopName);
     }
 
-    public void setData(Entity entity) {
+    public boolean setData(Entity entity) {
         mEntity = (Stop) entity;
         setStopName(mEntity.getStopName());
+
+        return true;
     }
 
     private void setStopName(String name) {

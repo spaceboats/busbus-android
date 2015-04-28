@@ -11,7 +11,7 @@ import net.spaceboats.busbus.android.R;
 /**
  * Created by zralston on 4/23/15.
  */
-public class ProviderViewHolder extends BaseViewHolder<Provider> {
+class ProviderViewHolder extends BaseViewHolder<Provider> {
 
     private TextView mProviderCreditTextView;
     private ImageView mFavoriteUnfilled;
@@ -24,10 +24,12 @@ public class ProviderViewHolder extends BaseViewHolder<Provider> {
         mFavoriteFilled = (ImageView) view.findViewById(R.id.favoriteFilled);
     }
 
-    public void setData(Entity entity) {
+    public boolean setData(Entity entity) {
         mEntity = (Provider) entity;
         setProviderName(mEntity.getCredit());
         setFavorite(mEntity.isFavorite());
+        
+        return true;
     }
 
     public void setProviderName(String name) {

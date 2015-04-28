@@ -20,5 +20,6 @@ abstract class BaseViewHolder<T extends Entity> extends RecyclerView.ViewHolder 
         return mEntity;
     }
 
-    public abstract void setData(Entity entity);
+    // Returns false when the item should be removed from the adapter
+    public abstract boolean setData(Entity entity);
 }

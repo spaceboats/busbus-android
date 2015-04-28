@@ -31,16 +31,6 @@ public class RoutesActivity extends EntityBaseActivity {
         TransitDataIntentService.startAction(this, url, TransitDataIntentService.ACTION_GET_ROUTES);
     }
 
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_routes;
-    }
-
-    @Override
-    protected int getFragmentPlaceholderId() {
-        return R.id.fragment_placeholder;
-    }
-
     private void switchToArrivalActivity(String url, String appBarTitle) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.app_bar), "app_bar"));
         Intent intent = new Intent(this, ArrivalsActivity.class);

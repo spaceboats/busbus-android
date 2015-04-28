@@ -34,15 +34,16 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
         mFavoriteFilled = (ImageView) view.findViewById(R.id.favoriteFilled);
     }
 
-    public void setData(Entity entity) {
+    public boolean setData(Entity entity) {
         mEntity = (Arrival) entity;
         setRouteNumber("Route " + mEntity.getRoute().getNumber());
         setStopName("@ " + mEntity.getStop().getStopName() + " to " + mEntity.getHeadsign());
         setRouteColor(mEntity.getRoute().getColor());
-        Date date = new Date();
-        // TODO: Fix negative times being shown when user scrolls down then back up.
-        setNextArrivalTime(mEntity.getStringOfTimeDiff(date.getTime()/1000));
+        long currentTime = new Date().getTime();
+        setNextArrivalTime(mEntity.getStringOfTimeDiff(currentTime/1000));
         setFavorite(entity.isFavorite());
+
+        return (mEntity.getTimeInSeconds() - currentTime/1000) > 0;
     }
 
     private void setRouteColor(String color){
