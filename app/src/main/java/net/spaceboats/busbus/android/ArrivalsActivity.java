@@ -1,7 +1,6 @@
 package net.spaceboats.busbus.android;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
@@ -15,11 +14,6 @@ public class ArrivalsActivity extends EntityBaseActivity {
         super.onCreate(savedInstanceState);
 
         String url = getIntent().getStringExtra(getString(R.string.EXTRA_ENTITY_URL));
-        String appBarTitle = getIntent().getStringExtra(getString(R.string.EXTRA_APP_BAR_TITLE));
-
-        if(appBarTitle != null) {
-            setTitle(appBarTitle);
-        }
 
         if(url == null) {
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());

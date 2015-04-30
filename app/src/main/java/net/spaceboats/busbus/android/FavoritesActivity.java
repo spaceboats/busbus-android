@@ -1,7 +1,5 @@
 package net.spaceboats.busbus.android;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
@@ -60,7 +58,7 @@ public class FavoritesActivity extends EntityBaseActivity {
             RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
             routeURLBuilder.addProviderId(provider.getId());
             routeURLBuilder.expandProvider();
-            switchToRouteActivity(routeURLBuilder.getURL(), provider.getCredit());
+            switchToEntityActivity(routeURLBuilder.getURL(), provider.getCredit(), RoutesActivity.class);
         }
     }
 
@@ -91,14 +89,5 @@ public class FavoritesActivity extends EntityBaseActivity {
                 }
             }
         }
-    }
-
-    private void switchToRouteActivity(String url, String appBarTitle) {
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.app_bar), "app_bar");
-        Intent intent = new Intent(this, RoutesActivity.class);
-        intent.putExtra(getString(R.string.EXTRA_ENTITY_URL), url);
-        intent.putExtra(getString(R.string.EXTRA_APP_BAR_TITLE), appBarTitle);
-
-        startActivity(intent, options.toBundle());
     }
 }

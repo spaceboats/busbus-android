@@ -1,5 +1,6 @@
 package net.spaceboats.busbus.android;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -47,6 +48,12 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
         }
 
         dataBroadcastReceiver = new DataBroadcastReceiver(this);
+
+        String appBarTitle = getIntent().getStringExtra(getString(R.string.EXTRA_APP_BAR_TITLE));
+
+        if(appBarTitle != null) {
+            setTitle(appBarTitle);
+        }
     }
 
     @Override
@@ -100,6 +107,15 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
 
     protected int getFragmentPlaceholderId() {
         return R.id.fragment_placeholder;
+    }
+
+    protected void switchToEntityActivity(String url, String appBarTitle, Class activityClass) {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.app_bar), "app_bar");
+        Intent intent = new Intent(this, activityClass);
+        intent.putExtra(getString(R.string.EXTRA_ENTITY_URL), url);
+        intent.putExtra(getString(R.string.EXTRA_APP_BAR_TITLE), appBarTitle);
+
+        startActivity(intent, options.toBundle());
     }
 
     @Override
