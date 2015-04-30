@@ -1,5 +1,7 @@
 package net.spaceboats.busbus.android;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
@@ -8,6 +10,7 @@ import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
 import net.spaceboats.busbus.android.Utils.ProviderURLBuilder;
+import net.spaceboats.busbus.android.Utils.RouteURLBuilder;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
 import java.util.Date;
@@ -52,7 +55,13 @@ public class FavoritesActivity extends EntityBaseActivity {
 
     @Override
     public void entityClicked(Entity entity) {
-        // Do nothing for now
+        if(entity instanceof Provider) {
+            Provider provider = (Provider) entity;
+            RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
+            routeURLBuilder.addProviderId(provider.getId());
+            routeURLBuilder.expandProvider();
+            switchToRouteActivity(routeURLBuilder.getURL(), provider.getCredit());
+        }
     }
 
     @Override
@@ -64,7 +73,7 @@ public class FavoritesActivity extends EntityBaseActivity {
     public void entityUnFavorited(final Entity entity, int position) {
         super.entityUnFavorited(entity, position);
 
-        // TODO: add an undo button for last deleted facorite
+        // TODO: add an undo button for last deleted favorite
         recyclerViewFragment.removeEntity(position);
     }
 
@@ -82,5 +91,14 @@ public class FavoritesActivity extends EntityBaseActivity {
                 }
             }
         }
+    }
+
+    private void switchToRouteActivity(String url, String appBarTitle) {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.app_bar), "app_bar");
+        Intent intent = new Intent(this, RoutesActivity.class);
+        intent.putExtra(getString(R.string.EXTRA_ENTITY_URL), url);
+        intent.putExtra(getString(R.string.EXTRA_APP_BAR_TITLE), appBarTitle);
+
+        startActivity(intent, options.toBundle());
     }
 }

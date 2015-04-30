@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 import net.spaceboats.busbus.android.Entites.Arrival;
 import net.spaceboats.busbus.android.Entites.Entity;
+import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 
 import java.util.Collections;
@@ -140,10 +141,8 @@ public class RecyclerViewFragment extends Fragment {
     Summary: Will set all entities' favorite attribute to true if it is a favorite.
      */
     public void markFavorites(List<Entity> entityList) {
-        List<Entity> favorites = EntityDbDelegator.queryFavorites();
-
         for (Entity entity : entityList) {
-            markFavorites(entity, favorites);
+            markFavorites(entity);
         }
     }
 
@@ -152,7 +151,10 @@ public class RecyclerViewFragment extends Fragment {
     Summary: Sets the entity favorite attribute to true if it is a favorite
      */
     public void markFavorites(Entity entity) {
-        markFavorites(entity, EntityDbDelegator.queryFavorites());
+        if(entity instanceof Arrival)
+            markFavorites(entity, EntityDbDelegator.queryArrivals());
+        else if(entity instanceof Provider)
+            markFavorites(entity, EntityDbDelegator.queryProviders());
     }
 
     /*
