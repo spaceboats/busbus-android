@@ -10,4 +10,8 @@ public class ProviderURLBuilder extends URLBuilder {
     public ProviderURLBuilder(Context context) {
         super(context, JSONKeys.ENTITY_PROVIDERS);
     }
+
+    public void addId(String id) {
+        addQueryParam(JSONKeys.PROVIDER_ID, id);
+    }
 }

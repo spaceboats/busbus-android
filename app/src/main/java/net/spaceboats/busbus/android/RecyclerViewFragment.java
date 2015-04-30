@@ -140,7 +140,7 @@ public class RecyclerViewFragment extends Fragment {
     Summary: Will set all entities' favorite attribute to true if it is a favorite.
      */
     public void markFavorites(List<Entity> entityList) {
-        List<Entity> favorites = EntityDbDelegator.queryArrivals();
+        List<Entity> favorites = EntityDbDelegator.queryFavorites();
 
         for (Entity entity : entityList) {
             markFavorites(entity, favorites);
@@ -152,20 +152,16 @@ public class RecyclerViewFragment extends Fragment {
     Summary: Sets the entity favorite attribute to true if it is a favorite
      */
     public void markFavorites(Entity entity) {
-        markFavorites(entity, EntityDbDelegator.queryArrivals());
+        markFavorites(entity, EntityDbDelegator.queryFavorites());
     }
 
     /*
     Summary: Sets the entity favorite attribute to true if it is in the favorites list
      */
     public void markFavorites(Entity entity, List<Entity> favorites) {
-        if(entity instanceof Arrival) {
-            Arrival arrival = (Arrival) entity;
-            for(Entity favorite : favorites) {
-                Arrival fav = (Arrival) favorite;
-                if(fav.equals(arrival))
-                    arrival.setFavorite(true);
-            }
+        for(Entity favorite : favorites) {
+            if(favorite.equals(entity))
+                entity.setFavorite(true);
         }
     }
 }

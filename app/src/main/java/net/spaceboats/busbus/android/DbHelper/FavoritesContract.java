@@ -31,4 +31,10 @@ final class FavoritesContract {
         public static String COLUMN_ROUTE_ID = "ROUTE_ID";
         public static String COLUMN_STOP_ID = "STOP_ID";
     }
+
+    public static abstract class Provider implements BaseColumns {
+        public static String TABLE_NAME = "PROVIDER";
+        public static String COLUMN_ID = "ID";
+        public static String COLUMN_CREDIT = "CREDIT";
+    }
 }
