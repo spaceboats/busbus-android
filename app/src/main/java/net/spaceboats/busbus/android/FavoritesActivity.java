@@ -20,11 +20,6 @@ public class FavoritesActivity extends EntityBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         List<Entity> favorites = EntityDbDelegator.queryFavorites();
 
