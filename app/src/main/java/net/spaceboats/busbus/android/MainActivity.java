@@ -133,9 +133,11 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     public void launchClosestStops(View view) {
         if(mLocation != null) {
+            // geo fix -95.253840 38.957155
             Intent intent = new Intent(this, ClosestStopActivity.class);
             intent.putExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), mLocation.getLatitude());
             intent.putExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), mLocation.getLongitude());
+            intent.putExtra(getString(R.string.EXTRA_LOCATION_DISTANCE), 100);
 
             startActivity(intent, getActivityOptions().toBundle());
         }

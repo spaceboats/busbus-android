@@ -22,7 +22,7 @@ public class ClosestStopActivity extends EntityBaseActivity {
         StopURLBuilder stopURLBuilder = new StopURLBuilder(getApplicationContext());
         stopURLBuilder.addLatitude(String.valueOf(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), 0)));
         stopURLBuilder.addLongitude(String.valueOf(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), 0)));
-        stopURLBuilder.addDistance("100");
+        stopURLBuilder.addDistance(String.valueOf(getIntent().getIntExtra(getString(R.string.EXTRA_LOCATION_DISTANCE), 100)));
         TransitDataIntentService.startAction(this, stopURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_STOPS);
     }
 
