@@ -62,7 +62,8 @@ public class Arrival extends Entity {
 
     public String getStringOfTimeDiff(long beforeTimeInSeconds) {
         long difference = (mTimeSeconds - beforeTimeInSeconds);
-        String units;
+        String units = " secs";
+        
         if(difference/HOUR_IN_SECONDS >= 1) {
             difference = difference/HOUR_IN_SECONDS;
             units = " hour";
@@ -71,8 +72,6 @@ public class Arrival extends Entity {
             difference = difference/MINUTE_IN_SECONDS;
             units = " mins";
         }
-        else
-            units = " secs";
 
         return Long.toString(difference) + units;
     }
