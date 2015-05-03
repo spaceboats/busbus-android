@@ -31,6 +31,10 @@ public class ArrivalURLBuilder extends URLBuilder {
         addEntityAttrParam(JSONKeys.STOP, JSONKeys.STOP_ID, id);
     }
 
+    public void addStopDescription(String desc) {
+        addEntityAttrParam(JSONKeys.STOP, JSONKeys.STOP_DESCRIPTION, desc);
+    }
+
     public void addRouteId(String id) {
         addEntityAttrParam(JSONKeys.ROUTE, JSONKeys.ROUTE_ID, id);
     }

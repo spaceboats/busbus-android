@@ -1,15 +1,15 @@
 package net.spaceboats.busbus.android;
 
+import android.app.FragmentTransaction;
+import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.spaceboats.busbus.android.Entites.Entity;
@@ -19,17 +19,32 @@ import net.spaceboats.busbus.android.Utils.StopURLBuilder;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
 import java.util.Date;
+import java.util.List;
 
 
-public class ClosestStopActivity extends EntityBaseActivity implements OnMapReadyCallback {
+public class ClosestStopActivity extends EntityBaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+
+    Location mLocation;
+    GoogleMap mMap;
+    Marker lastClickedMarker;
+    MapFragment mMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO: Figure out why when the back button is pressed to this activity, it crashes.
+
         // TODO: Possibly check for a url coming in just like the other entity activities
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mLocation = new Location("My Location");
+        mLocation.setLatitude(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), 0));
+        mLocation.setLongitude(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LONGITUDE), 0));
+
+        mMapFragment = MapFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map_placeholder, mMapFragment);
+        fragmentTransaction.commit();
+        mMapFragment.getMapAsync(this);
 
         StopURLBuilder stopURLBuilder = new StopURLBuilder(getApplicationContext());
         stopURLBuilder.addLatitude(String.valueOf(getIntent().getDoubleExtra(getString(R.string.EXTRA_LOCATION_LATITUDE), 0)));
@@ -61,15 +76,47 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
 
     @Override
     public void onMapReady(GoogleMap map) {
-        LatLng closest = new LatLng(-33.867, 151.206);
+        LatLng closest = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
 
-        Log.v(getClass().getName(), "ON MAP READY");
+        mMap = map;
+
         map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 10));
+        map.setBuildingsEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 17));
+    }
 
-        map.addMarker(new MarkerOptions()
-                .title("Closest")
-                .snippet("test")
-                .position(closest));
+    @Override
+    public void entityListReceived(List<Entity> entityList) {
+        for(Entity entity : entityList) {
+            Stop stop = (Stop) entity;
+            LatLng location = new LatLng(stop.getLatitude(), stop.getLongitude());
+            mMap.addMarker(new MarkerOptions()
+                    .title(stop.getStopName())
+                    .snippet(stop.getDescription())
+                    .position(location));
+        }
+
+        mMap.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        boolean result = false;
+
+        if(lastClickedMarker != null && marker.getId().equals(lastClickedMarker.getId())) {
+            ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
+            Date date = new Date();
+            arrivalURLBuilder.addStartTime(Long.toString(date.getTime() / 1000));
+            arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
+            arrivalURLBuilder.addStopDescription(marker.getSnippet());
+            arrivalURLBuilder.expandRoute();
+            arrivalURLBuilder.expandStop();
+            //arrivalURLBuilder.addLimit("1");
+            switchToEntityActivity(arrivalURLBuilder.getURL(), marker.getTitle(), ArrivalsActivity.class);
+            result = true;
+        }
+        lastClickedMarker = marker;
+
+        return result;
     }
 }

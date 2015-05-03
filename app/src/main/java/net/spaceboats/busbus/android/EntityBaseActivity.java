@@ -11,6 +11,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 import net.spaceboats.busbus.android.Entites.Entity;
@@ -29,6 +30,7 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
 
