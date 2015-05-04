@@ -34,13 +34,18 @@ public class TheJSONParser {
 
     private static Route getRoute(JSONObject routeObj)
         throws JSONException {
-        if (routeObj.isNull(JSONKeys.ROUTE_SHORT_NAME) || routeObj.isNull(JSONKeys.ROUTE_NAME))
-            return null;
-        String routeName = routeObj.getString(JSONKeys.ROUTE_NAME);
-        String routeNumber = routeObj.getString(JSONKeys.ROUTE_SHORT_NAME);
+        String routeName = "N/A";
+        String routeNumber = "N/A";
         String routeColor = "#424242";
-        if (!routeObj.isNull(JSONKeys.ROUTE_COLOR))
+        if(!routeObj.isNull(JSONKeys.ROUTE_SHORT_NAME)) {
+            routeNumber = routeObj.getString(JSONKeys.ROUTE_SHORT_NAME);
+        }
+        if(!routeObj.isNull(JSONKeys.ROUTE_NAME)) {
+            routeName = routeObj.getString(JSONKeys.ROUTE_NAME);
+        }
+        if(!routeObj.isNull(JSONKeys.ROUTE_COLOR)) {
             routeColor = "#" + routeObj.getString(JSONKeys.ROUTE_COLOR);
+        }
         String routeId = routeObj.getString(JSONKeys.ROUTE_ID);
         return new Route(routeNumber, routeName, routeColor, routeId);
     }

@@ -3,11 +3,13 @@ package net.spaceboats.busbus.android;
 import android.app.FragmentTransaction;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -55,16 +57,14 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
 
     @Override
     public void entityClicked(Entity entity) {
-        // It should be a Stop, but just check to be sure
         if(entity instanceof Stop) {
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             Date date = new Date();
             arrivalURLBuilder.addStartTime(Long.toString(date.getTime()/1000));
-            arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
+            arrivalURLBuilder.addEndTime(Long.toString(date.getTime()/1000 + 90));
             arrivalURLBuilder.addStopId(((Stop)entity).getId());
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();
-            //arrivalURLBuilder.addLimit("1");
             switchToEntityActivity(arrivalURLBuilder.getURL(), ((Stop)entity).getStopName(), ArrivalsActivity.class);
         }
     }
@@ -82,7 +82,15 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
 
         map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 17));
+        map.getUiSettings().setZoomControlsEnabled(true);
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 17));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(closest)
+                .zoom(17)
+                .tilt(40)
+                .build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
@@ -92,7 +100,7 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
             LatLng location = new LatLng(stop.getLatitude(), stop.getLongitude());
             mMap.addMarker(new MarkerOptions()
                     .title(stop.getStopName())
-                    .snippet(stop.getDescription())
+                    .snippet(stop.getId())
                     .position(location));
         }
 
@@ -108,7 +116,7 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
             Date date = new Date();
             arrivalURLBuilder.addStartTime(Long.toString(date.getTime() / 1000));
             arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
-            arrivalURLBuilder.addStopDescription(marker.getSnippet());
+            arrivalURLBuilder.addStopId(marker.getSnippet());
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();
             //arrivalURLBuilder.addLimit("1");

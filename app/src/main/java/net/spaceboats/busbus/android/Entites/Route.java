@@ -75,4 +75,13 @@ public class Route extends Entity {
         result = 31 * result + mId.hashCode();
         return result;
     }
+
+    /*
+    @Override
+    public int compareTo(Entity entity) {
+        if(!Route.class.isInstance(entity))
+            return super.compareTo(entity);
+        return Long.compare(this.getTimeInSeconds(), ((Arrival) (entity)).getTimeInSeconds());
+    }
+    */
 }
