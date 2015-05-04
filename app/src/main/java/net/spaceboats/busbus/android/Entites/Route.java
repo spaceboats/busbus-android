@@ -10,6 +10,7 @@ public class Route extends Entity {
     private String color;
     private String name;
     private String mId;
+    private String compareableShortName;
 
     public Route(@NonNull String shortName, @NonNull String name, @NonNull String color, @NonNull String routeId, @NonNull String providerId){
         super(providerId);
@@ -17,6 +18,21 @@ public class Route extends Entity {
         setColor(color);
         setName(name);
         setId(routeId);
+        compareableShortName = makeLengthTenOrMore(shortName);
+    }
+
+    private String makeLengthTenOrMore(String original) {
+        // A hack to make the string 10 come after 1
+        // Note: Cannot just convert to integer, because some of the shortNames are character strings
+        StringBuilder sb = new StringBuilder("0000000000");
+        StringBuilder orig = new StringBuilder(original).reverse();
+        if(sb.length() > orig.length()) {
+            orig.append(sb, orig.length(), sb.length());
+            return orig.reverse().toString();
+        }
+        else {
+            return original;
+        }
     }
 
     public String getShortName(){
@@ -79,12 +95,11 @@ public class Route extends Entity {
         return result;
     }
 
-    /*
     @Override
     public int compareTo(Entity entity) {
         if(!Route.class.isInstance(entity))
             return super.compareTo(entity);
-        return Long.compare(this.getTimeInSeconds(), ((Arrival) (entity)).getTimeInSeconds());
+
+        return this.compareableShortName.compareTo(((Route) entity).compareableShortName);
     }
-    */
 }
