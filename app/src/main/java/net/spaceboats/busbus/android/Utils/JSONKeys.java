@@ -42,6 +42,7 @@ final class JSONKeys {
     public static final String STOP_URL = "url";
     public static final String STOP_NAME = NAME;
     public static final String STOP_CODE = "code";
+    public static final String STOP_PROVIDER = PROVIDER;
     public static final String STOP_TIMEZONE = "timezone";
     public static final String STOP_LATITUDE = "latitude";
     public static final String STOP_LONGITUDE = "longitude";
@@ -57,6 +58,7 @@ final class JSONKeys {
     public static final String ROUTE_NAME = NAME;
     public static final String ROUTE_COLOR = "color";
     public static final String ROUTE_AGENCY = "agency";
+    public static final String ROUTE_PROVIDER = PROVIDER;
     public static final String ROUTE_SHORT_NAME = "short_name";
     public static final String ROUTE_DESCRIPTION = DESCRIPTION;
 

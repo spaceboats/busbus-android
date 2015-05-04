@@ -29,6 +29,7 @@ class StopDbOperator extends BaseDbOperator<Stop> {
         values.put(FavoritesContract.Stop.COLUMN_LATITUDE, stop.getLatitude());
         values.put(FavoritesContract.Stop.COLUMN_LONGITUDE, stop.getLongitude());
         values.put(FavoritesContract.Stop.COLUMN_DESCRIPTION, stop.getDescription());
+        values.put(FavoritesContract.Stop.COLUMN_PROVIDER_ID, stop.getProviderId());
 
         return values;
     }
@@ -39,7 +40,8 @@ class StopDbOperator extends BaseDbOperator<Stop> {
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LATITUDE))),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_LONGITUDE))),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_DESCRIPTION)),
-                cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_ID)));
+                cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(FavoritesContract.Stop.COLUMN_PROVIDER_ID)));
     }
 
     @Override
@@ -48,12 +50,13 @@ class StopDbOperator extends BaseDbOperator<Stop> {
                 FavoritesContract.Stop.COLUMN_NAME,
                 FavoritesContract.Stop.COLUMN_LATITUDE,
                 FavoritesContract.Stop.COLUMN_LONGITUDE,
-                FavoritesContract.Stop.COLUMN_DESCRIPTION};
+                FavoritesContract.Stop.COLUMN_DESCRIPTION,
+                FavoritesContract.Stop.COLUMN_PROVIDER_ID};
     }
 
     @Override
     protected String getIdSelection() {
-        return FavoritesContract.Stop.COLUMN_ID + "= ?";
+        return FavoritesContract.Stop.COLUMN_ID + "= ? and " + FavoritesContract.Stop.COLUMN_PROVIDER_ID + "= ?";
     }
 
 }

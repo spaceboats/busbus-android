@@ -16,6 +16,7 @@ final class FavoritesContract {
         public static String COLUMN_LATITUDE = "LATITUDE";
         public static String COLUMN_LONGITUDE = "LONGITUDE";
         public static String COLUMN_DESCRIPTION = "DESCRIPTION";
+        public static String COLUMN_PROVIDER_ID = "PROVIDER_ID";
     }
 
     public static abstract class Route implements BaseColumns {
@@ -24,12 +25,14 @@ final class FavoritesContract {
         public static String COLUMN_NAME = "NAME";
         public static String COLUMN_SHORT_NAME= "SHORT_NAME";
         public static String COLUMN_COLOR = "COLOR";
+        public static String COLUMN_PROVIDER_ID = "PROVIDER_ID";
     }
 
     public static abstract class Arrival implements BaseColumns {
         public static String TABLE_NAME = "ARRIVAL";
         public static String COLUMN_ROUTE_ID = "ROUTE_ID";
         public static String COLUMN_STOP_ID = "STOP_ID";
+        public static String COLUMN_PROVIDER_ID = "PROVIDER_ID";
     }
 
     public static abstract class Provider implements BaseColumns {

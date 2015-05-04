@@ -27,17 +27,27 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
         ContentValues values = new ContentValues();
         values.put(FavoritesContract.Arrival.COLUMN_ROUTE_ID, arrival.getRouteId());
         values.put(FavoritesContract.Arrival.COLUMN_STOP_ID, arrival.getStopId());
+        values.put(FavoritesContract.Arrival.COLUMN_PROVIDER_ID, arrival.getProviderId());
 
         return values;
     }
 
     @Override
     protected Arrival getNewEntity(Cursor cursor) {
+        String routeId = cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID));
+        String stopId = cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID));
+        String providerId = cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_PROVIDER_ID));
+
         RouteDbOperator routeDbOperator = new RouteDbOperator(mContext);
         StopDbOperator stopDbOperator = new StopDbOperator(mContext);
 
-        Route route = routeDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_ROUTE_ID)));
-        Stop stop = stopDbOperator.queryWithId(cursor.getString(cursor.getColumnIndex(FavoritesContract.Arrival.COLUMN_STOP_ID)));
+        // Assuming the arrival has the same provider has the stop and route.
+        // TODO: Come up with way to not have these depending on the same order as getIdSelection() function for route and stop
+        String[] routeArgs = {routeId, providerId};
+        String[] stopArgs = {stopId, providerId};
+
+        Route route = routeDbOperator.queryWithIds(routeArgs);
+        Stop stop = stopDbOperator.queryWithIds(stopArgs);
 
         return new Arrival(-1, "", stop, route);
     }
@@ -45,7 +55,8 @@ class ArrivalDbOperator extends BaseDbOperator<Arrival> {
     @Override
     protected String[] getColumns() {
         return new String[]{FavoritesContract.Arrival.COLUMN_ROUTE_ID,
-                FavoritesContract.Arrival.COLUMN_STOP_ID};
+                FavoritesContract.Arrival.COLUMN_STOP_ID,
+                FavoritesContract.Arrival.COLUMN_PROVIDER_ID};
     }
 
     @Override

@@ -13,7 +13,8 @@ public class Stop extends Entity {
     private String mDescription;
     private String mId;
 
-    public Stop(@NonNull String name, double latitude, double longitude, @NonNull String description, @NonNull String stopId) {
+    public Stop(@NonNull String name, double latitude, double longitude, @NonNull String description, @NonNull String stopId, @NonNull String providerId) {
+        super(providerId);
         setId(stopId);
         setName(name);
         setDescription(description);
@@ -73,6 +74,7 @@ public class Stop extends Entity {
         if (!mDescription.equals(stop.mDescription)) return false;
         if (!mId.equals(stop.mId)) return false;
         if (!mName.equals(stop.mName)) return false;
+        if (!mProviderId.equals(stop.mProviderId)) return false;
 
         return true;
     }
@@ -88,6 +90,7 @@ public class Stop extends Entity {
         result = 31 * result + mName.hashCode();
         result = 31 * result + mDescription.hashCode();
         result = 31 * result + mId.hashCode();
+        result = 31 * result + mProviderId.hashCode();
         return result;
     }
 }

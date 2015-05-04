@@ -47,7 +47,10 @@ public class TheJSONParser {
             routeColor = "#" + routeObj.getString(JSONKeys.ROUTE_COLOR);
         }
         String routeId = routeObj.getString(JSONKeys.ROUTE_ID);
-        return new Route(routeNumber, routeName, routeColor, routeId);
+        // TODO: Fix this by just attaching provider object?
+        JSONObject providerObj = routeObj.getJSONObject(JSONKeys.ROUTE_PROVIDER);
+        String providerId = providerObj.getString(JSONKeys.PROVIDER_ID);
+        return new Route(routeNumber, routeName, routeColor, routeId, providerId);
     }
 
     public static List<Entity> getStopList(String data)
@@ -75,7 +78,10 @@ public class TheJSONParser {
         double latitude = stopObj.getDouble(JSONKeys.STOP_LATITUDE);
         double longitude = stopObj.getDouble(JSONKeys.STOP_LONGITUDE);
         String stopId = stopObj.getString(JSONKeys.STOP_ID);
-        return new Stop(stopName, latitude, longitude, stopDescription, stopId);
+        // TODO: Fix this by just attaching provider object?
+        JSONObject providerObj = stopObj.getJSONObject(JSONKeys.STOP_PROVIDER);
+        String providerId = providerObj.getString(JSONKeys.PROVIDER_ID);
+        return new Stop(stopName, latitude, longitude, stopDescription, stopId, providerId);
     }
 
     public static List<Entity> getArrivalList(String data)

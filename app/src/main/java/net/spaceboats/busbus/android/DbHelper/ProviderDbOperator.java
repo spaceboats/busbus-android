@@ -20,7 +20,7 @@ class ProviderDbOperator extends BaseDbOperator<Provider> {
     @Override
     protected ContentValues getContentValues(Provider provider) {
         ContentValues values = new ContentValues();
-        values.put(FavoritesContract.Provider.COLUMN_ID, provider.getId());
+        values.put(FavoritesContract.Provider.COLUMN_ID, provider.getProviderId());
         values.put(FavoritesContract.Provider.COLUMN_CREDIT, provider.getCredit());
 
         return values;

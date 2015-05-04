@@ -33,7 +33,7 @@ public class ProviderActivity extends EntityBaseActivity {
         if(entity instanceof Provider) {
             Provider provider = (Provider) entity;
             RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
-            routeURLBuilder.addProviderId(provider.getId());
+            routeURLBuilder.addProviderId(provider.getProviderId());
             routeURLBuilder.expandProvider();
             switchToEntityActivity(routeURLBuilder.getURL(), provider.getCredit(), RoutesActivity.class);
         }

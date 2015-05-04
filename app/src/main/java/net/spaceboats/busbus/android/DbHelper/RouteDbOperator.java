@@ -28,6 +28,7 @@ class RouteDbOperator extends BaseDbOperator<Route> {
         values.put(FavoritesContract.Route.COLUMN_NAME, route.getName());
         values.put(FavoritesContract.Route.COLUMN_SHORT_NAME, route.getShortName());
         values.put(FavoritesContract.Route.COLUMN_COLOR, route.getColor());
+        values.put(FavoritesContract.Route.COLUMN_PROVIDER_ID, route.getProviderId());
 
         return values;
     }
@@ -37,7 +38,8 @@ class RouteDbOperator extends BaseDbOperator<Route> {
         return new Route(cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_SHORT_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_COLOR)),
-                cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_ID)));
+                cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(FavoritesContract.Route.COLUMN_PROVIDER_ID)));
     }
 
     @Override
@@ -45,12 +47,13 @@ class RouteDbOperator extends BaseDbOperator<Route> {
         return new String[]{FavoritesContract.Route.COLUMN_ID,
                 FavoritesContract.Route.COLUMN_NAME,
                 FavoritesContract.Route.COLUMN_SHORT_NAME,
-                FavoritesContract.Route.COLUMN_COLOR};
+                FavoritesContract.Route.COLUMN_COLOR,
+                FavoritesContract.Route.COLUMN_PROVIDER_ID};
     }
 
     @Override
     protected String getIdSelection() {
-        return FavoritesContract.Route.COLUMN_ID + "= ?";
+        return FavoritesContract.Route.COLUMN_ID + "= ? and " + FavoritesContract.Route.COLUMN_PROVIDER_ID + "= ?";
     }
 
 }

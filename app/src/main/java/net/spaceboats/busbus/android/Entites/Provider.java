@@ -6,27 +6,18 @@ package net.spaceboats.busbus.android.Entites;
 public class Provider extends Entity {
 
     String mCredit;
-    String mId;
 
     public Provider(String credit, String id) {
+        super(id);
         setCredit(credit);
-        setId(id);
     }
 
     public void setCredit(String credit) {
         mCredit = credit;
     }
 
-    public void setId(String id) {
-        mId = id;
-    }
-
     public String getCredit() {
         return mCredit;
-    }
-
-    public String getId() {
-        return mId;
     }
 
     @Override
@@ -37,7 +28,7 @@ public class Provider extends Entity {
         Provider provider = (Provider) o;
 
         if (!mCredit.equals(provider.mCredit)) return false;
-        if (!mId.equals(provider.mId)) return false;
+        if (!mProviderId.equals(provider.mProviderId)) return false;
 
         return true;
     }
@@ -45,7 +36,7 @@ public class Provider extends Entity {
     @Override
     public int hashCode() {
         int result = mCredit.hashCode();
-        result = 31 * result + mId.hashCode();
+        result = 31 * result + mProviderId.hashCode();
         return result;
     }
 }

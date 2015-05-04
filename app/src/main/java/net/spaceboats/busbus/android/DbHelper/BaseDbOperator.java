@@ -104,11 +104,10 @@ abstract class BaseDbOperator<T extends Entity> {
         return entities;
     }
 
-    public T queryWithId(String id) {
+    public T queryWithIds(String[] ids) {
         SQLiteDatabase db = DbManager.getDatabase();
-        String[] args = {id};
         T entity = null;
-        Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), args, null, null, null);
+        Cursor cursor = db.query(getTableName(), getColumns(), getIdSelection(), ids, null, null, null);
 
         try {
             if(cursor.moveToFirst())

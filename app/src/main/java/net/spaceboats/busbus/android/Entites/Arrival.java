@@ -14,6 +14,7 @@ public class Arrival extends Entity {
     private long mTimeSeconds;
 
     public Arrival(long timeSeconds, @NonNull String headsign, @NonNull Stop stop, @NonNull Route route) {
+        super(route.getProviderId());
         setStop(stop);
         setRoute(route);
         setHeadsign(headsign);

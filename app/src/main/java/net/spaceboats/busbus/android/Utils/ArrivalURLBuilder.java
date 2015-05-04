@@ -39,6 +39,10 @@ public class ArrivalURLBuilder extends URLBuilder {
         addEntityAttrParam(JSONKeys.ROUTE, JSONKeys.ROUTE_ID, id);
     }
 
+    public void addProviderId(String id) {
+        addEntityAttrParam(JSONKeys.PROVIDER, JSONKeys.PROVIDER_ID, id);
+    }
+
     public void expandRoute() {
         addToExpandArgs(JSONKeys.ENTITY_ROUTES);
     }

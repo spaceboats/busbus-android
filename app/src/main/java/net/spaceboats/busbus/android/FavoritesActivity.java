@@ -29,7 +29,7 @@ public class FavoritesActivity extends EntityBaseActivity {
                 // TODO: This is a hack, figure out why the providers will not show in the rcView, if I don't send a http request to the server.
                 Provider provider = (Provider) entity;
                 ProviderURLBuilder providerURLBuilder = new ProviderURLBuilder(getApplicationContext());
-                providerURLBuilder.addId(provider.getId());
+                providerURLBuilder.addId(provider.getProviderId());
                 TransitDataIntentService.startAction(this, providerURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_PROVIDERS);
             }
             else if(entity instanceof Arrival) {
@@ -51,7 +51,7 @@ public class FavoritesActivity extends EntityBaseActivity {
         if(entity instanceof Provider) {
             Provider provider = (Provider) entity;
             RouteURLBuilder routeURLBuilder = new RouteURLBuilder(getApplicationContext());
-            routeURLBuilder.addProviderId(provider.getId());
+            routeURLBuilder.addProviderId(provider.getProviderId());
             routeURLBuilder.expandProvider();
             switchToEntityActivity(routeURLBuilder.getURL(), provider.getCredit(), RoutesActivity.class);
         }

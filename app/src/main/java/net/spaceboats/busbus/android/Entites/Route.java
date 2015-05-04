@@ -11,7 +11,8 @@ public class Route extends Entity {
     private String name;
     private String mId;
 
-    public Route(@NonNull String shortName, @NonNull String name, @NonNull String color, @NonNull String routeId){
+    public Route(@NonNull String shortName, @NonNull String name, @NonNull String color, @NonNull String routeId, @NonNull String providerId){
+        super(providerId);
         setShortName(shortName);
         setColor(color);
         setName(name);
@@ -63,6 +64,7 @@ public class Route extends Entity {
         if (!mId.equals(route.mId)) return false;
         if (!name.equals(route.name)) return false;
         if (!shortName.equals(route.shortName)) return false;
+        if (!mProviderId.equals(route.mProviderId)) return false;
 
         return true;
     }
@@ -73,6 +75,7 @@ public class Route extends Entity {
         result = 31 * result + color.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + mId.hashCode();
+        result = 31 * result + mProviderId.hashCode();
         return result;
     }
 

@@ -37,6 +37,7 @@ public class RoutesActivity extends EntityBaseActivity {
             arrivalURLBuilder.addStartTime(Long.toString(date.getTime() / 1000));
             arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
             arrivalURLBuilder.addRouteId(route.getId());
+            arrivalURLBuilder.addProviderId(route.getProviderId());
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();
             //arrivalURLBuilder.addLimit("1");

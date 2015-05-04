@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by zralston on 3/15/15.
  */
 class FavoritesDbHelper extends SQLiteOpenHelper{
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "favorites.db";
 
     private static final String TYPE_TEXT = " TEXT ";
@@ -23,21 +23,35 @@ class FavoritesDbHelper extends SQLiteOpenHelper{
 
     private static final String SQL_CREATE_STOP =
             CREATE_TABLE + FavoritesContract.Stop.TABLE_NAME + OPEN_PAREN
-            + FavoritesContract.Stop.COLUMN_ID + TYPE_TEXT + PRIMARY_KEY + SEP_COMMA
+            + FavoritesContract.Stop.COLUMN_ID + TYPE_TEXT + SEP_COMMA
             + FavoritesContract.Stop.COLUMN_NAME + TYPE_TEXT + SEP_COMMA
             + FavoritesContract.Stop.COLUMN_LATITUDE + TYPE_TEXT + SEP_COMMA
             + FavoritesContract.Stop.COLUMN_LONGITUDE + TYPE_TEXT + SEP_COMMA
-            + FavoritesContract.Stop.COLUMN_DESCRIPTION + TYPE_TEXT + CLOSE_PAREN;
+            + FavoritesContract.Stop.COLUMN_DESCRIPTION + TYPE_TEXT + SEP_COMMA
+            + FavoritesContract.Stop.COLUMN_PROVIDER_ID + TYPE_TEXT + SEP_COMMA
+            + PRIMARY_KEY + OPEN_PAREN + FavoritesContract.Stop.COLUMN_ID + SEP_COMMA
+                                       + FavoritesContract.Stop.COLUMN_PROVIDER_ID + CLOSE_PAREN
+            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Stop.COLUMN_PROVIDER_ID + CLOSE_PAREN
+                    + REFERENCES + FavoritesContract.Provider.TABLE_NAME + OPEN_PAREN
+                    + FavoritesContract.Provider.COLUMN_ID + CLOSE_PAREN
+            + CLOSE_PAREN;
 
     private static final String SQL_DELETE_STOP =
             DROP_TABLE + FavoritesContract.Stop.TABLE_NAME;
 
     private static final String SQL_CREATE_ROUTE =
             CREATE_TABLE + FavoritesContract.Route.TABLE_NAME + OPEN_PAREN
-                    + FavoritesContract.Route.COLUMN_ID + TYPE_TEXT + PRIMARY_KEY + SEP_COMMA
-                    + FavoritesContract.Route.COLUMN_NAME + TYPE_TEXT + SEP_COMMA
-                    + FavoritesContract.Route.COLUMN_SHORT_NAME + TYPE_TEXT + SEP_COMMA
-                    + FavoritesContract.Route.COLUMN_COLOR + TYPE_TEXT + CLOSE_PAREN;
+            + FavoritesContract.Route.COLUMN_ID + TYPE_TEXT + SEP_COMMA
+            + FavoritesContract.Route.COLUMN_NAME + TYPE_TEXT + SEP_COMMA
+            + FavoritesContract.Route.COLUMN_SHORT_NAME + TYPE_TEXT + SEP_COMMA
+            + FavoritesContract.Route.COLUMN_COLOR + TYPE_TEXT + SEP_COMMA
+            + FavoritesContract.Route.COLUMN_PROVIDER_ID + TYPE_TEXT + SEP_COMMA
+            + PRIMARY_KEY + OPEN_PAREN + FavoritesContract.Route.COLUMN_ID + SEP_COMMA
+                                       + FavoritesContract.Route.COLUMN_PROVIDER_ID + CLOSE_PAREN
+            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Route.COLUMN_PROVIDER_ID + CLOSE_PAREN
+                    + REFERENCES + FavoritesContract.Provider.TABLE_NAME + OPEN_PAREN
+                    + FavoritesContract.Provider.COLUMN_ID + CLOSE_PAREN
+            + CLOSE_PAREN;
 
     private static final String SQL_DELETE_ROUTE =
             DROP_TABLE + FavoritesContract.Route.TABLE_NAME;
@@ -46,12 +60,17 @@ class FavoritesDbHelper extends SQLiteOpenHelper{
             CREATE_TABLE + FavoritesContract.Arrival.TABLE_NAME + OPEN_PAREN
             + FavoritesContract.Arrival.COLUMN_ROUTE_ID + TYPE_TEXT + SEP_COMMA
             + FavoritesContract.Arrival.COLUMN_STOP_ID + TYPE_TEXT + SEP_COMMA
-            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Arrival.COLUMN_ROUTE_ID
-                    + CLOSE_PAREN + REFERENCES + FavoritesContract.Route.TABLE_NAME + OPEN_PAREN
+            + FavoritesContract.Arrival.COLUMN_PROVIDER_ID + TYPE_TEXT + SEP_COMMA
+            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Arrival.COLUMN_ROUTE_ID + CLOSE_PAREN
+                    + REFERENCES + FavoritesContract.Route.TABLE_NAME + OPEN_PAREN
                     + FavoritesContract.Route.COLUMN_ID + CLOSE_PAREN + SEP_COMMA
-            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Arrival.COLUMN_STOP_ID
-                    + CLOSE_PAREN + REFERENCES + FavoritesContract.Stop.TABLE_NAME + OPEN_PAREN
-                    + FavoritesContract.Stop.COLUMN_ID + CLOSE_PAREN + CLOSE_PAREN;
+            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Arrival.COLUMN_STOP_ID + CLOSE_PAREN
+                    + REFERENCES + FavoritesContract.Stop.TABLE_NAME + OPEN_PAREN
+                    + FavoritesContract.Stop.COLUMN_ID + CLOSE_PAREN + SEP_COMMA
+            + FOREIGN_KEY + OPEN_PAREN + FavoritesContract.Arrival.COLUMN_PROVIDER_ID + CLOSE_PAREN
+                    + REFERENCES + FavoritesContract.Provider.TABLE_NAME + OPEN_PAREN
+                    + FavoritesContract.Provider.COLUMN_ID + CLOSE_PAREN
+            + CLOSE_PAREN;
 
     private static final String SQL_DELETE_ARRIVAL =
             DROP_TABLE + FavoritesContract.Arrival.TABLE_NAME;
