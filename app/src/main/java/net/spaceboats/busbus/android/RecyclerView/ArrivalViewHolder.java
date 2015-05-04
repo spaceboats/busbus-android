@@ -36,7 +36,7 @@ class ArrivalViewHolder extends BaseViewHolder<Arrival> {
 
     public boolean setData(Entity entity) {
         mEntity = (Arrival) entity;
-        setRouteNumber("Route " + mEntity.getRoute().getNumber());
+        setRouteNumber("Route " + mEntity.getRoute().getShortName());
         setStopName("@ " + mEntity.getStop().getStopName() + " to " + mEntity.getHeadsign());
         setRouteColor(mEntity.getRoute().getColor());
         long currentTime = new Date().getTime();

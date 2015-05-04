@@ -98,8 +98,6 @@ public class TheJSONParser {
         JSONObject stopObj = arrivalObj.getJSONObject(JSONKeys.ARRIVAL_STOP);
         JSONObject routeObj = arrivalObj.getJSONObject(JSONKeys.ARRIVAL_ROUTE);
         Route route = getRoute(routeObj);
-        if(route == null)
-            return null;
         int time = arrivalObj.getInt(JSONKeys.ARRIVAL_TIME);
         String headSign = "N/A";
         if(!arrivalObj.isNull(JSONKeys.ARRIVAL_HEADSIGN))

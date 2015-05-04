@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
 
 /**
@@ -27,7 +26,7 @@ class RouteDbOperator extends BaseDbOperator<Route> {
         ContentValues values = new ContentValues();
         values.put(FavoritesContract.Route.COLUMN_ID, route.getId());
         values.put(FavoritesContract.Route.COLUMN_NAME, route.getName());
-        values.put(FavoritesContract.Route.COLUMN_SHORT_NAME, route.getNumber());
+        values.put(FavoritesContract.Route.COLUMN_SHORT_NAME, route.getShortName());
         values.put(FavoritesContract.Route.COLUMN_COLOR, route.getColor());
 
         return values;

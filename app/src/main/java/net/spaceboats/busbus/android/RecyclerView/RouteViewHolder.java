@@ -9,7 +9,6 @@ import android.widget.TextView;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Route;
 import net.spaceboats.busbus.android.R;
-import net.spaceboats.busbus.android.RecyclerView.BaseViewHolder;
 
 /**
  * Created by zralston on 3/12/15.
@@ -30,7 +29,7 @@ class RouteViewHolder extends BaseViewHolder<Route> {
     public boolean setData(Entity entity) {
         mEntity = (Route) entity;
 
-        setRouteNumber("Route " + mEntity.getNumber());
+        setRouteNumber("Route " + mEntity.getShortName());
         setRouteColor(mEntity.getColor());
         setRouteName(mEntity.getName());
 

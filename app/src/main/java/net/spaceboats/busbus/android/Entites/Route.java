@@ -6,24 +6,24 @@ import android.support.annotation.NonNull;
  * Created by zralston on 2/18/15.
  */
 public class Route extends Entity {
-    private String number;
+    private String shortName;
     private String color;
     private String name;
     private String mId;
 
-    public Route(@NonNull String number, @NonNull String name, @NonNull String color, @NonNull String routeId){
-        setNumber(number);
+    public Route(@NonNull String shortName, @NonNull String name, @NonNull String color, @NonNull String routeId){
+        setShortName(shortName);
         setColor(color);
         setName(name);
         setId(routeId);
     }
 
-    public String getNumber(){
-        return number;
+    public String getShortName(){
+        return shortName;
     }
 
-    public void setNumber(@NonNull String number){
-        this.number = number;
+    public void setShortName(@NonNull String number){
+        this.shortName = number;
     }
 
     public String getName(){
@@ -62,14 +62,14 @@ public class Route extends Entity {
         if (!color.equals(route.color)) return false;
         if (!mId.equals(route.mId)) return false;
         if (!name.equals(route.name)) return false;
-        if (!number.equals(route.number)) return false;
+        if (!shortName.equals(route.shortName)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = number.hashCode();
+        int result = shortName.hashCode();
         result = 31 * result + color.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + mId.hashCode();

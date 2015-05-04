@@ -31,15 +31,16 @@ public class RoutesActivity extends EntityBaseActivity {
     public void entityClicked(Entity entity) {
         // It should be a route, but just check to be sure
         if(entity instanceof Route) {
+            Route route = (Route) entity;
             ArrivalURLBuilder arrivalURLBuilder = new ArrivalURLBuilder(getApplicationContext());
             Date date = new Date();
-            arrivalURLBuilder.addStartTime(Long.toString(date.getTime()/1000));
+            arrivalURLBuilder.addStartTime(Long.toString(date.getTime() / 1000));
             arrivalURLBuilder.addEndTime(Long.toString(date.getTime() / 1000 + 900));
-            arrivalURLBuilder.addRouteId("RT_" + ((Route) entity).getNumber());
+            arrivalURLBuilder.addRouteId(route.getId());
             arrivalURLBuilder.expandRoute();
             arrivalURLBuilder.expandStop();
             //arrivalURLBuilder.addLimit("1");
-            switchToEntityActivity(arrivalURLBuilder.getURL(), "Route " + ((Route)entity).getNumber(), ArrivalsActivity.class);
+            switchToEntityActivity(arrivalURLBuilder.getURL(), "Route " + route.getShortName(), ArrivalsActivity.class);
         }
     }
 }
