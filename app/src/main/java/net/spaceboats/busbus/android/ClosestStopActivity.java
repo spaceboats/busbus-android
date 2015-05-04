@@ -3,7 +3,6 @@ package net.spaceboats.busbus.android;
 import android.app.FragmentTransaction;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

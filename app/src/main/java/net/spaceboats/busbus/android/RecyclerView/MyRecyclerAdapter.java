@@ -1,16 +1,13 @@
 package net.spaceboats.busbus.android.RecyclerView;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
 import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.BlankEntity;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.Entites.Route;
@@ -51,7 +48,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void updateItems(List<Entity> entities) {
-        this.entities = entities;
+        if(entities.size() != 0)
+            this.entities = entities;
+        else {
+            List<Entity> tempList = new ArrayList<>();
+            tempList.add(new BlankEntity("No Data"));
+            this.entities = tempList;
+        }
         notifyDataSetChanged();
     }
 
@@ -119,22 +122,27 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         else if(viewType == PROVIDER_VIEWTYPE) {
             viewHolder = createProviderViewHolder(viewGroup);
         }
+        else if(viewType == DEFAULT_VIEWTYPE) {
+            viewHolder = createBlankViewHolder(viewGroup);
+        }
 
         return viewHolder;
     }
 
     private void runEnterAnimation(View view, int position) {
         if (position > lastPositionAnimated) {
-            lastPositionAnimated = position;
             view.setAlpha(0.f);
             view.setTranslationY(150);
+            final long MAX_DELAY = 165;
+            long startDelay = position * 15 > MAX_DELAY ? MAX_DELAY : position * 15;
             view.animate()
                     .alpha(1.f)
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(2.f))
-                    .setStartDelay(position * 15)
+                    .setStartDelay(startDelay)
                     .setDuration(200)
                     .start();
+            lastPositionAnimated = position;
         }
     }
 
@@ -243,6 +251,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             }
         });
+        return viewHolder;
+    }
+
+    private BlankViewHolder createBlankViewHolder(ViewGroup viewGroup) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        final View view = inflater.inflate(R.layout.blank_entity, viewGroup, false);
+        final BlankViewHolder viewHolder = new BlankViewHolder(view);
         return viewHolder;
     }
 }

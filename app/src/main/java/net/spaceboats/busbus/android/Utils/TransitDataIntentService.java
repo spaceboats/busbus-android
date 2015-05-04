@@ -35,7 +35,7 @@ public class TransitDataIntentService extends IntentService {
      * Creates a Service to send Http request and broadcast response
      */
     public static void startAction(Context context, String param1, String action) {
-        Intent intent = new Intent(context, TransitDataIntentService.class);
+        Intent intent = new Intent(context.getApplicationContext(), TransitDataIntentService.class);
         intent.setAction(action);
         intent.putExtra(EXTRA_URL, param1);
         context.startService(intent);
