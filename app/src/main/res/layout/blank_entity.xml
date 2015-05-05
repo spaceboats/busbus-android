@@ -28,7 +28,11 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"/>
+                android:gravity="center"
+                android:textScaleX="1.5"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:textColor="@color/colorAccent"
+                android:layout_marginLeft="2dp" />
 
         </LinearLayout>
 

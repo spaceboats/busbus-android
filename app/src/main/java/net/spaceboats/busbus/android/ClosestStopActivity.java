@@ -82,7 +82,7 @@ public class ClosestStopActivity extends EntityBaseActivity implements OnMapRead
         map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 17));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(closest, 17));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(closest)

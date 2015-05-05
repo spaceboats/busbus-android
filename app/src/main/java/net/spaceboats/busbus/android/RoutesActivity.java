@@ -17,6 +17,8 @@ public class RoutesActivity extends EntityBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBlankEntityMessage = "No Routes";
+
         String url = getIntent().getStringExtra(getString(R.string.EXTRA_ENTITY_URL));
 
         if(url == null) {

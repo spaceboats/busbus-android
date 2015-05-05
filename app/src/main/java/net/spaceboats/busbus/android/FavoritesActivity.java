@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
 import net.spaceboats.busbus.android.Entites.Arrival;
+import net.spaceboats.busbus.android.Entites.BlankEntity;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.Entites.Provider;
 import net.spaceboats.busbus.android.Utils.ArrivalURLBuilder;
@@ -11,6 +12,7 @@ import net.spaceboats.busbus.android.Utils.ProviderURLBuilder;
 import net.spaceboats.busbus.android.Utils.RouteURLBuilder;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +45,12 @@ public class FavoritesActivity extends EntityBaseActivity {
                 arrivalURLBuilder.expandRoute();
                 TransitDataIntentService.startAction(this, arrivalURLBuilder.getURL(), TransitDataIntentService.ACTION_GET_ARRIVALS);
             }
+        }
+
+        if(favorites.size() == 0) {
+            List<Entity> entityList = new ArrayList<>();
+            entityList.add(new BlankEntity("No Favorites"));
+            recyclerViewFragment.updateData(entityList);
         }
     }
 

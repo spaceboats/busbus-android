@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import net.spaceboats.busbus.android.DbHelper.EntityDbDelegator;
+import net.spaceboats.busbus.android.Entites.BlankEntity;
 import net.spaceboats.busbus.android.Entites.Entity;
 import net.spaceboats.busbus.android.RecyclerView.MyRecyclerAdapter;
 import net.spaceboats.busbus.android.Utils.DataBroadcastReceiver;
 import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +29,7 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
     private Toolbar toolbar;
     private DataBroadcastReceiver dataBroadcastReceiver;
     protected RecyclerViewFragment recyclerViewFragment;
+    protected String mBlankEntityMessage = "No Data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +149,14 @@ public abstract class EntityBaseActivity extends ActionBarActivity implements My
 
     @Override
     public void entityListReceived(List<Entity> entityList) {
-        recyclerViewFragment.updateData(entityList);
+        if(recyclerViewFragment != null) {
+            if(entityList.size() == 0) {
+                List<Entity> temp = new ArrayList<>();
+                temp.add(new BlankEntity(mBlankEntityMessage));
+                entityList = temp;
+            }
+
+            recyclerViewFragment.updateData(entityList);
+        }
     }
 }

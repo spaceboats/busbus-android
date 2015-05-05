@@ -13,6 +13,8 @@ public class ArrivalsActivity extends EntityBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBlankEntityMessage = "No Arrivals";
+
         String url = getIntent().getStringExtra(getString(R.string.EXTRA_ENTITY_URL));
 
         if(url == null) {

@@ -14,9 +14,13 @@ import net.spaceboats.busbus.android.Utils.TransitDataIntentService;
  */
 public class ProviderActivity extends EntityBaseActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mBlankEntityMessage = "No Providers";
 
         String url = getIntent().getStringExtra(getString(R.string.EXTRA_ENTITY_URL));
 

@@ -48,13 +48,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void updateItems(List<Entity> entities) {
-        if(entities.size() != 0)
-            this.entities = entities;
-        else {
-            List<Entity> tempList = new ArrayList<>();
-            tempList.add(new BlankEntity("No Data"));
-            this.entities = tempList;
-        }
+        this.entities = entities;
         notifyDataSetChanged();
     }
 
