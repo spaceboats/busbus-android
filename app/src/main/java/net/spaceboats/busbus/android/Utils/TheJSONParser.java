@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class TheJSONParser {
 
+    private static final String NOT_AVALIABLE = "N/A";
+
     public static List<Entity> getRouteList(String data)
         throws JSONException {
 
@@ -34,9 +36,8 @@ public class TheJSONParser {
 
     private static Route getRoute(JSONObject routeObj)
         throws JSONException {
-        final String DEFAULT = "N/A";
-        String routeName = DEFAULT;
-        String routeNumber = DEFAULT;
+        String routeName = NOT_AVALIABLE;
+        String routeNumber = NOT_AVALIABLE;
         String routeColor = "#424242";
         if(!routeObj.isNull(JSONKeys.ROUTE_SHORT_NAME)) {
             routeNumber = routeObj.getString(JSONKeys.ROUTE_SHORT_NAME);
@@ -47,6 +48,13 @@ public class TheJSONParser {
         if(!routeObj.isNull(JSONKeys.ROUTE_COLOR)) {
             routeColor = "#" + routeObj.getString(JSONKeys.ROUTE_COLOR);
         }
+
+        // Just in case one is there, but the other isn't.
+        if(routeName.equals(NOT_AVALIABLE))
+            routeName = routeNumber;
+        else if(routeNumber.equals(NOT_AVALIABLE))
+            routeNumber = routeName;
+
         String routeId = routeObj.getString(JSONKeys.ROUTE_ID);
         // TODO: Fix this by just attaching provider object?
         JSONObject providerObj = routeObj.getJSONObject(JSONKeys.ROUTE_PROVIDER);
