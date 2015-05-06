@@ -34,8 +34,9 @@ public class TheJSONParser {
 
     private static Route getRoute(JSONObject routeObj)
         throws JSONException {
-        String routeName = "N/A";
-        String routeNumber = "N/A";
+        final String DEFAULT = "N/A";
+        String routeName = DEFAULT;
+        String routeNumber = DEFAULT;
         String routeColor = "#424242";
         if(!routeObj.isNull(JSONKeys.ROUTE_SHORT_NAME)) {
             routeNumber = routeObj.getString(JSONKeys.ROUTE_SHORT_NAME);
