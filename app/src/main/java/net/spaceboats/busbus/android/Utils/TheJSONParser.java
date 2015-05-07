@@ -56,7 +56,6 @@ public class TheJSONParser {
             routeNumber = routeName;
 
         String routeId = routeObj.getString(JSONKeys.ROUTE_ID);
-        // TODO: Fix this by just attaching provider object?
         JSONObject providerObj = routeObj.getJSONObject(JSONKeys.ROUTE_PROVIDER);
         String providerId = providerObj.getString(JSONKeys.PROVIDER_ID);
         return new Route(routeNumber, routeName, routeColor, routeId, providerId);
@@ -87,7 +86,6 @@ public class TheJSONParser {
         double latitude = stopObj.getDouble(JSONKeys.STOP_LATITUDE);
         double longitude = stopObj.getDouble(JSONKeys.STOP_LONGITUDE);
         String stopId = stopObj.getString(JSONKeys.STOP_ID);
-        // TODO: Fix this by just attaching provider object?
         JSONObject providerObj = stopObj.getJSONObject(JSONKeys.STOP_PROVIDER);
         String providerId = providerObj.getString(JSONKeys.PROVIDER_ID);
         return new Stop(stopName, latitude, longitude, stopDescription, stopId, providerId);
