@@ -32,11 +32,11 @@ class URLBuilder {
                 .appendPath(entity);
     }
 
-    public void addQueryParam(String name, String value) {
+    protected void addQueryParam(String name, String value) {
         builder.appendQueryParameter(name, value);
     }
 
-    public void addToExpandArgs(String entityName) {
+    protected void addToExpandArgs(String entityName) {
         expandArgs += entityName + EXPAND_SEPARATOR;
     }
 
