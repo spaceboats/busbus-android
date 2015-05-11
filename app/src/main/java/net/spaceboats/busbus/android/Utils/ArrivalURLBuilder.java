@@ -12,7 +12,7 @@ public class ArrivalURLBuilder extends URLBuilder {
     }
 
     public void addLimit(String amount) {
-        addQueryParam(JSONKeys.ARRIVALS_LIMIT, amount);
+        addQueryParam(JSONKeys.ARRIVAL_LIMIT, amount);
     }
 
     public void addStartTime(String time) {

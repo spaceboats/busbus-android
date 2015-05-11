@@ -1,12 +1,9 @@
 package net.spaceboats.busbus.android.Utils;
 
 /**
- * Created by Zane on 4/1/2015.
+ * Summary: Keys that can be used to query data from busbus web
  */
 final class JSONKeys {
-
-    public JSONKeys() {
-    }
 
     /*
     Different entity types available
@@ -69,7 +66,7 @@ final class JSONKeys {
     public static final String ARRIVAL_STOP = STOP;
     public static final String ARRIVAL_TIME = "time";
     public static final String ARRIVAL_ROUTE = ROUTE;
-    public static final String ARRIVALS_LIMIT = "_limit";
+    public static final String ARRIVAL_LIMIT = "_limit";
     public static final String ARRIVAL_PROVIDER = PROVIDER;
     public static final String ARRIVAL_HEADSIGN = "headsign";
     public static final String ARRIVAL_END_TIME = "end_time";
